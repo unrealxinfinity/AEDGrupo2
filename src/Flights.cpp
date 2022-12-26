@@ -5,11 +5,11 @@
 #include "Flight.h"
 Flight::Flight(const string dest, const std::string airline) :Dest(dest),Airline(airline){}
 
-Airport Flight::getDest() const {
+string Flight::getDest() const {
     return Dest;
 }
 
-void Flight::setDest(const Airport &dest) {
+void Flight::setDest(const string &dest) {
     Dest = dest;
 }
 

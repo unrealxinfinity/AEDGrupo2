@@ -6,28 +6,26 @@
 #define PROJETOGRUPO2_FLIGHT_H
 #include <string>
 #include "Airport.h"
-#include "Airport.h"
 using namespace std;
 
 class Flight{
 private:
-    Airport Dest;
+    string Dest;
     string Airline;
     static int hashint;
 public:
     Flight (const string dest,const string airline);
-    Airport getDest() const;
-    void setDest(const Airport &dest);
+    string getDest() const;
+    void setDest(const string &dest);
     const string getAirline() const;
     void setAirline(const string &airline);
-
 };
 struct FlightHash{
     int operator() (const Flight &other){
         return other.getDest().size()%14;
     }
     bool operator()(const Flight &other1, const Flight &other2){
-
+        return (other1.getDest()==other2.getDest())&&(other1.getAirline()==other2.getAirline());
     }
 
 };

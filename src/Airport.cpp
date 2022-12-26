@@ -8,6 +8,6 @@ Airport::Airport(std::string code, std::string name, std::string city, float lat
 string Airport::getCode() const {
     return Code;
 }
-unordered_set<Flight> Airport::getFlights() const {
+Flights Airport::getFlights() const {
     return flights;
 }

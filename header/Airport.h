@@ -2,8 +2,8 @@
 // Created by fuhao on 26/12/2022.
 //
 
-#ifndef PROJETO_GRUPO2_AIRPORT_H
-#define PROJETO_GRUPO2_AIRPORT_H
+#ifndef PROJETOGRUPO2_AIRPORT_H
+#define PROJETOGRUPO2_AIRPORT_H
 #include "Flight.h"
 #include <unordered_set>
 using namespace std;
@@ -23,17 +23,21 @@ private:
 public:
 
     Airport(string code,string name,string city,float latitude,float longitude);
-
+    Airport();
     void addFlight(Flight f){
         flights.insert(f);
     }
     string getCode() const;
-    unordered_set<Flight> getFlights() const;
+    Flights getFlights() const;
 };
+
 struct airportHash{
     int operator() (const Airport &other){
         return other.getFlights().size()%10
     }
+    bool operator()(const Airport &a,Airport &b){
+        return (a.getCode()==b.getCode());
+    }
 };
 
-#endif //PROJETO_GRUPO2_AIRPORT_H
+#endif //PROJETOGRUPO2_AIRPORT_H
