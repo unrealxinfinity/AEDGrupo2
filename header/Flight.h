@@ -6,17 +6,18 @@
 #define PROJETOGRUPO2_FLIGHT_H
 #include <string>
 #include "Airport.h"
+
 using namespace std;
 
 class Flight{
 private:
-    string Dest;
+    Airport Dest;
     string Airline;
 
 public:
-    Flight (const string dest,const string airline);
-    string getDest() const;
-    void setDest(const string &dest);
+    Flight (const Airport dest,const string airline);
+    Airport getDest() const;
+    void setDest(const Airport &dest);
     const string getAirline() const;
     void setAirline(const string &airline);
 };

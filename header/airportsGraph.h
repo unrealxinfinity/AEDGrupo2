@@ -12,9 +12,14 @@
 #include "Flight.h"
 #include "CSVReader.h"
 using namespace std;
-typedef unordered_set<Airport,airportHash,airportHash> Airports;
+
+typedef unordered_set<Airport,airportHash,airportHash> AirportsSet;
+
 class airportsGraph{
-    Airports airports;
+    AirportsSet airports;
+
+private:
+    CSVReader Reader;
     bool hasDir;
 public:
     void bfs();

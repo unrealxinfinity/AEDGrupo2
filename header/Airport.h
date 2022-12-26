@@ -9,7 +9,6 @@
 using namespace std;
 
 typedef unordered_set<Flight,FlightHash,FlightHash> FlightsSet;
-
 class Airport {
 private:
     string Code;
