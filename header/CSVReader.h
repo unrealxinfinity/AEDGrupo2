@@ -13,6 +13,7 @@ class CSVReader {
 private:
         string filename;
 public:
+    //supposed idea to use CSV reader in the graph constructor to fill the airports set of the its field
     void readAirports(unordered_set<Airport> &airports,string filename);
     void readFlights(unordered_set<Flight> &flights,string filename);
 
