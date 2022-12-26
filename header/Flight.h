@@ -12,7 +12,7 @@ class Flight{
 private:
     string Dest;
     string Airline;
-    static int hashint;
+
 public:
     Flight (const string dest,const string airline);
     string getDest() const;

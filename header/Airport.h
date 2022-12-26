@@ -8,7 +8,7 @@
 #include <unordered_set>
 using namespace std;
 
-typedef unordered_set<Flight,FlightHash,FlightHash> Flights;
+typedef unordered_set<Flight,FlightHash,FlightHash> FlightsSet;
 
 class Airport {
 private:
@@ -17,7 +17,7 @@ private:
     string City;
     float Latitude;
     float Longitude;
-    Flights flights;
+    FlightsSet flights;
     bool visited;
     int distance;
 public:
@@ -28,7 +28,7 @@ public:
         flights.insert(f);
     }
     string getCode() const;
-    Flights getFlights() const;
+    FlightsSet getFlights() const;
 };
 
 struct airportHash{

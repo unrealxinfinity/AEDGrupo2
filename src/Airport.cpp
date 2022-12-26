@@ -8,6 +8,6 @@ Airport::Airport(std::string code, std::string name, std::string city, float lat
 string Airport::getCode() const {
     return Code;
 }
-Flights Airport::getFlights() const {
+FlightsSet Airport::getFlights() const {
     return flights;
 }
