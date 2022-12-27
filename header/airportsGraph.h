@@ -14,7 +14,6 @@
 using namespace std;
 
 typedef unordered_set<Airport,airportHash,airportHash> AirportsSet;
-
 class airportsGraph{
     AirportsSet airports;
 
