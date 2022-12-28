@@ -18,19 +18,20 @@ typedef unordered_set<Flight,FlightHash,FlightHash> Flights;
  --expected complexity O(N*E) for readAirports sendo E o nr de Edges relacionados por esta implementacao, usando find de complexidade 1 do unordered_set;
  --expected complexity for insertFlights() is O(E) being E the nr of Flights related to a certain airport;
  */
+
 class CSVReader {
 private:
     string filename;
     Flight flights;
 
     //fills the Flights of each Airport
-    void readFlights(string filename);
-    void insertFlights(Airport &a);
+    //void readFlights(string filename);
+    //void insertFlights(Airport &a);
 public:
     CSVReader(string Flightsfilename);
     CSVReader();
     //supposed idea to use CSV reader in the graph constructor to fill the airports set of its field
-    void readAirports(unordered_set<Airport,airportHash,airportKeyEqual> &airports,string filename);
+    //void readAirports(unordered_set<Airport,airportHash,airportKeyEqual> &airports,string filename);
 
 };
 

@@ -18,11 +18,11 @@ class airportsGraph{
     AirportsSet airports;
 
 private:
-    //CSVReader Reader;
+    CSVReader Reader;
     bool hasDir;
 public:
     void bfs(Airport &a);
-    //airportsGraph(string airpotsCSV,string flightsCSV ,CSVReader reader,bool dir=true);
+    airportsGraph(string airpotsCSV,string flightsCSV ,CSVReader reader,bool dir=true);
     int distance(string airportA,string airportB);
 
 
