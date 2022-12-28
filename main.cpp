@@ -1,10 +1,12 @@
 #include <iostream>
 #include "Airport.h"
 #include "airportsGraph.h"
+#include "CSVReader.h"
 #include <unordered_set>
 
 //temp section for tests
 //Tested
+/*
 void testsAirportEqualAndAssignment(){
     Airport airportTest= Airport("BCN","BarcelonaAirport","Barcelona",1,1);
     Airport airportTest2= Airport("ABD","BarcelonaAirport","Barcelona",1,1);
@@ -26,7 +28,7 @@ void airportSetTest(){
    /* Airport b = Airport("","Test","",0,0);
     b.visited=false;
     b.distanceSince=0;
-    b.addFlight(Flight("","",0));*/
+    b.addFlight(Flight("","",0));
 
     Airport target = Airport("Code1","Test","Uhm",1,2);
    // cout<<(a==b)<<endl;
@@ -50,9 +52,10 @@ void testUnorderedSetFlights(){
     cout<<res->getOriginAirportCode()<<res->DestAirportCode<<res->AirlineCode<<res->FlightDistance<<endl;
 
 }
-
+*/
 int main() {
 
-    airportSetTest();
+    CSVReader reader;
+    reader.populate();
     return 0;
 }

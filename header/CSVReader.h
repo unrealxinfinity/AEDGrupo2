@@ -21,14 +21,17 @@ typedef unordered_set<Flight*,FlightHash,FlightKeyEqual> Flights;
 
 class CSVReader {
 private:
-    string filename;
-    Flight flights;
+    unordered_set<Airport, AirportHash> airports;
+    unordered_set<City, CityHash> cities;
 
     //fills the Flights of each Airport
     //void readFlights(string filename);
     //void insertFlights(Airport &a);
+    void read_flights();
+    void read_airports();
+    void read_airlines();
 public:
-    CSVReader(string Flightsfilename);
+    void populate();
     CSVReader();
     //supposed idea to use CSV reader in the graph constructor to fill the airports set of its field
     //void readAirports(unordered_set<Airport,airportHash,airportKeyEqual> &airports,string filename);

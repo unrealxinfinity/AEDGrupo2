@@ -3,17 +3,8 @@
 //
 
 #include "Airport.h"
-Airport::Airport(std::string code, std::string name, std::string city, float latitude, float longitude):Code(code),Name(name),City(city),Latitude(latitude),Longitude(longitude) {}
-Airport::Airport() {
-    Code="";
-    Name="";
-    City="";
-    Latitude=0;
-    Longitude=0;
-    visited=false;
-    distanceSince=0;
+Airport::Airport(std::string code, std::string name, const City* city, double latitude, double longitude):Code(code),Name(name),city(city),Latitude(latitude),Longitude(longitude) {}
 
-}
 string Airport::getCode() const {
     return Code;
 }
@@ -21,19 +12,19 @@ string Airport::getCode() const {
 string Airport::getName() const {
     return Name;
 }
-string Airport::getCity() const {
-    return City;
+City* Airport::getCity() const {
+    return const_cast<City *>(city);
 }
-float Airport::getLongitude() const {
+double Airport::getLongitude() const {
     return Longitude;
 }
-float Airport::getLatitude() const {
+double Airport::getLatitude() const {
     return Latitude;
 }
 void Airport::operator=(const Airport &other) {
     this->Code=other.getCode();
     this->Name=other.getName();
-    this->City=other.getCity();
+    this->city=other.getCity();
     this->Longitude=other.getLongitude();
     this->Latitude=other.getLatitude();
     this->distanceSince=other.distanceSince;
