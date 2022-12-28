@@ -11,7 +11,7 @@ CSVReader::CSVReader() {
 CSVReader::CSVReader(std::string Flightsfilename) {
     filename=Flightsfilename;
 }
-
+/*
 void CSVReader::readAirports(unordered_set<Airport,airportHash,airportKeyEqual> &airports,string filename){
 
-}
+}*/

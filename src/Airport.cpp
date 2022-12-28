@@ -30,7 +30,7 @@ float Airport::getLongitude() const {
 float Airport::getLatitude() const {
     return Latitude;
 }
-void Airport::operator=(Airport &other) {
+void Airport::operator=(const Airport &other) {
     this->Code=other.getCode();
     this->Name=other.getName();
     this->City=other.getCity();
@@ -39,7 +39,7 @@ void Airport::operator=(Airport &other) {
     this->distanceSince=other.distanceSince;
     this->visited=other.visited;
 }
-bool Airport::operator==(Airport &other) {
+bool Airport::operator==(const Airport &other) const{
     return this->getCode()==other.getCode();
 }
 float Airport::calcDistanceHaversine( Airport &b) {
