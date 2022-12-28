@@ -39,7 +39,7 @@ void Airport::operator=(Airport &other) {
     this->distanceSince=other.distanceSince;
     this->visited=other.visited;
 }
-bool Airport::operator== (Airport &other) {
+bool Airport::operator==(Airport &other) {
     return this->getCode()==other.getCode();
 }
 float Airport::calcDistanceHaversine( Airport &b) {

@@ -48,11 +48,14 @@ public:
 
 //Melhorar em termos de hash function que eu nao sei o que por c,:
 struct airportHash {
-    int operator() (const Airport &other){
+    int operator() (const Airport &other) const{
         return other.getFlights().size()%10;
     }
     //queria implementar uma cena que fizesse com o struct levasse um argumento tipo float para verificar que dist de 2 airports <X faz com que key seja igual ao outro key
-    bool operator()(const Airport &a,Airport &b){
+
+};
+struct airportKeyEqual{
+    bool operator()(const Airport &a,Airport &b) const{
         return (a.getCode()==b.getCode()) ;
     }
 };

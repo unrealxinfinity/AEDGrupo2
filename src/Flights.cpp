@@ -4,25 +4,24 @@
 #include "Flight.h"
 
 Flight::Flight(const string dest, const std::string airline,const float flightDistance) : DestAirportCode(dest), AirlineCode(airline),FlightDistance(flightDistance){}
-
+Flight::Flight() {
+    OriginAirportCode=="";
+    DestAirportCode=="";
+    AirlineCode=="";
+    FlightDistance=0;
+}
 bool Flight::operator==(Flight &other) {
-    return this->getDestAirportCode()==other.getDestAirportCode() && this->getDestAirportCode() ==other.getDestAirportCode();
-}
-string Flight::getDestAirportCode() const {
-    return DestAirportCode;
-}
-float Flight::getFlightDistance() const{
-    return FlightDistance;
+    return this->DestAirportCode==other.DestAirportCode && this->AirlineCode ==other.AirlineCode && this->getOriginAirportCode()==other.getOriginAirportCode();
 }
 
-void Flight::setDestAirportCode(const std::string &dest) {
-    DestAirportCode=dest;
+void Flight::operator=(const Flight &other){
+    this->OriginAirportCode=other.getOriginAirportCode();
+    this->AirlineCode=other.AirlineCode;
+    this->DestAirportCode=other.DestAirportCode;
+    this->FlightDistance=other.FlightDistance;
 }
 
-const string Flight::getAirlineCode() const {
-    return AirlineCode;
+string Flight::getOriginAirportCode() const {
+    return OriginAirportCode;
 }
 
-void Flight::setAirline(const string &airline) {
-    AirlineCode = airline;
-}
