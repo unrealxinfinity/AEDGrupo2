@@ -6,6 +6,7 @@
 #define PROJETOGRUPO2_CSVREADER_H
 #include <string>
 #include "airportsGraph.h"
+#include "Airline.h"
 
 using namespace std;
 typedef unordered_set<Flight*,FlightHash,FlightKeyEqual> Flights;
@@ -23,6 +24,7 @@ class CSVReader {
 private:
     unordered_set<Airport, AirportHash> airports;
     unordered_set<City, CityHash> cities;
+    unordered_set<Airline, AirlineHash> airlines;
 
     //fills the Flights of each Airport
     //void readFlights(string filename);
