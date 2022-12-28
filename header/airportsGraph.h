@@ -21,7 +21,7 @@ private:
     CSVReader Reader;
     bool hasDir;
 public:
-    void bfs();
+    void bfs(Airport &a);
     airportsGraph(string airpotsCSV,string flightsCSV ,CSVReader reader,bool dir=true);
     int distance(string airportA,string airportB);
 

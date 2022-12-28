@@ -41,7 +41,7 @@ public:
     string getCity() const;
     float calcDistanceHaversine(Airport &b);
     void operator=(Airport &other) ;
-    bool operator ==(Airport &other);
+    bool operator== (Airport &other);
 
 
 };
