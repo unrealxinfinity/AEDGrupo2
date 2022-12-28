@@ -8,7 +8,7 @@
 #include "airportsGraph.h"
 
 using namespace std;
-typedef unordered_set<Flight,FlightHash,FlightHash> Flights;
+typedef unordered_set<Flight*,FlightHash,FlightKeyEqual> Flights;
 
 
 /*Conceito : tens um readFlights  para usar no construtor que lê todos os flights do ficheiro para *var flights*.

@@ -26,14 +26,14 @@ public:
 };
 struct FlightHash{
 
-    size_t operator() (const Flight &other) const{
-        return  other.getOriginAirportCode().size()*rand()%100;
+    size_t operator() (const Flight *other) const{
+        return  other->getOriginAirportCode().size()*rand()%100;
     }
 
 };
 struct FlightKeyEqual{
-    bool operator()(const Flight &other1, const Flight &other2) const{
-        return ((other1.AirlineCode==other2.AirlineCode)&&(other1.DestAirportCode==other2.DestAirportCode))? true : other1.getOriginAirportCode()==other2.getOriginAirportCode();
+    bool operator()(const Flight *other1, const Flight *other2) const{
+        return ((other1->AirlineCode==other2->AirlineCode)&&(other1->DestAirportCode==other2->DestAirportCode))? true : other1->getOriginAirportCode()==other2->getOriginAirportCode();
     }
 };
 #endif //PROJETOGRUPO2_FLIGHT_H

@@ -24,7 +24,7 @@ private:
 
 public:
 
-    list<Flight> flights;
+    list<Flight*> flights;
 
     Airport(string code,string name,string city,float latitude,float longitude);
     Airport();
@@ -33,12 +33,15 @@ public:
     int distanceSince;
 
     void addFlight(Flight f){
+        flights.push_back(&f);
+    }
+    void addFlight(Flight *f){
         flights.push_back(f);
     }
 
     string getCode() const;
 
-    list<Flight>getFlights() const;
+    list<Flight*>getFlights() const;
 
     float getLongitude() const;
     float getLatitude() const;
@@ -53,16 +56,16 @@ public:
 
 //Melhorar em termos de hash function que eu nao sei o que por c,:
 struct AirportHash {
-    size_t operator() (const Airport &other) const{
-        return other.getCode().size()+ rand()%100;
+    size_t operator() (const Airport *other) const{
+        return other->getCode().size()+ rand()%100;
     }
     //queria implementar uma cena que fizesse com o struct levasse um argumento tipo float para verificar que dist de 2 airports <X faz com que key seja igual ao outro key
 
 };
 //esta KeyCompare nao funciona for some reason
 struct AirportKeyEqual{
-    bool operator()(const Airport &a , const Airport &b) const{
-        return a==b; // a.getCode()==b.getCode() ;
+    bool operator()(const Airport *a , const Airport *b) const{
+        return a==b; // a->getCode()==b->getCode() ;
     }
 };
 
