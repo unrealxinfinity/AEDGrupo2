@@ -17,7 +17,7 @@ void testsAirportEqualAndAssignment(){
 }
 //error
 void airportSetTest(){
-    typedef unordered_set<Airport,AirportHash,AirportKeyEqual> Airports;
+    typedef unordered_set<Airport*,AirportHash,AirportKeyEqual> Airports;
     Airport a = Airport("Code1","Test","Uhm",1,2);
     a.distanceSince=0;
     a.visited=false;
@@ -32,27 +32,27 @@ void airportSetTest(){
    // cout<<(a==b)<<endl;
 
     Airports airports;
-    airports.insert(a);
+    airports.insert(&a);
 
-    cout<<airports.find(target)->getCode()<<endl;
+    cout<<(*airports.find(&target))->getCode()<<endl;
 
 
 }
 //tested
 void testUnorderedSetFlights(){
-    typedef unordered_set<Flight,FlightHash,FlightKeyEqual> Flights;
+    typedef unordered_set<Flight*,FlightHash,FlightKeyEqual> Flights;
     Flights flights;
     Flight temp=Flight("Ola","Teste",0);
-    Flight target=Flight("Ola","",1);
-    flights.insert(temp);
-    auto res = flights.find(target);
+    Flight target=Flight("Ola","",10);
+    flights.insert(&temp);
+    auto res = flights.find(&target);
 
-    cout<<res->getOriginAirportCode()<<res->DestAirportCode<<res->AirlineCode<<res->FlightDistance<<endl;
+    cout<<(*res)->getOriginAirportCode()<<(*res)->DestAirportCode<<(*res)->AirlineCode<<(*res)->FlightDistance<<endl;
 
 }
 
 int main() {
-
+    //erro nesta funcao
     airportSetTest();
     return 0;
 }
