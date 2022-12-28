@@ -62,7 +62,7 @@ struct AirportHash {
 //esta KeyCompare nao funciona for some reason
 struct AirportKeyEqual{
     bool operator()(const Airport &a , const Airport &b) const{
-        return a==b; // a.getCode()==b.getCode() || (a.getLatitude()==b.getLatitude()&&a.getLongitude()==b.getLongitude());
+        return a==b; // a.getCode()==b.getCode() ;
     }
 };
 
