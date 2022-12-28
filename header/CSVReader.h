@@ -6,10 +6,9 @@
 #define PROJETOGRUPO2_CSVREADER_H
 #include <string>
 #include "airportsGraph.h"
+#include "Airline.h"
 
 using namespace std;
-typedef unordered_set<Flight*,FlightHash,FlightKeyEqual> Flights;
-
 
 /*Conceito : tens um readFlights  para usar no construtor que lê todos os flights do ficheiro para *var flights*.
  Como flights.csv esta organizado em origem-dest-airline, o readAirports vai introduzir os aeroportos do ficheiro linha a linha para a estrutura
@@ -21,17 +20,21 @@ typedef unordered_set<Flight*,FlightHash,FlightKeyEqual> Flights;
 
 class CSVReader {
 private:
-    string filename;
-    Flight flights;
+    unordered_set<Airport, AirportHash> airports;
+    unordered_set<City, CityHash> cities;
+    unordered_set<Airline, AirlineHash> airlines;
 
     //fills the Flights of each Airport
     //void readFlights(string filename);
     //void insertFlights(Airport &a);
+    void read_flights();
+    void read_airports();
+    void read_airlines();
 public:
-    CSVReader(string Flightsfilename);
+    void populate();
     CSVReader();
-    //supposed idea to use CSV reader in the graph constructor to fill the airports set of its field
-    //void readAirports(unordered_set<Airport,airportHash,airportKeyEqual> &airports,string filename);
+    unordered_set<Airport, AirportHash> getAirports() ;
+
 
 };
 

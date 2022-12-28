@@ -13,17 +13,22 @@
 #include "CSVReader.h"
 using namespace std;
 
-typedef unordered_set<Airport,AirportHash,AirportKeyEqual> AirportsSet;
+typedef unordered_set<Airport,AirportHash> Airports;
 class airportsGraph{
-    AirportsSet airports;
+    Airports airports;
 
 private:
-    //CSVReader Reader;
     bool hasDir;
 public:
     void bfs(Airport &a);
-    //airportsGraph(string airpotsCSV,string flightsCSV ,CSVReader reader,bool dir=true);
+    //airportsGraph(CSVReader reader,bool dir=true);
+    airportsGraph();
+    unordered_set<Airport,AirportHash> getAirports();
+    //encontra os aeroportos
+    unordered_set<Airport,AirportHash> findAirportsAround(const double lat,const double longi,const double x)const;
+    Airport findAirportByCoord(const double lat, const double longi) const;
     int distance(string airportA,string airportB);
+
 
 
 };

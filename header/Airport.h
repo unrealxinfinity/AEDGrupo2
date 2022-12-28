@@ -11,43 +11,41 @@
 #include<string>
 #include <iostream>
 #include "Flight.h"
+#include "City.h"
 
 using namespace std;
 
 class Airport {
 private:
-    string Code;
-    string Name;
-    string City;
-    float Latitude;
-    float Longitude;
+    string code_;
+    string name_;
+    const City* city_;
+    double latitude_;
+    double longitude_;
 
 public:
+    mutable list<Flight> flights;
 
-    list<Flight*> flights;
-
-    Airport(string code,string name,string city,float latitude,float longitude);
+    Airport(string code,string name,const City* city,double latitude,double longitude);
+    explicit Airport(string code);
     Airport();
 
     bool visited;
     int distanceSince;
 
-    void addFlight(Flight f){
-        flights.push_back(&f);
-    }
-    void addFlight(Flight *f){
+    void addFlight(Flight f) const{
         flights.push_back(f);
     }
 
     string getCode() const;
 
-    list<Flight*>getFlights() const;
+    list<Flight>getFlights() const;
 
-    float getLongitude() const;
-    float getLatitude() const;
+    double getLongitude() const;
+    double getLatitude() const;
     string getName() const;
-    string getCity() const;
-    float calcDistanceHaversine(Airport &b);
+    City* getCity() const;
+    double calcDistanceHaversine(const Airport &b) const;
     void operator=(const Airport &other)  ;
     bool operator==(const Airport &other) const;
 
@@ -56,8 +54,12 @@ public:
 
 //Melhorar em termos de hash function que eu nao sei o que por c,:
 struct AirportHash {
-    size_t operator() (const Airport *other) const{
-        return other->getCode().size()+ rand()%100;
+    size_t operator() (const Airport& other) const{
+        size_t res = 0;
+        for (char c : other.getCode()) {
+            res += 37*c;
+        }
+        return res;
     }
     //queria implementar uma cena que fizesse com o struct levasse um argumento tipo float para verificar que dist de 2 airports <X faz com que key seja igual ao outro key
 
