@@ -25,24 +25,22 @@ private:
 
 public:
 
-    list<Flight*> flights;
+    mutable list<Flight> flights;
 
     Airport(string code,string name,const City* city,double latitude,double longitude);
+    explicit Airport(string code);
     Airport();
 
     bool visited;
     int distanceSince;
 
-    void addFlight(Flight f){
-        flights.push_back(&f);
-    }
-    void addFlight(Flight *f){
+    void addFlight(Flight f) const{
         flights.push_back(f);
     }
 
     string getCode() const;
 
-    list<Flight*>getFlights() const;
+    list<Flight>getFlights() const;
 
     double getLongitude() const;
     double getLatitude() const;

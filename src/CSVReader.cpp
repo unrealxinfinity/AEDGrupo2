@@ -14,6 +14,7 @@ CSVReader::CSVReader() = default;
 void CSVReader::populate() {
     read_airports();
     read_airlines();
+    read_flights();
 }
 
 void CSVReader::read_airports() {
@@ -50,6 +51,21 @@ void CSVReader::read_airlines() {
         getline(iss, callsign, ',');
         getline(iss, country, ',');
         airlines.insert(Airline(code, name, callsign, country));
+    }
+    in.close();
+}
+
+void CSVReader::read_flights() {
+    ifstream in("data/flights.csv");
+    string source, target, airline, line;
+    getline(in, line);
+    while (getline(in, line)) {
+        istringstream iss(line);
+        getline(iss, source, ',');
+        getline(iss, target, ',');
+        getline(iss, airline, ',');
+        auto it = airports.find(Airport(source));
+        it->addFlight(Flight(target, airline, 0));
     }
     in.close();
 }

@@ -38,3 +38,5 @@ float Airport::calcDistanceHaversine( Airport &b) {
 
     return 2*6371* pow(19,3)* asin(sqrt(pow(sin((bLatRad-aLatRad)/2),2)+ cos(aLatRad)*cos(bLatRad)*pow(sin((bLongRad-aLongRad)/2),2)));
 }
+
+Airport::Airport(string code): Code(code) {}
