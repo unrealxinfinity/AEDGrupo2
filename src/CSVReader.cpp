@@ -131,22 +131,28 @@ bool CSVReader::isFlownByAirline(const Flight f,list<string> airlines) const {
 
 
 
-list<Flight> CSVReader::bfs(const string &source, const string &dest) {
+list<Flight> CSVReader::bfs(const list<string> &source, const list<string> &dest) {
     list<Flight> res;
     for (const Airport& airport : airports) {
         airport.visited = false;
         airport.predecessor = nullptr;
     }
     queue<string> q; // queue of unvisited nodes
-    q.push(source);
-    auto it = airports.find(Airport(source));
-    it->visited = true;
+    for (const string& s : source) {
+        q.push(s);
+        auto it = airports.find(Airport(s));
+        it->visited = true;
+    }
     while (!q.empty()) { // while there are still unvisited nodes
         string u = q.front(); q.pop();
         // show node order
         //cout << u << " ";
         auto find = airports.find(Airport(u));
-        if (find->getCode() == dest) {
+        bool found = false;
+        for (const string& s : dest) {
+            if (find->getCode() == s) found = true;
+        }
+        if (found) {
             Flight* pred = find->predecessor;
             while (pred != nullptr) {
                 res.push_front(*pred);

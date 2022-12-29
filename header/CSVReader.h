@@ -37,7 +37,7 @@ private:
     // complexity O(N) being N the size of the list of airlines the user provides;
     bool isFlownByAirline(const Flight f,list<string> airline) const;
 public:
-    list<Flight> bfs(const string& source, const string& dest);
+    list<Flight> bfs(const list<string>& source, const list<string>& dest);
     void populate();
     CSVReader();
 
