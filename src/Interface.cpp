@@ -27,19 +27,49 @@ int Interface::initiate() {
 
     //Caso o user escolha Calcular rota de voo
     if(userInput == "1"){
-        menuRota: string criteria1, criteria2;
+        menuRota: string criteria1, criteria2, aeroporto, cidade, loc;
         cout << "Escolha o criterio para a partida e para a chegada:\n\tLocal de partida:\n\t1.Aeroporto\n\t2.Cidade\n\t3.Localizacao\n\tLocal de chegada:\n\t1.Aeroporto\n\t2.Cidade\n\t3.Localizacao\n\0.Voltar" << endl;
         cin >> criteria1;
         cin >> criteria2;
-        while(!is_in(criteria1, 0, 4)){
+        while(!is_in(criteria1, 0, 3)){
             cout << "Sintaxe errada.\nPor favor, reintroduzir:" << endl;
             cin >> criteria1;
         }
-        while(!is_in(criteria2, 0, 4)){
+        while(!is_in(criteria2, 0, 3)){
             cout << "Sintaxe errada.\nPor favor, reintroduzir:" << endl;
             cin >> criteria2;
         }
         if (criteria1 == "0" || criteria2 == "0") goto MenuPrincipal;
+
+        //caso o criterio for aeroporto
+        if (criteria1 == "1"){
+            cout << "Introduza o aeroporto pretendido: ";
+            cin >> aeroporto;
+        }
+        if (criteria2 == "1"){
+            cout << "Introduza o aeroporto pretendido: ";
+            cin >> aeroporto;
+        }
+
+        //caso o criterio for cidade
+        if (criteria1 == "2"){
+            cout << "Introduza o aeroporto pretendido: ";
+            cin >> cidade;
+        }
+        if (criteria2 == "2"){
+            cout << "Introduza o aeroporto pretendido: ";
+            cin >> cidade;
+        }
+
+        //caso o criterio for localizacao
+        if (criteria1 == "3"){
+            cout << "Introduza o aeroporto pretendido: ";
+            cin >> loc;
+        }
+        if (criteria2 == "3"){
+            cout << "Introduza o aeroporto pretendido: ";
+            cin >> loc;
+        }
     }
 
     //Caso o user escolha Informacoes
