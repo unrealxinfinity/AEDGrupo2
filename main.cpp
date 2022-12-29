@@ -7,7 +7,7 @@
 //temp section for tests
 //Tested
 
-void testAirport(){
+/* void testAirport(){
     /*unordered_set<Airport,AirportHash> airports;
     City city = City("Porto","Portugal");
     City *cityP=&city;
@@ -25,14 +25,15 @@ void testAirport(){
     unordered_set<Airport,AirportHash> res;
 
     airportsGraph graph= airportsGraph();
-    */
+
     CSVReader reader = CSVReader();
     reader.populate();
     cout<<reader.getAirports().begin()->getCode()<<endl;
 
 
 }
-/*void testsAirportEqualAndAssignment(){
+
+void testsAirportEqualAndAssignment(){
     Airport airportTest= Airport("BCN","BarcelonaAirport","Barcelona",1,1);
     Airport airportTest2= Airport("ABD","BarcelonaAirport","Barcelona",1,1);
     Airport temp;
@@ -43,28 +44,48 @@ void testAirport(){
 
 }
 //error
+
 void airportSetTest(){
-    typedef unordered_set<Airport*,AirportHash,AirportKeyEqual> Airports;
-    Airport a = Airport("Code1","Test","Uhm",1,2);
+
+    typedef unordered_set<Airport,AirportHash> Airports;
+    City city = City("Porto","Portugal");
+    City *cityP=&city;
+    Airport a = Airport("Code1","Test",cityP,1,2);
     a.distanceSince=0;
     a.visited=false;
     a.addFlight(Flight("","",0));
 
-   /* Airport b = Airport("","Test","",0,0);
+    Airport b = Airport("","Test",cityP,0,0);
     b.visited=false;
     b.distanceSince=0;
     b.addFlight(Flight("","",0));
 
-    Airport target = Airport("Code1","Test","Uhm",1,2);
+    Airport target = Airport("Code1","Test",cityP,1,2);
    // cout<<(a==b)<<endl;
 
     Airports airports;
-    airports.insert(&a);
+    airports.insert(a);
 
-    cout<<(*airports.find(&target))->getCode()<<endl;
+    City city = City("Porto","Portugal");
+    City *cityP=&city;
+    airportsGraph graph= airportsGraph();
+    auto it = graph.findAirportByCoord(-6.081689,145.391881);
+    cout<<it.getCode()<<endl;
+
+    Airport airport= Airport("GKA","Goroka",cityP,-6.081689,145.391881);
+    Airport airport1= Airport("MAG","Madang",cityP,-5.207083,145.788700);
+    cout<<airport.calcDistanceHaversine(airport1)<<endl;
+
+    auto it2= graph.findAirportsAround(-6.081689,145.391881,400);
+   cout<<it2.begin()->getCode()<<endl;
+
+    cout<<(++it2.begin())->getCode()<<endl;
+
+
 
 
 }
+
 //tested
 void testUnorderedSetFlights(){
     typedef unordered_set<Flight*,FlightHash,FlightKeyEqual> Flights;
@@ -79,7 +100,7 @@ void testUnorderedSetFlights(){
 }
 */
 int main() {
-    testAirport();
+    //airportSetTest();
     //CSVReader reader;
     //reader.populate();
     return 0;

@@ -15,8 +15,9 @@ airportsGraph::airportsGraph() {
 }
 Airport airportsGraph::findAirportByCoord(const double lat, const double longi) const{
     auto it=airports.begin();
-    while(it!=airports.end());{
+    while(it!=airports.end()){
         if(it->getLatitude()==lat&&it->getLongitude()==longi) return *it;
+        it++;
     }
 }
 unordered_set<Airport,AirportHash> airportsGraph::findAirportsAround(const double lat, const double longi,
@@ -26,10 +27,12 @@ unordered_set<Airport,AirportHash> airportsGraph::findAirportsAround(const doubl
     Airports temp;
     temp.insert(center);
     while(it!=airports.end()){
-        if(center.calcDistanceHaversine(*it)<x){
+        if(center.calcDistanceHaversine(*it)<=x){
             temp.insert(*it);
         }
+        it++;
     }
+    return temp;
 }
 
 unordered_set<Airport,AirportHash> airportsGraph::getAirports() {
