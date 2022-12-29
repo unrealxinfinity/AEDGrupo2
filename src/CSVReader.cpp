@@ -55,6 +55,17 @@ void CSVReader::read_airlines() {
     in.close();
 }
 
+double haversine(double lat1, double lon1, double lat2, double lon2) {
+    double dLat = (lat2 - lat1) * M_PI / 180.0;
+    double dLon = (lon2 - lon1) * M_PI / 180.0;
+    lat1 = (lat1) * M_PI / 180.0;
+    lat2 = (lat2) * M_PI / 180.0;
+    double a = pow(sin(dLat / 2), 2) + pow(sin(dLon / 2), 2) * cos(lat1) * cos(lat2);
+    double rad = 6371;
+    double c = 2 * asin(sqrt(a));
+    return rad * c;
+}
+
 void CSVReader::read_flights() {
     ifstream in("data/flights.csv");
     string source, target, airline, line;
@@ -64,9 +75,10 @@ void CSVReader::read_flights() {
         getline(iss, source, ',');
         getline(iss, target, ',');
         getline(iss, airline, ',');
-        auto airlinePt= airlines.find(Airline(airline,"","",""));
         auto it = airports.find(Airport(source));
-        it->addFlight(Flight(target, *airlinePt, 0));
+        auto it_target = airports.find(Airport(target));
+        double distance = haversine(it->getLatitude(), it->getLongitude(), it_target->getLatitude(), it_target->getLongitude());
+        it->addFlight(Flight(target, airline, distance));
     }
     in.close();
 }

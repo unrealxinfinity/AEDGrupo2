@@ -24,3 +24,5 @@ string Airline::getName() const {
 bool Airline::operator==(const Airline &other) const {
     return code==other.getCode();
 }
+
+Airline::Airline(string code): code(code) {}

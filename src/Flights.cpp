@@ -13,7 +13,6 @@ Flight::Flight() {
     destAirportCode_ == "";
    // airlineCode_ == "";
     flightDistance_=0;
-    airline_=Airline("","","","");
 }
 bool Flight::operator==(Flight &other) const {
     return this->destAirportCode_ == other.destAirportCode_ && this->airline_==other.airline_;// this->airlineCode_ == other.airlineCode_ ;
