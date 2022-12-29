@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Airport.h"
-#include "airportsGraph.h"
 #include "CSVReader.h"
 #include <unordered_set>
 
@@ -111,19 +110,17 @@ void AirlineTest(){
 }
  */
 void isFlownByAirlineTest(){
-    airportsGraph graph=airportsGraph();
-    CSVReader reader;
-    reader.populate();
-    Airline target= Airline("AAY","","","");
-    auto it =reader.getAirlines().find(target);
-    Flight flight= Flight("YBL",*it,0);
-    list<string> airlines={"RYN","AAY"};
-    cout<<graph.isFlownByAirline(flight,airlines) ;
+
+}
+void testFindAirportsAround(){
+    CSVReader reader= CSVReader();
+    auto container=reader.findAirportsAround(40,-73,100);
+    cout<<"hello"<<endl;
 }
 
 
 int main() {
-    isFlownByAirlineTest();
+    testFindAirportsAround();
     CSVReader reader;
     reader.populate();
     return 0;

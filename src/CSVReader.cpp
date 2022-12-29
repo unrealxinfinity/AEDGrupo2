@@ -5,9 +5,13 @@
 #include <fstream>
 #include <sstream>
 #include "CSVReader.h"
+#include "Airport.h"
+
 using namespace std;
 
-CSVReader::CSVReader() = default;
+CSVReader::CSVReader(){
+    populate();
+};
 
 
 
@@ -77,12 +81,53 @@ void CSVReader::read_flights() {
         getline(iss, airline, ',');
         auto it = airports.find(Airport(source));
         auto it_target = airports.find(Airport(target));
-        double distance = haversine(it->getLatitude(), it->getLongitude(), it_target->getLatitude(), it_target->getLongitude());
+        double distance = it->calcDistanceHaversine(*it_target);
         it->addFlight(Flight(target, airline, distance));
     }
     in.close();
 }
+
 unordered_set<Airport, AirportHash> CSVReader::getAirports() {
     return airports;
 }
+
+Airport CSVReader::findAirportByCoord(const double lat, const double longi) const{
+    auto it=airports.begin();
+    while(it!=airports.end()){
+        if(it->getLatitude()==lat&&it->getLongitude()==longi) return *it;
+        it++;
+    }
+}
+unordered_set<Airport,AirportHash> CSVReader::findAirportsAround(const double lat, const double longi,
+                                                                     const double radius) const {
+    auto it= airports.begin();
+    Airport center= Airport("","", nullptr,lat,longi);
+    unordered_set<Airport,AirportHash> temp;
+    while(it!=airports.end()){
+        if(center.calcDistanceHaversine(*it) <= radius){
+            temp.insert(*it);
+        }
+        it++;
+    }
+
+    return temp;
+}
+
+
+bool CSVReader::isFlownByAirline(const Flight f,list<string> airlines) const {
+    if(airlines.empty()) return true;
+    auto it = airlines.begin();
+    while(it!=airlines.end()){
+        //TODO
+        //auto find = airlines.find(Airline(*it));
+        //if(f.airline_.getCode()==airline || f.airline_.get_callsign()==airline||f.airline_.getName()==airline) return true;
+        it++;
+    }
+    return false;
+}
+
+
+
+
+
 

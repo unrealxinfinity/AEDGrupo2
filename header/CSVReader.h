@@ -5,8 +5,10 @@
 #ifndef PROJETOGRUPO2_CSVREADER_H
 #define PROJETOGRUPO2_CSVREADER_H
 #include <string>
-#include "airportsGraph.h"
+#include <list>
 #include "Airline.h"
+#include "Airport.h"
+#include "Flight.h"
 
 using namespace std;
 
@@ -30,9 +32,24 @@ private:
     void read_flights();
     void read_airports();
     void read_airlines();
+
+    bool hasDir;
+
+    //checks if a flight is flown by an airline, parameter airlines accepts callsign ,code or name, empty means all airlines are accepted;
+    //Used for bfs , idea is to bfs_visit those flights that isFlownByAirline evaluates true maybe? But I believe this function will be useful;
+    // complexity O(N) being N the size of the list of airlines the user provides;
+    bool isFlownByAirline(const Flight f,list<string> airline) const;
 public:
     void populate();
     CSVReader();
+
+    void bfs(Airport &from,Airport &to);
+
+    //encontra os aeroportos a partir de um centro, retorna unordered set com o centro inclusive;
+    //complexidade O(N) sendo N a pesquisa pelo aeroporto com as coordenadas dadas e a pesquisa pelos aeroportos a menos de raio radius
+    unordered_set<Airport,AirportHash> findAirportsAround(const double lat,const double longi,const double radius)const;
+    Airport findAirportByCoord(const double lat, const double longi) const;
+    int distance(string airportA,string airportB);
     unordered_set<Airline,AirlineHash> getAirlines(){return airlines;}
     unordered_set<Airport, AirportHash> getAirports() ;
 
