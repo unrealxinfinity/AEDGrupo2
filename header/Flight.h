@@ -11,17 +11,17 @@ using namespace std;
 class Flight{
 public:
     string destAirportCode_;
-    Airline airline_;
+    string airline_;
    // string airlineCode_;
     float flightDistance_;
 
 
    // Flight (const string dest,const string airline,float flightDistance);
-    Flight (const string dest,const Airline airline, double flightDistance);
+    Flight (const string dest,string airline, double flightDistance);
     Flight();
 
-   bool operator==(Flight &other);
-   void operator=(const Flight &other);
+   bool operator==(Flight &other) const;
+   Flight& operator=(const Flight &other);
 };
 
 #endif //PROJETOGRUPO2_FLIGHT_H
