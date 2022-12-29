@@ -26,9 +26,6 @@ private:
     unordered_set<City, CityHash> cities;
     unordered_set<Airline, AirlineHash> airlines;
 
-    //fills the Flights of each Airport
-    //void readFlights(string filename);
-    //void insertFlights(Airport &a);
     void read_flights();
     void read_airports();
     void read_airlines();
@@ -38,11 +35,12 @@ private:
     //checks if a flight is flown by an airline, parameter airlines accepts callsign ,code or name, empty means all airlines are accepted;
     //Used for bfs , idea is to bfs_visit those flights that isFlownByAirline evaluates true maybe? But I believe this function will be useful;
     // complexity O(N) being N the size of the list of airlines the user provides;
+    bool isFlownByAirline(const Flight f,list<string> airline) const;
 public:
     list<Flight> bfs(const string& source, const string& dest);
     void populate();
     CSVReader();
-    bool isFlownByAirline(const Flight f,list<string> airline) const;
+
 
     void bfs(Airport &from,Airport &to);
 
