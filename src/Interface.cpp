@@ -44,31 +44,31 @@ int Interface::initiate() {
         //caso o criterio for aeroporto
         if (criteria1 == "1"){
             cout << "Introduza o aeroporto pretendido: ";
-            cin >> aeroporto;
+            getline(cin,aeroporto);
         }
         if (criteria2 == "1"){
             cout << "Introduza o aeroporto pretendido: ";
-            cin >> aeroporto;
+            getline(cin,aeroporto);
         }
 
         //caso o criterio for cidade
         if (criteria1 == "2"){
-            cout << "Introduza o aeroporto pretendido: ";
-            cin >> cidade;
+            cout << "Introduza a cidade pretendida: ";
+            getline(cin,cidade);
         }
         if (criteria2 == "2"){
-            cout << "Introduza o aeroporto pretendido: ";
-            cin >> cidade;
+            cout << "Introduza a cidade pretendida: ";
+            getline(cin,cidade);
         }
 
         //caso o criterio for localizacao
         if (criteria1 == "3"){
-            cout << "Introduza o aeroporto pretendido: ";
-            cin >> loc;
+            cout << "Introduza as coordenadas neste formato - (latitude,longitude): ";
+            getline(cin,loc);
         }
         if (criteria2 == "3"){
-            cout << "Introduza o aeroporto pretendido: ";
-            cin >> loc;
+            cout << "Introduza as coordenadas neste formato - (latitude,longitude): ";
+            getline(cin,loc);
         }
     }
 
