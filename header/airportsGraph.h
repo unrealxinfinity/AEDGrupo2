@@ -26,7 +26,7 @@ private:
     bool isFlownByAirline(const Flight f,list<string> airline) const;
 
 public:
-    void bfs(Airport &from);
+    void bfs(Airport &from,Airport &to);
 
 
     //airportsGraph(CSVReader reader,bool dir=true);

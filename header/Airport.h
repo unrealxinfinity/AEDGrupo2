@@ -22,6 +22,8 @@ private:
     const City* city_;
     double latitude_;
     double longitude_;
+    //nr de voos;
+    double flightsSince;
 
 public:
     mutable list<Flight> flights;
