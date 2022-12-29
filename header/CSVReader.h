@@ -35,25 +35,22 @@ private:
     //checks if a flight is flown by an airline, parameter airlines accepts callsign ,code or name, empty means all airlines are accepted;
     //Used for bfs , idea is to bfs_visit those flights that isFlownByAirline evaluates true maybe? But I believe this function will be useful;
     // complexity O(N) being N the size of the list of airlines the user provides;
-    bool isFlownByAirline(const Flight f,list<string> airline) const;
+    bool isFlownByAirline(const Flight& f,const list<string>& airline) const;
+    Airport findAirportByName(const string airportName) const;
+    list<Airport> findAirportByCity(const string city, const string country) const;
+    Airport findAirportByCoord(const double lat, const double longi) const;
+    list<Airport> findAirportsAround(const double lat,const double longi,const double radius)const;
 public:
-    list<Flight> bfs(const string& source, const string& dest);
+    pair<list<Flight>, string> bfs(const list<string>& source, const list<string>& dest, const list<string>& preferences);
     void populate();
     CSVReader();
-
-
-    void bfs(Airport &from,Airport &to);
-
     //encontra os aeroportos a partir de um centro, retorna unordered set com o centro inclusive;
     //complexidade O(N) sendo N a pesquisa pelo aeroporto com as coordenadas dadas e a pesquisa pelos aeroportos a menos de raio radius
-    list<Airport> findAirportsAround(const double lat,const double longi,const double radius)const;
-    Airport findAirportByCoord(const double lat, const double longi) const;
-    list<Airport> decipherInput(string src,double radius);
+    list<Airport> decipherInput(const string src,const double radius);
     int distance(string airportA,string airportB);
     unordered_set<Airline,AirlineHash> getAirlines(){return airlines;}
     unordered_set<Airport, AirportHash> getAirports() ;
-    Airport findAirportByName(const string airportName) const;
-    list<Airport> findAirportByCity(const string city, const string country) const;
+
 
 
 

@@ -110,7 +110,7 @@ void AirlineTest(){
     auto it = airlines.find(target);
     cout<<it->getCode()<<endl;
 }
- */
+ */ /*
 void isFlownByAirlineTest(){
     CSVReader reader;
     Flight f= Flight("CDG","AAL",0);
@@ -137,6 +137,7 @@ void testFindAirportByName(){
     auto it=reader.findAirportByName("Mount Hagen");
     cout<<it.getCode()<<endl;
 }
+ */
 void testDecipherInput(){
     string input={"(41.248055,-8.681389)"};
     CSVReader reader;
@@ -152,8 +153,5 @@ void testDecipherInput(){
 int main() {
     testDecipherInput();
     CSVReader reader;
-
-
-
-    return 0;
+    auto travel = reader.bfs({"CDG", "ORY"}, {"SXF", "TXL"},{"RYN"});
 }

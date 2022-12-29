@@ -116,7 +116,7 @@ list<Airport> CSVReader::findAirportsAround(const double lat, const double longi
 }
 
 
-bool CSVReader::isFlownByAirline(const Flight f,list<string> airlines) const {
+bool CSVReader::isFlownByAirline(const Flight& f,const list<string>& airlines) const {
     if(airlines.empty()) return true;
     Airline target= Airline(f.airline_,"","","");
     auto found=this->airlines.find(target);
@@ -129,36 +129,44 @@ bool CSVReader::isFlownByAirline(const Flight f,list<string> airlines) const {
     return false;
 }
 
-
-
-
-list<Flight> CSVReader::bfs(const string &source, const string &dest) {
-    list<Flight> res;
+pair<list<Flight>, string> CSVReader::bfs(const list<string> &source, const list<string> &dest, const list<string>& preferences) {
+    list<Flight> flights;
     for (const Airport& airport : airports) {
         airport.visited = false;
         airport.predecessor = nullptr;
     }
     queue<string> q; // queue of unvisited nodes
-    q.push(source);
-    auto it = airports.find(Airport(source));
-    it->visited = true;
+    for (const string& s : source) {
+        q.push(s);
+        auto it = airports.find(Airport(s));
+        it->visited = true;
+    }
     while (!q.empty()) { // while there are still unvisited nodes
         string u = q.front(); q.pop();
         // show node order
         //cout << u << " ";
         auto find = airports.find(Airport(u));
-        if (find->getCode() == dest) {
+        bool found = false;
+        for (const string& s : dest) {
+            if (find->getCode() == s) found = true;
+        }
+        if (found) {
             Flight* pred = find->predecessor;
+            string prev;
             while (pred != nullptr) {
-                res.push_front(*pred);
-                string prev = find->predecessor_code;
+                flights.push_front(*pred);
+                prev = find->predecessor_code;
                 auto back = airports.find(Airport(prev));
                 pred = back->predecessor;
                 find = back;
             }
+            pair<list<Flight>, string> res;
+            res.first = flights;
+            res.second = prev;
             return res;
         }
         for (auto& e : find->flights) {
+            if (!isFlownByAirline(e, preferences)) continue;
             string w = e.destAirportCode_;
             auto target = airports.find(Airport(w));
             if (!target->visited) {
@@ -169,6 +177,8 @@ list<Flight> CSVReader::bfs(const string &source, const string &dest) {
             }
         }
     }
+    pair<list<Flight>, string> res;
+    res.second = "PATH NOT FOUND";
     return res;
 }
 Airport CSVReader::findAirportByName(const std::string airportName) const {
@@ -191,7 +201,7 @@ list<Airport> CSVReader::findAirportByCity(const std::string city, const std::st
 
 
 //throws error when theres no valid input
-list<Airport> CSVReader::decipherInput(string src,double radius=0) {
+list<Airport> CSVReader::decipherInput(const string src,const double radius=0) {
     list<Airport> source;
     int error=0;
 
