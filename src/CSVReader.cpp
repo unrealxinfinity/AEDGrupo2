@@ -115,7 +115,7 @@ unordered_set<Airport,AirportHash> CSVReader::findAirportsAround(const double la
 }
 
 
-bool CSVReader::isFlownByAirline(const Flight f,list<string> airlines) const {
+bool CSVReader::isFlownByAirline(const Flight& f,const list<string>& airlines) const {
     if(airlines.empty()) return true;
     Airline target= Airline(f.airline_,"","","");
     auto found=this->airlines.find(target);
@@ -131,7 +131,7 @@ bool CSVReader::isFlownByAirline(const Flight f,list<string> airlines) const {
 
 
 
-pair<list<Flight>, string> CSVReader::bfs(const list<string> &source, const list<string> &dest) {
+pair<list<Flight>, string> CSVReader::bfs(const list<string> &source, const list<string> &dest, const list<string>& preferences) {
     list<Flight> flights;
     for (const Airport& airport : airports) {
         airport.visited = false;
@@ -168,6 +168,7 @@ pair<list<Flight>, string> CSVReader::bfs(const list<string> &source, const list
             return res;
         }
         for (auto& e : find->flights) {
+            if (!isFlownByAirline(e, preferences)) continue;
             string w = e.destAirportCode_;
             auto target = airports.find(Airport(w));
             if (!target->visited) {
@@ -179,6 +180,7 @@ pair<list<Flight>, string> CSVReader::bfs(const list<string> &source, const list
         }
     }
     pair<list<Flight>, string> res;
+    res.second = "PATH NOT FOUND";
     return res;
 }
 
