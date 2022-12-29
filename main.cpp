@@ -108,7 +108,7 @@ void AirlineTest(){
     auto it = airlines.find(target);
     cout<<it->getCode()<<endl;
 }
- */
+ */ /*
 void isFlownByAirlineTest(){
     CSVReader reader;
     Flight f= Flight("CDG","AAL",0);
@@ -119,12 +119,13 @@ void testFindAirportsAround(){
     CSVReader reader= CSVReader();
     auto container=reader.findAirportsAround(40,-73,100);
     cout<<"hello"<<endl;
-}
+}*/
 
 
 int main() {
-    isFlownByAirlineTest();
+    //isFlownByAirlineTest();
     CSVReader reader;
     reader.populate();
+    auto travel = reader.bfs({"CDG", "ORY"}, {"SXF", "TXL"});
     return 0;
 }

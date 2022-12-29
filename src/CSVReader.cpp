@@ -131,8 +131,8 @@ bool CSVReader::isFlownByAirline(const Flight f,list<string> airlines) const {
 
 
 
-list<Flight> CSVReader::bfs(const list<string> &source, const list<string> &dest) {
-    list<Flight> res;
+pair<list<Flight>, string> CSVReader::bfs(const list<string> &source, const list<string> &dest) {
+    list<Flight> flights;
     for (const Airport& airport : airports) {
         airport.visited = false;
         airport.predecessor = nullptr;
@@ -154,13 +154,17 @@ list<Flight> CSVReader::bfs(const list<string> &source, const list<string> &dest
         }
         if (found) {
             Flight* pred = find->predecessor;
+            string prev;
             while (pred != nullptr) {
-                res.push_front(*pred);
-                string prev = find->predecessor_code;
+                flights.push_front(*pred);
+                prev = find->predecessor_code;
                 auto back = airports.find(Airport(prev));
                 pred = back->predecessor;
                 find = back;
             }
+            pair<list<Flight>, string> res;
+            res.first = flights;
+            res.second = prev;
             return res;
         }
         for (auto& e : find->flights) {
@@ -174,6 +178,7 @@ list<Flight> CSVReader::bfs(const list<string> &source, const list<string> &dest
             }
         }
     }
+    pair<list<Flight>, string> res;
     return res;
 }
 
