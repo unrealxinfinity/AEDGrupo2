@@ -31,7 +31,7 @@ public:
     Airport();
 
     bool visited;
-    int distanceSince;
+    double distanceSince;
 
     void addFlight(Flight f) const{
         flights.push_back(f);

@@ -20,7 +20,8 @@ class airportsGraph{
 private:
     bool hasDir;
 
-    //checks if an a flight is flown by airline, parameter airlines accepts callsign ,code or name;
+    //checks if a flight is flown by an airline, parameter airlines accepts callsign ,code or name, empty means all airlines are accepted;
+    //Used for bfs , idea is to bfs_visit those flights that isFlownByAirline evaluates true maybe? But I believe this function will be useful;
     // complexity O(N) being N the size of the list of airlines the user provides;
     bool isFlownByAirline(const Flight f,list<string> airline) const;
 

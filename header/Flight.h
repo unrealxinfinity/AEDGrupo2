@@ -15,6 +15,7 @@ public:
    // string airlineCode_;
     float flightDistance_;
 
+
    // Flight (const string dest,const string airline,float flightDistance);
     Flight (const string dest,const Airline airline, double flightDistance);
     Flight();
