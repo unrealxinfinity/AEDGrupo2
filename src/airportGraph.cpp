@@ -21,13 +21,13 @@ Airport airportsGraph::findAirportByCoord(const double lat, const double longi) 
     }
 }
 unordered_set<Airport,AirportHash> airportsGraph::findAirportsAround(const double lat, const double longi,
-                                                                     const double x) const {
+                                                                     const double radius) const {
     auto it= airports.begin();
     Airport center= findAirportByCoord(lat,longi);
     Airports temp;
     temp.insert(center);
     while(it!=airports.end()){
-        if(center.calcDistanceHaversine(*it)<=x){
+        if(center.calcDistanceHaversine(*it) <= radius){
             temp.insert(*it);
         }
         it++;

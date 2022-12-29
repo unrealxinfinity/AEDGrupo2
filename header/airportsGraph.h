@@ -33,8 +33,9 @@ public:
     airportsGraph();
     unordered_set<Airport,AirportHash> getAirports();
 
-    //encontra os aeroportos a partir de um centro, retorna unordered set
-    unordered_set<Airport,AirportHash> findAirportsAround(const double lat,const double longi,const double x)const;
+    //encontra os aeroportos a partir de um centro, retorna unordered set com o centro inclusive;
+    //complexidade O(N) sendo N a pesquisa pelo aeroporto com as coordenadas dadas e a pesquisa pelos aeroportos a menos de raio radius
+    unordered_set<Airport,AirportHash> findAirportsAround(const double lat,const double longi,const double radius)const;
     Airport findAirportByCoord(const double lat, const double longi) const;
     int distance(string airportA,string airportB);
 
