@@ -31,6 +31,7 @@ private:
     void read_airports();
     void read_airlines();
 public:
+    list<Flight> bfs(const string& source, const string& dest);
     void populate();
     CSVReader();
     unordered_set<Airline,AirlineHash> getAirlines(){return airlines;}

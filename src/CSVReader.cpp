@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <queue>
 #include "CSVReader.h"
 using namespace std;
 
@@ -84,5 +85,45 @@ void CSVReader::read_flights() {
 }
 unordered_set<Airport, AirportHash> CSVReader::getAirports() {
     return airports;
+}
+
+list<Flight> CSVReader::bfs(const string &source, const string &dest) {
+    list<Flight> res;
+    for (const Airport& airport : airports) {
+        airport.visited = false;
+        airport.predecessor = nullptr;
+    }
+    queue<string> q; // queue of unvisited nodes
+    q.push(source);
+    auto it = airports.find(Airport(source));
+    it->visited = true;
+    while (!q.empty()) { // while there are still unvisited nodes
+        string u = q.front(); q.pop();
+        // show node order
+        //cout << u << " ";
+        auto find = airports.find(Airport(u));
+        if (find->getCode() == dest) {
+            Flight* pred = find->predecessor;
+            while (pred != nullptr) {
+                res.push_front(*pred);
+                string prev = find->predecessor_code;
+                auto back = airports.find(Airport(prev));
+                pred = back->predecessor;
+                find = back;
+            }
+            return res;
+        }
+        for (auto& e : find->flights) {
+            string w = e.destAirportCode_;
+            auto target = airports.find(Airport(w));
+            if (!target->visited) {
+                target->predecessor = &e;
+                target->predecessor_code = u;
+                q.push(w);
+                target->visited = true;
+            }
+        }
+    }
+    return res;
 }
 
