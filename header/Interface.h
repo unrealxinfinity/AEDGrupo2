@@ -14,6 +14,13 @@
 using namespace std;
 
 class Interface {
+private:
+    bool is_in(string choice,int lim_start,int lim_end) const;
+    CSVReader* database;
+public:
+    Interface();
+    Interface(CSVReader& reader);
+    int initiate();
     //Dados dois locais, indicar a melhor maneira de voar de um para o outro (menor número de voos).
         //Local - aeroporto em especifico, cidade (considerar todos os aeroportos presentes) ou uma localização (coordenadas, considerar todos os aeroportas a X kms da localização).
         //Rede de voos - ter em conta qualquer companhia aerea, somente uma ou um conjunto.

@@ -28,7 +28,7 @@ int Interface::initiate() {
     //Caso o user escolha Calcular rota de voo
     if(userInput == "1"){
         menuRota: string criteria1, criteria2, aeroporto, cidade, loc;
-        cout << "Escolha o criterio para a partida e para a chegada:\n\tLocal de partida:\n\t1.Aeroporto\n\t2.Cidade\n\t3.Localizacao\n\tLocal de chegada:\n\t1.Aeroporto\n\t2.Cidade\n\t3.Localizacao\n\0.Voltar" << endl;
+        cout << "Escolha o criterio para a partida e para a chegada:\n\tLocal de partida:\n\t1.Aeroporto\n\t2.Cidade-Pais\n\t3.Localizacao\n\tLocal de chegada:\n\t1.Aeroporto\n\t2.Cidade\n\t3.Localizacao\n\0.Voltar" << endl;
         cin >> criteria1;
         cin >> criteria2;
         while(!is_in(criteria1, 0, 3)){
@@ -53,11 +53,11 @@ int Interface::initiate() {
 
         //caso o criterio for cidade
         if (criteria1 == "2"){
-            cout << "Introduza a cidade pretendida: ";
+            cout << "Introduza a cidade-pais pretendida neste mesmo formato: ";
             getline(cin,cidade);
         }
         if (criteria2 == "2"){
-            cout << "Introduza a cidade pretendida: ";
+            cout << "Introduza a cidade-pais pretendida neste mesmo formato: ";
             getline(cin,cidade);
         }
 
@@ -76,3 +76,5 @@ int Interface::initiate() {
     else if(userInput == "2"){}
 
 }
+
+Interface::Interface(CSVReader &reader) : database(&reader) {}
