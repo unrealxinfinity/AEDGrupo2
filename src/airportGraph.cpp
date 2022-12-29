@@ -32,11 +32,23 @@ unordered_set<Airport,AirportHash> airportsGraph::findAirportsAround(const doubl
         }
         it++;
     }
+
     return temp;
 }
 
 unordered_set<Airport,AirportHash> airportsGraph::getAirports() {
     return  airports;
+}
+
+bool airportsGraph::isFlownByAirline(const Flight f,list<string> airlines) const {
+    if(airlines.empty()) return true;
+    auto it = airlines.begin();
+    while(it!=airlines.end()){
+        string airline= *it;
+        if(f.airline_.getCode()==airline || f.airline_.get_callsign()==airline||f.airline_.getName()==airline) return true;
+        it++;
+    }
+    return false;
 }
 
 

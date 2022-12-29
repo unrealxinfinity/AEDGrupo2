@@ -64,8 +64,9 @@ void CSVReader::read_flights() {
         getline(iss, source, ',');
         getline(iss, target, ',');
         getline(iss, airline, ',');
+        auto airlinePt= airlines.find(Airline(airline,"","",""));
         auto it = airports.find(Airport(source));
-        it->addFlight(Flight(target, airline, 0));
+        it->addFlight(Flight(target, *airlinePt, 0));
     }
     in.close();
 }

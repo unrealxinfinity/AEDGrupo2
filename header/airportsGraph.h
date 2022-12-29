@@ -19,15 +19,24 @@ class airportsGraph{
 
 private:
     bool hasDir;
+
+    //checks if an a flight is flown by airline, parameter airlines accepts callsign ,code or name;
+    // complexity O(N) being N the size of the list of airlines the user provides;
+    bool isFlownByAirline(const Flight f,list<string> airline) const;
+
 public:
-    void bfs(Airport &a);
+    void bfs(Airport &from);
+
+
     //airportsGraph(CSVReader reader,bool dir=true);
     airportsGraph();
     unordered_set<Airport,AirportHash> getAirports();
-    //encontra os aeroportos
+
+    //encontra os aeroportos a partir de um centro, retorna unordered set
     unordered_set<Airport,AirportHash> findAirportsAround(const double lat,const double longi,const double x)const;
     Airport findAirportByCoord(const double lat, const double longi) const;
     int distance(string airportA,string airportB);
+
 
 
 

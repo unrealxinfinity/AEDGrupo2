@@ -33,6 +33,7 @@ private:
 public:
     void populate();
     CSVReader();
+    unordered_set<Airline,AirlineHash> getAirlines(){return airlines;}
     unordered_set<Airport, AirportHash> getAirports() ;
 
 

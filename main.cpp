@@ -98,10 +98,33 @@ void testUnorderedSetFlights(){
     cout<<(*res)->getOriginAirportCode()<<(*res)->destAirportCode_<<(*res)->airlineCode_<<(*res)->flightDistance_<<endl;
 
 }
-*/
+
+void AirlineTest(){
+    Airline a= Airline("IBE","Iberia Airlines","Iberia","Spain");
+    Airline b= Airline("RYR","Raynair","RAINAIR","Ireland");
+    unordered_set<Airline,AirlineHash> airlines;
+    Airline target= Airline("RYR","","","");
+    airlines.insert(a);
+    airlines.insert(b);
+    auto it = airlines.find(target);
+    cout<<it->getCode()<<endl;
+}
+ */
+void isFlownByAirlineTest(){
+    airportsGraph graph=airportsGraph();
+    CSVReader reader;
+    reader.populate();
+    Airline target= Airline("AAY","","","");
+    auto it =reader.getAirlines().find(target);
+    Flight flight= Flight("YBL",*it,0);
+    list<string> airlines={"RYN","AAY"};
+    cout<<graph.isFlownByAirline(flight,airlines) ;
+}
+
+
 int main() {
-    //airportSetTest();
-    //CSVReader reader;
-    //reader.populate();
+    isFlownByAirlineTest();
+    CSVReader reader;
+    reader.populate();
     return 0;
 }

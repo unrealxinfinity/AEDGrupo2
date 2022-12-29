@@ -4,17 +4,19 @@
 
 #ifndef PROJETOGRUPO2_FLIGHT_H
 #define PROJETOGRUPO2_FLIGHT_H
-
 #include <string>
+#include "Airline.h"
 using namespace std;
 
 class Flight{
 public:
     string destAirportCode_;
-    string airlineCode_;
+    Airline airline_;
+   // string airlineCode_;
     float flightDistance_;
 
-    Flight (const string dest,const string airline,float flightDistance);
+   // Flight (const string dest,const string airline,float flightDistance);
+    Flight (const string dest,const Airline airline, double flightDistance);
     Flight();
 
    bool operator==(Flight &other);
