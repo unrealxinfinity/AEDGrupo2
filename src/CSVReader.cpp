@@ -7,6 +7,7 @@
 #include <queue>
 #include "CSVReader.h"
 #include "Airport.h"
+#include <sstream>
 
 using namespace std;
 
@@ -98,19 +99,19 @@ Airport CSVReader::findAirportByCoord(const double lat, const double longi) cons
         if(it->getLatitude()==lat&&it->getLongitude()==longi) return *it;
         it++;
     }
+    return Airport();
 }
-unordered_set<Airport,AirportHash> CSVReader::findAirportsAround(const double lat, const double longi,
+list<Airport> CSVReader::findAirportsAround(const double lat, const double longi,
                                                                      const double radius) const {
     auto it= airports.begin();
     Airport center= Airport("","", nullptr,lat,longi);
-    unordered_set<Airport,AirportHash> temp;
+    list<Airport> temp;
     while(it!=airports.end()){
         if(center.calcDistanceHaversine(*it) <= radius){
-            temp.insert(*it);
+            temp.push_back(*it);
         }
         it++;
     }
-
     return temp;
 }
 
@@ -169,5 +170,78 @@ list<Flight> CSVReader::bfs(const string &source, const string &dest) {
         }
     }
     return res;
+}
+Airport CSVReader::findAirportByName(const std::string airportName) const {
+    auto it = airports.begin();
+    while(it!=airports.end()){
+        if(it->getName()==airportName) return *it;
+        it++;
+    }
+    return Airport();
+}
+list<Airport> CSVReader::findAirportByCity(const std::string city, const std::string country) const {
+    auto it = airports.begin();
+    list<Airport> res;
+    while(it!=airports.end()){
+        if(it->getCity()->get_country()==country&&it->getCity()->get_name()==city) res.push_back(*it);
+        it++;
+    }
+    return res;
+}
+
+
+//throws error when theres no valid input
+list<Airport> CSVReader::decipherInput(string src,double radius=0) {
+    list<Airport> source;
+    int error=0;
+
+    if(src.at(0)=='(' && src.at(src.size()-1)==')'){
+        list<double> coordinates;
+        string line = src;
+        string res;
+        line.erase(line.begin());
+        line.erase(--line.end());
+        stringstream ss(line);
+        while(getline(ss,res,',')){
+            coordinates.push_back(stod(res));
+        }
+        auto target= findAirportsAround(coordinates.front(),coordinates.back(),radius);
+        source=target;
+        if(source.empty()){
+            throw error;
+        }
+        return source;
+    }
+
+    string line=src;
+    if(line.find('-')!=string::npos){
+        stringstream ss(line);
+        string temp,city,country;
+        list<Airport> res;
+        getline(ss,temp,'-');
+        city=temp;
+        getline(ss,temp,'-');
+        country=temp;
+        res=findAirportByCity(city,country);
+        source=res;
+        if(source.empty()){
+            throw error;
+        }
+        return source;
+    }
+
+    Airport target=Airport(src,"", nullptr,0,0);
+    Airport halfFound;
+    auto it=airports.find(target);
+    if(it==airports.end()){
+        halfFound=findAirportByName(src);
+        if(halfFound==Airport()){
+            throw error;
+        }
+        source.push_back(halfFound);
+        return source;
+    }
+    source.push_back(*it);
+    return source;
 }
 

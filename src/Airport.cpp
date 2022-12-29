@@ -4,7 +4,14 @@
 
 #include "Airport.h"
 Airport::Airport(std::string code, std::string name, const City* city, double latitude, double longitude): code_(code), name_(name), city_(city), latitude_(latitude), longitude_(longitude) {}
+Airport::Airport() {
+    code_="";
+    name_="";
+    city_= nullptr;
+    latitude_=0;
+    longitude_=0;
 
+}
 string Airport::getCode() const {
     return code_;
 }

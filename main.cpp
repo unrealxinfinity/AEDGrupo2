@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Airport.h"
 #include "CSVReader.h"
+#include <string>
+#include <sstream>
 #include <unordered_set>
 
 //temp section for tests
@@ -120,11 +122,38 @@ void testFindAirportsAround(){
     auto container=reader.findAirportsAround(40,-73,100);
     cout<<"hello"<<endl;
 }
-
+void testFindAirportByCity(){
+    CSVReader reader;
+    list<Airport> res;
+    res=reader.findAirportByCity("London","United Kingdom");
+    auto it=res.begin();
+    while(it!=res.end()){
+        cout<<it->getCode()<<endl;
+        it++;
+    }
+}
+void testFindAirportByName(){
+    CSVReader reader;
+    auto it=reader.findAirportByName("Mount Hagen");
+    cout<<it.getCode()<<endl;
+}
+void testDecipherInput(){
+    string input={"(41.248055,-8.681389)"};
+    CSVReader reader;
+    list<Airport> res;
+    res=reader.decipherInput(input,100);
+    auto it=res.begin();
+    while(it!=res.end()){
+        cout<<it->getCode()<<endl;
+        it++;
+    }
+}
 
 int main() {
-    isFlownByAirlineTest();
+    testDecipherInput();
     CSVReader reader;
-    reader.populate();
+
+
+
     return 0;
 }

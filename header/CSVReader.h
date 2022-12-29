@@ -46,11 +46,15 @@ public:
 
     //encontra os aeroportos a partir de um centro, retorna unordered set com o centro inclusive;
     //complexidade O(N) sendo N a pesquisa pelo aeroporto com as coordenadas dadas e a pesquisa pelos aeroportos a menos de raio radius
-    unordered_set<Airport,AirportHash> findAirportsAround(const double lat,const double longi,const double radius)const;
+    list<Airport> findAirportsAround(const double lat,const double longi,const double radius)const;
     Airport findAirportByCoord(const double lat, const double longi) const;
+    list<Airport> decipherInput(string src,double radius);
     int distance(string airportA,string airportB);
     unordered_set<Airline,AirlineHash> getAirlines(){return airlines;}
     unordered_set<Airport, AirportHash> getAirports() ;
+    Airport findAirportByName(const string airportName) const;
+    list<Airport> findAirportByCity(const string city, const string country) const;
+
 
 
 };
