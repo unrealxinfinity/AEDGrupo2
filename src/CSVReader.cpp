@@ -117,11 +117,12 @@ unordered_set<Airport,AirportHash> CSVReader::findAirportsAround(const double la
 
 bool CSVReader::isFlownByAirline(const Flight f,list<string> airlines) const {
     if(airlines.empty()) return true;
+    Airline target= Airline(f.airline_,"","","");
+    auto found=this->airlines.find(target);
     auto it = airlines.begin();
     while(it!=airlines.end()){
-        //TODO
-        //auto find = airlines.find(Airline(*it));
-        //if(f.airline_.getCode()==airline || f.airline_.get_callsign()==airline||f.airline_.getName()==airline) return true;
+        string airline= *it;
+        if(found->getCode()== airline || found->getName()==airline||found->get_callsign()==airline) return true;
         it++;
     }
     return false;

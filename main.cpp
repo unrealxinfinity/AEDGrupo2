@@ -110,7 +110,10 @@ void AirlineTest(){
 }
  */
 void isFlownByAirlineTest(){
-
+    CSVReader reader;
+    Flight f= Flight("CDG","AAL",0);
+    list<string> air={"American Airlines"};
+    cout<<reader.isFlownByAirline(f,air)<<endl;
 }
 void testFindAirportsAround(){
     CSVReader reader= CSVReader();
@@ -120,7 +123,7 @@ void testFindAirportsAround(){
 
 
 int main() {
-    testFindAirportsAround();
+    isFlownByAirlineTest();
     CSVReader reader;
     reader.populate();
     return 0;
