@@ -17,38 +17,37 @@ using namespace std;
 
 class Airport {
 private:
-    string Code;
-    string Name;
-    const City* city;
-    double Latitude;
-    double Longitude;
+    string code_;
+    string name_;
+    const City* city_;
+    double latitude_;
+    double longitude_;
 
 public:
-
-    list<Flight*> flights;
+    mutable list<Flight> flights;
+    mutable Flight* predecessor;
+    mutable string predecessor_code;
 
     Airport(string code,string name,const City* city,double latitude,double longitude);
+    explicit Airport(string code);
     Airport();
 
-    bool visited;
-    int distanceSince;
+    mutable bool visited;
+    double distanceSince;
 
-    void addFlight(Flight f){
-        flights.push_back(&f);
-    }
-    void addFlight(Flight *f){
+    void addFlight(Flight f) const{
         flights.push_back(f);
     }
 
     string getCode() const;
 
-    list<Flight*>getFlights() const;
+    list<Flight>getFlights() const;
 
     double getLongitude() const;
     double getLatitude() const;
     string getName() const;
     City* getCity() const;
-    float calcDistanceHaversine(Airport &b);
+    double calcDistanceHaversine(const Airport &b) const;
     void operator=(const Airport &other)  ;
     bool operator==(const Airport &other) const;
 

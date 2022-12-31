@@ -5,11 +5,12 @@
 #ifndef PROJETOGRUPO2_CSVREADER_H
 #define PROJETOGRUPO2_CSVREADER_H
 #include <string>
-#include "airportsGraph.h"
+#include <list>
+#include "Airline.h"
+#include "Airport.h"
+#include "Flight.h"
 
 using namespace std;
-typedef unordered_set<Flight*,FlightHash,FlightKeyEqual> Flights;
-
 
 /*Conceito : tens um readFlights  para usar no construtor que lê todos os flights do ficheiro para *var flights*.
  Como flights.csv esta organizado em origem-dest-airline, o readAirports vai introduzir os aeroportos do ficheiro linha a linha para a estrutura
@@ -23,18 +24,37 @@ class CSVReader {
 private:
     unordered_set<Airport, AirportHash> airports;
     unordered_set<City, CityHash> cities;
+    unordered_set<Airline, AirlineHash> airlines;
 
-    //fills the Flights of each Airport
-    //void readFlights(string filename);
-    //void insertFlights(Airport &a);
     void read_flights();
     void read_airports();
     void read_airlines();
+
+    bool hasDir;
+
+    //checks if a flight is flown by an airline, parameter airlines accepts callsign ,code or name, empty means all airlines are accepted;
+    //Used for bfs , idea is to bfs_visit those flights that isFlownByAirline evaluates true maybe? But I believe this function will be useful;
+    // complexity O(N) being N the size of the list of airlines the user provides;
+    bool isFlownByAirline(const Flight& f,const list<string>& airline) const;
+    Airport findAirportByName(const string airportName) const;
+    list<Airport> findAirportByCity(const string city, const string country) const;
+    Airport findAirportByCoord(const double lat, const double longi) const;
+    //encontra os aeroportos a partir de um centro, retorna unordered set com o centro inclusive;
+    //complexidade O(N) sendo N a pesquisa pelo aeroporto com as coordenadas dadas e a pesquisa pelos aeroportos a menos de raio radius
+    list<Airport> findAirportsAround(const double lat,const double longi,const double radius)const;
 public:
+    pair<list<Flight>, string> bfs(const list<string>& source, const list<string>& dest, const list<string>& preferences);
     void populate();
     CSVReader();
-    //supposed idea to use CSV reader in the graph constructor to fill the airports set of its field
-    //void readAirports(unordered_set<Airport,airportHash,airportKeyEqual> &airports,string filename);
+    //Dando um input o decipher transforma o input numa lista de aeroportos para fazer bfs, faz throw de um inteiro caso os inputs estejam invalidos e nao estiverem de acordo com o formato dado
+    //Complexidade O(N) sendo N a pesquisa pelos aeroportos de acordo com o input;
+    list<Airport> decipherInput(const string src,const double radius);
+    int distance(string airportA,string airportB);
+    unordered_set<Airline,AirlineHash> getAirlines(){return airlines;}
+    unordered_set<Airport, AirportHash> getAirports() ;
+
+
+
 
 };
 

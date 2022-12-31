@@ -3,38 +3,49 @@
 //
 
 #include "Airport.h"
-Airport::Airport(std::string code, std::string name, const City* city, double latitude, double longitude):Code(code),Name(name),city(city),Latitude(latitude),Longitude(longitude) {}
+Airport::Airport(std::string code, std::string name, const City* city, double latitude, double longitude): code_(code), name_(name), city_(city), latitude_(latitude), longitude_(longitude) {}
+Airport::Airport() {
+    code_="";
+    name_="";
+    city_= nullptr;
+    latitude_=0;
+    longitude_=0;
 
+}
 string Airport::getCode() const {
-    return Code;
+    return code_;
 }
 
 string Airport::getName() const {
-    return Name;
+    return name_;
 }
 City* Airport::getCity() const {
-    return const_cast<City *>(city);
+    return const_cast<City *>(city_);
 }
 double Airport::getLongitude() const {
-    return Longitude;
+    return longitude_;
 }
 double Airport::getLatitude() const {
-    return Latitude;
+    return latitude_;
 }
 void Airport::operator=(const Airport &other) {
-    this->Code=other.getCode();
-    this->Name=other.getName();
-    this->city=other.getCity();
-    this->Longitude=other.getLongitude();
-    this->Latitude=other.getLatitude();
+    this->code_=other.getCode();
+    this->name_=other.getName();
+    this->city_=other.getCity();
+    this->longitude_=other.getLongitude();
+    this->latitude_=other.getLatitude();
     this->distanceSince=other.distanceSince;
     this->visited=other.visited;
 }
 bool Airport::operator==(const Airport &other) const{
     return this->getCode()==other.getCode();
 }
-float Airport::calcDistanceHaversine( Airport &b) {
-    float aLatRad=this->getLatitude()*M_PI/180, bLatRad=b.getLatitude()*M_PI/180,aLongRad=this->getLongitude() * M_PI / 180,bLongRad= b.getLongitude();
+double Airport::calcDistanceHaversine(const Airport &b) const{
+    double aLatRad=this->getLatitude()*M_PI/180;
+    double bLatRad=b.getLatitude()*M_PI/180;
+    double aLongRad=this->getLongitude() * M_PI / 180;
+    double bLongRad= b.getLongitude()*M_PI/180;
 
-    return 2*6371* pow(19,3)* asin(sqrt(pow(sin((bLatRad-aLatRad)/2),2)+ cos(aLatRad)*cos(bLatRad)*pow(sin((bLongRad-aLongRad)/2),2)));
+    return 2*6371*asin(sqrt(pow(sin((bLatRad-aLatRad)/2),2)+ cos(aLatRad)*cos(bLatRad)*pow(sin((bLongRad-aLongRad)/2),2)));
 }
+Airport::Airport(string code): code_(code) {}
