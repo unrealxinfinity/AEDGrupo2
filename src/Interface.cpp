@@ -16,6 +16,10 @@ bool Interface::is_in(string choice, int lim_start, int lim_end) const{
 }
 
 int Interface::initiate() {
+
+    list <string> save; //contem os inputs do user
+    //auto it = save.begin();
+
     MenuPrincipal: string userInput;
     cout << "Introduza o numero do comando: \n\t1. Calcular rota de voo \n\t2.Informacoes\n\t0.Sair do programa" << endl;
     cin >> userInput;
@@ -43,32 +47,49 @@ int Interface::initiate() {
 
         //caso o criterio for aeroporto
         if (criteria1 == "1"){
-            cout << "Introduza o aeroporto pretendido: ";
+            cout << "Introduza o aeroporto pretendido:\n\t0.Voltar" << endl;
             getline(cin,aeroporto);
+            if (aeroporto == "0") goto menuRota;
+            save.push_back(aeroporto);
+
+            menuAirline: string air;
+            cout << "Quais companhias aereas pretende averiguar?\n\t1.Qualquer uma\n\t2.Personalizado" << endl;
+            cin >> air;
+
         }
         if (criteria2 == "1"){
-            cout << "Introduza o aeroporto pretendido: ";
+            cout << "Introduza o aeroporto pretendido:\n\t0.Voltar" << endl;
             getline(cin,aeroporto);
+            if (aeroporto == "0") goto menuRota;
+            save.push_back(aeroporto);
         }
 
         //caso o criterio for cidade
         if (criteria1 == "2"){
-            cout << "Introduza a cidade-pais pretendida neste mesmo formato: ";
+            cout << "Introduza a cidade-pais pretendida neste mesmo formato:\n\t0.Voltar" << endl;
             getline(cin,cidade);
+            if (cidade == "0") goto menuRota;
+            save.push_back(cidade);
         }
         if (criteria2 == "2"){
-            cout << "Introduza a cidade-pais pretendida neste mesmo formato: ";
+            cout << "Introduza a cidade-pais pretendida neste mesmo formato:\n\t0.Voltar" << endl;
             getline(cin,cidade);
+            if (cidade == "0") goto menuRota;
+            save.push_back(cidade);
         }
 
         //caso o criterio for localizacao
         if (criteria1 == "3"){
-            cout << "Introduza as coordenadas neste formato - (latitude,longitude): ";
+            cout << "Introduza as coordenadas neste formato - (latitude,longitude):\n\t0.Voltar" << endl;
             getline(cin,loc);
+            if (loc == "0") goto menuRota;
+            save.push_back(loc);
         }
         if (criteria2 == "3"){
-            cout << "Introduza as coordenadas neste formato - (latitude,longitude): ";
+            cout << "Introduza as coordenadas neste formato - (latitude,longitude):\n\t0.Voltar" << endl;
             getline(cin,loc);
+            if (loc == "0") goto menuRota;
+            save.push_back(loc);
         }
     }
 
