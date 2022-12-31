@@ -81,6 +81,7 @@ int Interface::initiate() {
             save.push_back(loc);
         }
 
+        
         //chegada
         cin >> criteria2;
         while(!is_in(criteria2, 0, 3)){
@@ -111,7 +112,7 @@ int Interface::initiate() {
         }
     }
 
-    
+
     //Caso o user escolha Informacoes
     else if(userInput == "2"){}
 
