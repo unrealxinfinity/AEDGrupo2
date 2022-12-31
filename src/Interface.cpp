@@ -33,18 +33,14 @@ int Interface::initiate() {
     if(userInput == "1"){
         menuRota: string criteria1, criteria2, aeroporto, cidade, loc;
         cout << "Escolha o criterio para a partida e para a chegada:\n\tLocal de partida:\n\t1.Aeroporto\n\t2.Cidade-Pais\n\t3.Localizacao\n\tLocal de chegada:\n\t1.Aeroporto\n\t2.Cidade\n\t3.Localizacao\n\0.Voltar" << endl;
+
+        //partida
         cin >> criteria1;
-        cin >> criteria2;
         while(!is_in(criteria1, 0, 3)){
             cout << "Sintaxe errada.\nPor favor, reintroduzir:" << endl;
             cin >> criteria1;
         }
-        while(!is_in(criteria2, 0, 3)){
-            cout << "Sintaxe errada.\nPor favor, reintroduzir:" << endl;
-            cin >> criteria2;
-        }
-        if (criteria1 == "0" || criteria2 == "0") goto MenuPrincipal;
-
+        if (criteria1 == "0") goto MenuPrincipal;
         //caso o criterio for aeroporto
         if (criteria1 == "1"){
             cout << "Introduza o aeroporto pretendido:\n\t0.Voltar" << endl;
@@ -52,18 +48,24 @@ int Interface::initiate() {
             if (aeroporto == "0") goto menuRota;
             save.push_back(aeroporto);
 
-            menuAirline: string air;
-            cout << "Quais companhias aereas pretende averiguar?\n\t1.Qualquer uma\n\t2.Personalizado" << endl;
+            menuAirline: string air, perso;
+            cout << "Quais companhias aereas pretende averiguar?\n\t1.Qualquer uma\n\t2.Personalizado\n\t0.Voltar" << endl;
             cin >> air;
+            if (air =="0") goto menuRota;
+            save.push_back(air);
+
+            //qualquer uma
+            if (air == "1"){}
+
+            //personalizado
+            if (air == "2"){
+                cout << "Introduza as companhias aereas pretendidas: " << endl;
+                getline(cin, perso);
+                save.push_back(perso);
+            }
+
 
         }
-        if (criteria2 == "1"){
-            cout << "Introduza o aeroporto pretendido:\n\t0.Voltar" << endl;
-            getline(cin,aeroporto);
-            if (aeroporto == "0") goto menuRota;
-            save.push_back(aeroporto);
-        }
-
         //caso o criterio for cidade
         if (criteria1 == "2"){
             cout << "Introduza a cidade-pais pretendida neste mesmo formato:\n\t0.Voltar" << endl;
@@ -71,13 +73,6 @@ int Interface::initiate() {
             if (cidade == "0") goto menuRota;
             save.push_back(cidade);
         }
-        if (criteria2 == "2"){
-            cout << "Introduza a cidade-pais pretendida neste mesmo formato:\n\t0.Voltar" << endl;
-            getline(cin,cidade);
-            if (cidade == "0") goto menuRota;
-            save.push_back(cidade);
-        }
-
         //caso o criterio for localizacao
         if (criteria1 == "3"){
             cout << "Introduza as coordenadas neste formato - (latitude,longitude):\n\t0.Voltar" << endl;
@@ -85,6 +80,29 @@ int Interface::initiate() {
             if (loc == "0") goto menuRota;
             save.push_back(loc);
         }
+
+        //chegada
+        cin >> criteria2;
+        while(!is_in(criteria2, 0, 3)){
+            cout << "Sintaxe errada.\nPor favor, reintroduzir:" << endl;
+            cin >> criteria2;
+        }
+        if (criteria2 == "0") goto MenuPrincipal;
+        //caso o criterio for aeroporto
+        if (criteria2 == "1"){
+            cout << "Introduza o aeroporto pretendido:\n\t0.Voltar" << endl;
+            getline(cin,aeroporto);
+            if (aeroporto == "0") goto menuRota;
+            save.push_back(aeroporto);
+        }
+        //caso o criterio for cidade
+        if (criteria2 == "2"){
+            cout << "Introduza a cidade-pais pretendida neste mesmo formato:\n\t0.Voltar" << endl;
+            getline(cin,cidade);
+            if (cidade == "0") goto menuRota;
+            save.push_back(cidade);
+        }
+        //caso o criterio for localizacao
         if (criteria2 == "3"){
             cout << "Introduza as coordenadas neste formato - (latitude,longitude):\n\t0.Voltar" << endl;
             getline(cin,loc);
@@ -93,6 +111,7 @@ int Interface::initiate() {
         }
     }
 
+    
     //Caso o user escolha Informacoes
     else if(userInput == "2"){}
 
