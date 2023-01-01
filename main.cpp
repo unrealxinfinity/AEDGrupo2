@@ -153,12 +153,7 @@ void testDecipherInput(){
 int main() {
     testDecipherInput();
     CSVReader reader;
-    auto travel = reader.bfs(reader.decipherInput("OPO"),reader.decipherInput("LIS"),{});
-    auto it=travel.first.begin();
-    while(it!=travel.first.end()){
-        cout<<it->destAirportCode_<<endl;
-        it++;
-    }
+    reader.showShortestPath("London-United Kingdom","New York-United States",100);
 
 
 
