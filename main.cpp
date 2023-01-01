@@ -138,7 +138,7 @@ void testFindAirportByName(){
     cout<<it.getCode()<<endl;
 }
  */
-void testDecipherInput(){
+/*void testDecipherInput(){
     string input={"Oradea"};
     CSVReader reader;
     list<string> res;
@@ -149,11 +149,12 @@ void testDecipherInput(){
         it++;
     }
 }
+*/
 
 int main() {
-    testDecipherInput();
+
     CSVReader reader;
-    reader.showShortestPath("London-United Kingdom","New York-United States",100);
+    reader.showShortestPath("London-United Kingdom","Shenzhen-China");
 
 
 

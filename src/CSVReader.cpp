@@ -93,14 +93,6 @@ unordered_set<Airport, AirportHash> CSVReader::getAirports() {
     return airports;
 }
 
-Airport CSVReader::findAirportByCoord(const double lat, const double longi) const{
-    auto it=airports.begin();
-    while(it!=airports.end()){
-        if(it->getLatitude()==lat&&it->getLongitude()==longi) return *it;
-        it++;
-    }
-    return Airport();
-}
 list<string> CSVReader::findAirportsAround(const double lat, const double longi,
                                                                      const double radius) const {
     auto it= airports.begin();
