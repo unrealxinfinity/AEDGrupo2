@@ -101,14 +101,14 @@ Airport CSVReader::findAirportByCoord(const double lat, const double longi) cons
     }
     return Airport();
 }
-list<Airport> CSVReader::findAirportsAround(const double lat, const double longi,
+list<string> CSVReader::findAirportsAround(const double lat, const double longi,
                                                                      const double radius) const {
     auto it= airports.begin();
     Airport center= Airport("","", nullptr,lat,longi);
-    list<Airport> temp;
+    list<string> temp;
     while(it!=airports.end()){
         if(center.calcDistanceHaversine(*it) <= radius){
-            temp.push_back(*it);
+            temp.push_back(it->getCode());
         }
         it++;
     }
@@ -181,19 +181,19 @@ pair<list<Flight>, string> CSVReader::bfs(const list<string> &source, const list
     res.second = "PATH NOT FOUND";
     return res;
 }
-Airport CSVReader::findAirportByName(const std::string airportName) const {
+string CSVReader::findAirportByName(const std::string airportName) const {
     auto it = airports.begin();
     while(it!=airports.end()){
-        if(it->getName()==airportName) return *it;
+        if(it->getName()==airportName) return (*it).getCode();
         it++;
     }
-    return Airport();
+    return "";
 }
-list<Airport> CSVReader::findAirportByCity(const std::string city, const std::string country) const {
+list<string> CSVReader::findAirportByCity(const std::string city, const std::string country) const {
     auto it = airports.begin();
-    list<Airport> res;
+    list<string> res;
     while(it!=airports.end()){
-        if(it->getCity()->get_country()==country&&it->getCity()->get_name()==city) res.push_back(*it);
+        if(it->getCity()->get_country()==country&&it->getCity()->get_name()==city) res.push_back(it->getCode());
         it++;
     }
     return res;
@@ -201,8 +201,8 @@ list<Airport> CSVReader::findAirportByCity(const std::string city, const std::st
 
 
 //throws error when theres no valid input
-list<Airport> CSVReader::decipherInput(const string src,const double radius=0) {
-    list<Airport> source;
+list<string> CSVReader::decipherInput(const string src,const double radius) {
+    list<string>source1;
     int error=0;
 
     if(src.at(0)=='(' && src.at(src.size()-1)==')'){
@@ -216,42 +216,42 @@ list<Airport> CSVReader::decipherInput(const string src,const double radius=0) {
             coordinates.push_back(stod(res));
         }
         auto target= findAirportsAround(coordinates.front(),coordinates.back(),radius);
-        source=target;
-        if(source.empty()){
+        source1=target;
+        if(source1.empty()){
             throw error;
         }
-        return source;
+        return source1;
     }
 
     string line=src;
     if(line.find('-')!=string::npos){
         stringstream ss(line);
         string temp,city,country;
-        list<Airport> res;
+        list<string> res;
         getline(ss,temp,'-');
         city=temp;
         getline(ss,temp,'-');
         country=temp;
         res=findAirportByCity(city,country);
-        source=res;
-        if(source.empty()){
+        source1=res;
+        if(source1.empty()){
             throw error;
         }
-        return source;
+        return source1;
     }
 
     Airport target=Airport(src,"", nullptr,0,0);
-    Airport halfFound;
+    string halfFound;
     auto it=airports.find(target);
     if(it==airports.end()){
         halfFound=findAirportByName(src);
-        if(halfFound==Airport()){
+        if(halfFound==""){
             throw error;
         }
-        source.push_back(halfFound);
-        return source;
+        source1.push_back(halfFound);
+        return source1;
     }
-    source.push_back(*it);
-    return source;
+    source1.push_back(it->getCode());
+    return source1;
 }
 

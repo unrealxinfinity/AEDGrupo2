@@ -139,13 +139,13 @@ void testFindAirportByName(){
 }
  */
 void testDecipherInput(){
-    string input={"(41.248055,-8.681389)"};
+    string input={"London-United Kingdom"};
     CSVReader reader;
-    list<Airport> res;
+    list<string> res;
     res=reader.decipherInput(input,100);
     auto it=res.begin();
     while(it!=res.end()){
-        cout<<it->getCode()<<endl;
+        cout<<*it<<endl;
         it++;
     }
 }
@@ -153,5 +153,13 @@ void testDecipherInput(){
 int main() {
     testDecipherInput();
     CSVReader reader;
-    auto travel = reader.bfs({"CDG", "ORY"}, {"SXF", "TXL"},{"RYN"});
+    auto travel = reader.bfs(reader.decipherInput("OPO"),reader.decipherInput("LIS"),{});
+    auto it=travel.first.begin();
+    while(it!=travel.first.end()){
+        cout<<it->destAirportCode_<<endl;
+        it++;
+    }
+
+
+
 }
