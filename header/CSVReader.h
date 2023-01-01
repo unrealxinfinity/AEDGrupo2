@@ -36,6 +36,8 @@ private:
     //Used for bfs , idea is to bfs_visit those flights that isFlownByAirline evaluates true maybe? But I believe this function will be useful;
     // complexity O(N) being N the size of the list of airlines the user provides;
     bool isFlownByAirline(const Flight& f,const list<string>& airline) const;
+
+    //estas funcoes find retornam o codigo/lista codigos do aeroporto,complexidade O(N)
     string findAirportByName(const string airportName) const;
     list<string> findAirportByCity(const string city, const string country) const;
     Airport findAirportByCoord(const double lat, const double longi) const;

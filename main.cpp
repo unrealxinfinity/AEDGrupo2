@@ -139,7 +139,7 @@ void testFindAirportByName(){
 }
  */
 void testDecipherInput(){
-    string input={"London-United Kingdom"};
+    string input={"Oradea"};
     CSVReader reader;
     list<string> res;
     res=reader.decipherInput(input,100);
