@@ -152,10 +152,6 @@ void testFindAirportByName(){
 */
 
 int main() {
-
     CSVReader reader;
     reader.showShortestPath("London-United Kingdom","Shenzhen-China");
-
-
-
 }

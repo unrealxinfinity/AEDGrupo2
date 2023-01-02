@@ -252,12 +252,12 @@ void CSVReader::showShortestPath(const std::string src,const string dest, const 
     list<string>destination=this->decipherInput(dest,radius);
     auto travel=this->bfs(origin,destination,preferences);
     auto startingPointPtr=airports.find(Airport(travel.second));
-    cout<<"Airport: "<<startingPointPtr->getName()<<"("<<startingPointPtr->getCode()<<")";
+    cout<<"{Airport: "<<startingPointPtr->getName()<<"("<<startingPointPtr->getCode()<<")}";
     auto it=travel.first.begin();
     while(it!=travel.first.end()){
         auto airportPtr=airports.find(Airport(it->destAirportCode_));
         auto airlinePtr=airlines.find(Airline(it->airline_));
-        cout<<"--"<<"[By:"<<airlinePtr->getName()<<"("<<airlinePtr->getCode()<<")"<<"]-->"<<"Airport: "<<airportPtr->getName()<<"("<<airportPtr->getCode()<<")";
+        cout<<" =="<<"[By:"<<airlinePtr->getName()<<"("<<airlinePtr->getCode()<<")"<<"]==> "<<"{Airport: "<<airportPtr->getName()<<"("<<airportPtr->getCode()<<")}";
         it++;
     }
 }
