@@ -59,6 +59,8 @@ public:
     void showShortestPath(const string src,const string dest,const double radius=0,const list<string> preferences={});
     list<Flight> flightsFromAirport(const string& cod);
     list<pair<string,Flight>> flightsToAirport(const string& cod);
+
+    unordered_set<string> reachableCountries(unsigned int n, const string& source);
 };
 
 

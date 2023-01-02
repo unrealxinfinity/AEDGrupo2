@@ -121,6 +121,32 @@ bool CSVReader::isFlownByAirline(const Flight& f,const list<string>& airlines) c
     return false;
 }
 
+unordered_set<string> CSVReader::reachableCountries(unsigned n, const string& source) {
+    unordered_set<string> countries;
+    for (const Airport& airport : airports) {
+        airport.visited = false;
+        airport.predecessor = nullptr;
+    }
+    queue<pair<int, string>> q;
+    q.emplace(0, source);
+
+    while (!q.empty() && q.front().first <= n) {
+        auto u = q.front(); q.pop();
+
+        auto find = airports.find(Airport(u.second));
+        countries.insert(find->getCity()->get_country());
+        for (const auto& e : find->flights) {
+            string w = e.destAirportCode_;
+            auto target = airports.find(Airport(w));
+            if (!target->visited) {
+                q.emplace(u.first + 1, w);
+                target->visited = false;
+            }
+        }
+    }
+    return countries;
+}
+
 pair<list<Flight>, string> CSVReader::bfs(const list<string> &source, const list<string> &dest, const list<string>& preferences) {
     list<Flight> flights;
     for (const Airport& airport : airports) {
