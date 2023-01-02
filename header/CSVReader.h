@@ -57,6 +57,8 @@ public:
     //Radius e preferencias estao como default 0 e empty caso o user nao precise de introduzir radius ou nao tenha preferencias;
     //Complexity O(N) being N the size of the path of travel
     void showShortestPath(const string src,const string dest,const double radius=0,const list<string> preferences={});
+    list<Flight> flightsFromAirport(const string& cod);
+    list<pair<string,Flight>> flightsToAirport(const string& cod);
 };
 
 
