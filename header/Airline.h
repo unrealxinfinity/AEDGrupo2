@@ -22,6 +22,7 @@ public:
     string get_callsign() const;
     string getCode() const;
     string getName() const;
+    string getCountry() const;
     bool operator==(const Airline& other) const;
 };
 

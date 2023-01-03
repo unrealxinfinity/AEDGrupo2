@@ -47,6 +47,13 @@ private:
     //Dando um input o decipher transforma o input numa lista de aeroportos para fazer bfs, faz throw de um inteiro caso os inputs estejam invalidos e nao estiverem de acordo com o formato dado
     //Complexidade O(N) sendo N a pesquisa pelos aeroportos de acordo com o input;
     list<string> decipherInput(const string src,const double radius=0);
+    int calculateNrAirports(const string tipo,const string country="");
+    int calculateNrFlights(const string tipo,const string countryOrAirline="");
+    int calculateNrAirlines(const string tipo, const string country="");
+    void showTopKAirports(const string tipo,const string country="",const int k=0);
+    //returns the airport with the max nr of FLights, if given parameter then finds the airport with the max nr of flights being the max nr < given max;
+    Airport maxFlightsAirport(const int prevMax=-1,const string country="", const unordered_set<Airport,AirportHash> existingAirports={});
+
 public:
     CSVReader();
 
@@ -59,6 +66,7 @@ public:
     void showShortestPath(const string src,const string dest,const double radius=0,const list<string> preferences={});
     list<Flight> flightsFromAirport(const string& cod);
     list<pair<string,Flight>> flightsToAirport(const string& cod);
+    void globalStatistics(const string tipo,const string modo,const string country="",const string airline="",const int k=0 );
 
     unordered_set<string> reachableCountries(unsigned int n, const string& source);
 };

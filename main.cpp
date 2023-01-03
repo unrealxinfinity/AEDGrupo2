@@ -153,5 +153,5 @@ void testFindAirportByName(){
 
 int main() {
     CSVReader reader;
-    reader.showShortestPath("London-United Kingdom","Shenzhen-China");
+    reader.globalStatistics("pais","top-k airports","Portugal","",10);
 }

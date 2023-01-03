@@ -286,7 +286,13 @@ list<string> CSVReader::findAirportByCity(const std::string city, const std::str
 }
 
 
-//throws error when theres no valid input
+/**
+ * Decodes the input givem by user following certain format
+ * Complexity: O(N) being N the linear search for airports with given input
+ * @param src : String given by user from input
+ * @param radius : In case of search by coordinates, needs radius to find airports around the coordinates given by user input
+ * @return list<string> : List of airport codes in string
+ */
 list<string> CSVReader::decipherInput(const string src,const double radius) {
     list<string>source1;
     int error=0;
@@ -340,18 +346,25 @@ list<string> CSVReader::decipherInput(const string src,const double radius) {
     source1.push_back(it->getCode());
     return source1;
 }
-
+/**
+ * Outputs in the terminal the shortes path from a source to a destination airport given any inputs by user following any kind of criteria(ex: city, coordinates, airport name/code)
+ * Complexity:O(N) being N the size of the path to travel through
+ * @param src : string of source airport
+ * @param dest : string of destination airport
+ * @param radius : radius around a given coordinate to find airports
+ * @param preferences : list of user prefered airlines, empty means user has no airline preference
+ */
 void CSVReader::showShortestPath(const std::string src,const string dest, const double radius,const list<string>preferences) {
     list<string>origin =this->decipherInput(src,radius);
     list<string>destination=this->decipherInput(dest,radius);
     auto travel=this->bfs(origin,destination,preferences);
     auto startingPointPtr=airports.find(Airport(travel.second));
-    cout<<"{Airport: "<<startingPointPtr->getName()<<"("<<startingPointPtr->getCode()<<")}";
+    cout<<"{Aeroporto: "<<startingPointPtr->getName()<<"("<<startingPointPtr->getCode()<<")}";
     auto it=travel.first.begin();
     while(it!=travel.first.end()){
         auto airportPtr=airports.find(Airport(it->destAirportCode_));
         auto airlinePtr=airlines.find(Airline(it->airline_));
-        cout<<" =="<<"[By:"<<airlinePtr->getName()<<"("<<airlinePtr->getCode()<<")"<<"]==> "<<"{Airport: "<<airportPtr->getName()<<"("<<airportPtr->getCode()<<")}";
+        cout<<" =="<<"[Por:"<<airlinePtr->getName()<<"("<<airlinePtr->getCode()<<")"<<"]==> "<<"{Aeroporto: "<<airportPtr->getName()<<"("<<airportPtr->getCode()<<")}";
         it++;
     }
 }
@@ -382,6 +395,156 @@ list<pair<string,Flight>> CSVReader::flightsToAirport(const string &cod) {
                 res.emplace_back(airport.getCode(), flight);
     return res;
 }
+/**
+ * Calculates the nr of airports related to the whole web or by country
+ * Complexity : O(1) if operation done for the whole web and O(N) if its specific for a country (N= nr of related Airports);
+ * @param tipo : Type of operation - if for the whole web or only for the country being it "rede" or "pais" respectively
+ * @param country : In case the operation is related to a country, it's the related country
+ * @return Nr or related airports
+ */
+int CSVReader::calculateNrAirports(const std::string tipo,const string country) {
+    int airportCount=0;
+    if(tipo=="rede"){
+        return airports.size();
+    }
+    if(tipo=="pais"){
+        for (Airport a :airports){
+            City *city = a.getCity();
+            if(city->get_country()==country) airportCount++;
+        }
+    }
+    return airportCount;
+}
+int CSVReader::calculateNrFlights(const std::string tipo, const std::string countryOrAirline) {
+    int res=0;
+    if(tipo=="rede"){
+            for(Airport a : airports){
+                res+=a.getFlights().size();
+            }
+    }
+    if(tipo=="pais"){
+        for(Airport a : airports){
+            City *city=a.getCity();
+            if(city->get_country()==countryOrAirline){
+                res+=a.getFlights().size();
+            }
+        }
+    }
+    if (tipo=="companhia aerea"){
+        for(Airport a: airports){
+            for(Flight f: a.getFlights()){
+                if(f.airline_==countryOrAirline) res++;
+            }
+        }
+    }
+    return res;
+}
+int CSVReader::calculateNrAirlines(const std::string tipo, const std::string country) {
+    int res=0;
+    if(tipo=="rede"){
+        return airlines.size();
+    }
+    if(tipo=="pais"){
+        for(Airline a: airlines){
+            if(a.getCountry()==country){
+                res++;
+            }
+        }
+    }
+    return res;
+}
+Airport CSVReader::maxFlightsAirport(const int prevMax,const string country,const unordered_set<Airport,AirportHash> existingAirports) {
+    int max=0;
+    Airport temp;
+    if(prevMax!=-1){
+        for(Airport a: airports){
+            City *city=a.getCity();
+            if(city->get_country()==country || country=="") {
+                if (existingAirports.find(a) == nullptr &&  a.getFlights().size() <= prevMax) {
+                    if (a.getFlights().size() > max) {
+                        max = a.getFlights().size();
+                        temp = a;
+                    }
+                }
+            }
+        }
+    }
+    else{
+        for(Airport a: airports){
+            City *city=a.getCity();
+            if(city->get_country()==country || country=="") {
+                if (a.getFlights().size() > max) {
+                    max = a.getFlights().size();
+                    temp = a;
+                }
+            }
+        }
+    }
+    return temp;
+}
+/**
+ * Shows the ranking of the airports with the most flights
+ * Complxity: O(N*K) (N being nr of related airports) (K being number of airports to be shown
+ * @param tipo : "rede","pais"
+ * @param country : only necessary for tipo=="pais", otherwise "";
+ * @param k : Nr of lines to be shown
+ */
+void CSVReader::showTopKAirports(const std::string tipo, const std::string country, const int k) {
+    int max=-1;
+    int temp=1;
+    unordered_set<Airport,AirportHash> existingAirports;
+    if(tipo=="rede"){
+        while(temp<=k){
 
+            Airport target=maxFlightsAirport(max,"",existingAirports);
+            existingAirports.insert(target);
+            max=target.getFlights().size();
+            cout<<temp<<"."<<"Aeroporto:"<<target.getName()<<"("<<target.getCode()<<")"<<endl;
+            temp++;
+        }
+    }
+    if(tipo=="pais"){
+        while(temp<=k){
+            Airport target=maxFlightsAirport(max,country,existingAirports);
+            existingAirports.insert(target);
+            max=target.getFlights().size();
+            cout<<temp<<"."<<"Aeroporto:"<<target.getName()<<"("<<target.getCode()<<")"<<endl;
+            temp++;
+        }
+    }
+}
+
+/**
+ * Shows the global statistics given a type(ex: of all the web, a country or airline ),a mode (ex: statistics of nr of airports,nr of flights, nr of companies,top k airports with the most flights or companies)
+ * Possible combinations: rede-nAirports, pais-nAirports, rede-nFlights,pais-nFlights,companhia aerea-nFlights, rede - top-k airports, pais - top-k airports;
+ * Complexity : O(N) average (N=Nr of airports), O(N*E) worst case (N= Nr of related airports, E=Nr of related airlines)
+ * @param tipo - it can be "rede","pais", or "companhia aeria"
+ * @param modo - it can be "nAirports","nFlights","nAirlines","top-k airports"
+ * @param country - it can be optional depends on if "pais" is involved, if not necessary then ""
+ * @param airline - optional parameter only for comapnhjia aerea-nFlights for now, if not necessary then ""
+ * @param k - k number of airports to be shown -optional paramenter only necessary in certain cases like "top-k airports"
+ */
+void CSVReader::globalStatistics(const string tipo, const std::string modo,const string country, const string airline, const int k) {
+    //Case type of global statistics is all
+    if(modo=="nAirports"){
+        cout<<"O tipo:"<<tipo<<" foi escolhido e no total existem:"<<calculateNrAirports(tipo,country)<<" aeroportos relacionados com esse/a "<<tipo<<endl;
+    }
+    if(modo=="nFlights"){
+        if(tipo=="pais") {
+            cout << "O tipo:" << tipo << " foi escolhido e no total existem:" << calculateNrFlights(tipo, country)<< " voos relacionados com esse/a " << tipo << endl;
+        }
+        else if(tipo=="companhia aeria"){
+            cout << "O tipo:" << tipo << " foi escolhido e no total existem:" << calculateNrFlights(tipo, airline)<< " voos relacionados com esse/a " << tipo << endl;
+
+        }
+    }
+    if(modo=="nAirlines"){
+        cout<<"O tipo:"<<tipo<<" foi escolhido e no total existem:"<<calculateNrAirlines(tipo,country)<<" companhias aereas relacionados com esse/a "<<tipo<<endl;
+    }
+    if(modo=="top-k airports"){
+        cout<<"O tipo:"<<tipo<<" foi escolhido e o ranking por nr de voos é o seguinte:"<<endl;
+        showTopKAirports(tipo,country,k);
+    }
+}
 
 
