@@ -36,7 +36,7 @@ private:
     bool isFlownByAirline(const Flight& f,const list<string>& airline) const;
 
     //estas funcoes find retornam o codigo/lista codigos do aeroporto,complexidade O(N)
-    string findAirportByName(const string airportName) const;
+    string findAirportByName(const string airportName,const string city, const string country) const;
     list<string> findAirportByCity(const string city, const string country) const;
     //encontra os aeroportos a partir de um centro, retorna unordered set com o centro inclusive;
     //complexidade O(N) sendo N a pesquisa pelo aeroporto com as coordenadas dadas e a pesquisa pelos aeroportos a menos de raio radius
@@ -46,7 +46,7 @@ private:
     void populate();
     //Dando um input o decipher transforma o input numa lista de aeroportos para fazer bfs, faz throw de um inteiro caso os inputs estejam invalidos e nao estiverem de acordo com o formato dado
     //Complexidade O(N) sendo N a pesquisa pelos aeroportos de acordo com o input;
-    list<string> decipherInput(const string src,const double radius=0);
+
     int calculateNrAirports(const string tipo,const string country="");
     int calculateNrFlights(const string tipo,const string countryOrAirline="");
     int calculateNrAirlines(const string tipo, const string country="");
@@ -56,7 +56,7 @@ private:
 
 public:
     CSVReader();
-
+    list<string> decipherInput(const string src,const double radius=0);
 
     unordered_set<Airline,AirlineHash> getAirlines(){return airlines;}
     unordered_set<Airport, AirportHash> getAirports();

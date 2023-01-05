@@ -259,10 +259,14 @@ pair<list<Flight>, string> CSVReader::bfs(const list<string> &source, const list
  * @param airportName name of airport
  * @return code of airport, empty string if airport does not exist
  */
-string CSVReader::findAirportByName(const std::string airportName) const {
+string CSVReader::findAirportByName(const std::string airportName,const string city, const string country) const {
+
+
     auto it = airports.begin();
     while(it!=airports.end()){
-        if(it->getName()==airportName) return (*it).getCode();
+        City *cityP=it->getCity();
+
+        if(it->getName()==airportName &&cityP->get_name()==city&&cityP->get_country()==country ) return (*it).getCode();
         it++;
     }
     return "";
@@ -289,13 +293,13 @@ list<string> CSVReader::findAirportByCity(const std::string city, const std::str
 /**
  * Decodes the input givem by user following certain format
  * Complexity: O(N) being N the linear search for airports with given input
- * @param src : String given by user from input
+ * @param src : String given by user from input- can be the following formats : "(latitude,longitude)","airportName_city_country","city-country", "airportCode"
  * @param radius : In case of search by coordinates, needs radius to find airports around the coordinates given by user input
  * @return list<string> : List of airport codes in string
  */
 list<string> CSVReader::decipherInput(const string src,const double radius) {
     list<string>source1;
-    int error=0;
+    int error=-1;
 
     if(src.at(0)=='(' && src.at(src.size()-1)==')'){
         list<double> coordinates;
@@ -332,17 +336,30 @@ list<string> CSVReader::decipherInput(const string src,const double radius) {
         return source1;
     }
 
+    line=src;
+
+    if(line.find('_')!=string::npos){
+        stringstream ss(line);
+        string temp,city,country,airportName;
+        string res;
+        getline(ss,temp,'_');
+        airportName=temp;
+        getline(ss,temp,'_');
+        city=temp;
+        getline(ss,temp,'_');
+        country=temp;
+        res= findAirportByName(airportName,city,country);
+        if(res==""){
+            throw error;
+        }
+        source1.push_back(res);
+        return source1;
+    }
+
     Airport target=Airport(src,"", nullptr,0,0);
     string halfFound;
     auto it=airports.find(target);
-    if(it==airports.end()){
-        halfFound=findAirportByName(src);
-        if(halfFound==""){
-            throw error;
-        }
-        source1.push_back(halfFound);
-        return source1;
-    }
+    if(it==airports.end()) throw error;
     source1.push_back(it->getCode());
     return source1;
 }
