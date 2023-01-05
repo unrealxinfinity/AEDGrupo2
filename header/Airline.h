@@ -24,6 +24,7 @@ public:
     string getName() const;
     string getCountry() const;
     bool operator==(const Airline& other) const;
+    bool operator <(const Airline& other) const;
 };
 
 struct AirlineHash{

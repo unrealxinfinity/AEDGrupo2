@@ -6,6 +6,7 @@
 #define PROJETOGRUPO2_CSVREADER_H
 #include <string>
 #include <list>
+#include <set>
 #include "Airline.h"
 #include "Airport.h"
 #include "Flight.h"
@@ -51,12 +52,13 @@ private:
     int calculateNrFlights(const string tipo,const string countryOrAirline="");
     int calculateNrAirlines(const string tipo, const string country="");
     void showTopKAirports(const string tipo,const string country="",const int k=0);
+
     //returns the airport with the max nr of FLights, if given parameter then finds the airport with the max nr of flights being the max nr < given max;
     Airport maxFlightsAirport(const int prevMax=-1,const string country="", const unordered_set<Airport,AirportHash> existingAirports={});
+    list<string> decipherInput(const string src,const double radius=0);
 
 public:
     CSVReader();
-    list<string> decipherInput(const string src,const double radius=0);
 
     unordered_set<Airline,AirlineHash> getAirlines(){return airlines;}
     unordered_set<Airport, AirportHash> getAirports();
@@ -67,7 +69,10 @@ public:
     list<Flight> flightsFromAirport(const string& cod);
     list<pair<string,Flight>> flightsToAirport(const string& cod);
     void globalStatistics(const string tipo,const string modo,const string country="",const string airline="",const int k=0 );
-
+    set<Airline>airlinesFromAirport(const string& cod);
+    set<Airline> airlinesToAirport(const string& cod);
+    set<string> countriesFromAirport(const string& cod);
+    set<string> countriesToAirport(const string& cod);
     unordered_set<string> reachableCountries(unsigned int n, const string& source);
 };
 

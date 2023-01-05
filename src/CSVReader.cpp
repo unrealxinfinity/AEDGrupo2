@@ -18,7 +18,7 @@ CSVReader::CSVReader(){
 
 /**
  * Reads all files and initializes data \n
- * Complexity: O(n1 + n2 + n3) (n1 = number of lines in arlines.csv; n2 = number of lines in airports.csv; n3 = number of lines in flights.csv)
+ * @attention Complexity: O(n1 + n2 + n3) (n1 = number of lines in arlines.csv; n2 = number of lines in airports.csv; n3 = number of lines in flights.csv)
  */
 void CSVReader::populate() {
     read_airports();
@@ -28,7 +28,7 @@ void CSVReader::populate() {
 
 /**
  * Reads airports.csv and stores the data \n
- * Complexity: O(n) (n = number of lines in file)
+ * @attention Complexity: O(n) (n = number of lines in file)
  */
 void CSVReader::read_airports() {
     ifstream in("data/airports.csv");
@@ -55,7 +55,7 @@ void CSVReader::read_airports() {
 
 /**
  * Reads arlines.csv and stores the data \n
- * Complexity: O(n) (n = number of lines in file)
+ * @attention Complexity: O(n) (n = number of lines in file)
  */
 void CSVReader::read_airlines() {
     ifstream in("data/airlines.csv");
@@ -74,7 +74,7 @@ void CSVReader::read_airlines() {
 
 /**
  * Calculates the distance between two points using the Haversine formula \n
- * Complexity: O(1) (unsure since the documentation for functions like pow() don't specify complexity)
+ * @attention Complexity: O(1) (unsure since the documentation for functions like pow() don't specify @attention Complexity)
  * @param lat1 latitude of first point
  * @param lon1 longitude of first point
  * @param lat2 latitude of second point
@@ -94,7 +94,7 @@ double haversine(double lat1, double lon1, double lat2, double lon2) {
 
 /**
  * Reads flights.csv and stores the data \n
- * Complexity: O(n) (n = number of lines in file)
+ * @attention Complexity: O(n) (n = number of lines in file)
  */
 void CSVReader::read_flights() {
     ifstream in("data/flights.csv");
@@ -119,7 +119,7 @@ unordered_set<Airport, AirportHash> CSVReader::getAirports() {
 
 /**
  * Determines which airports are within a certain radius of a point \n
- * Complexity: O(n) (n = number of airports)
+ * @attention Complexity: O(n) (n = number of airports)
  * @param lat latitude of point
  * @param longi longitude of point
  * @param radius radius in which to search (meters)
@@ -141,7 +141,7 @@ list<string> CSVReader::findAirportsAround(const double lat, const double longi,
 
 /**
  * Determines whether a flight is flown by one of the airlines in a list. If the list is empty, always returns true \n
- * Complexity: O(n) (n = number of airlines in preference list)
+ * @attention Complexity: O(n) (n = number of airlines in preference list)
  * @param f flight in question
  * @param airlines desired airlines
  * @return true if flown by desired airlines or desired airline list is empty, false otherwise
@@ -161,7 +161,7 @@ bool CSVReader::isFlownByAirline(const Flight& f,const list<string>& airlines) c
 
 /**
  * Determines which countries can be reached from a given airport in a given number of flights \n
- * Complexity: O(V + E) (V = number of airports, E = number of flights)
+ * @attention Complexity: O(V + E) (V = number of airports, E = number of flights)
  * @param n number of flights
  * @param source source airport code
  * @return unordered_set with the names of reachable countries
@@ -194,7 +194,7 @@ unordered_set<string> CSVReader::reachableCountries(unsigned n, const string& so
 
 /**
  * Performs a multi-source breadth-first search to find a path between two airports
- * Complexity: O(V + E) (V = number of airports, E = number of flights)
+ * @attention Complexity: O(V + E) (V = number of airports, E = number of flights)
  * @param source source airport codes
  * @param dest destination airport codes
  * @param preferences desired airlines (if no preference, use empty list)
@@ -255,7 +255,7 @@ pair<list<Flight>, string> CSVReader::bfs(const list<string> &source, const list
 
 /**
  * Gets an airport's name by its code \n
- * Complexity: O(n) (n = number of airports)
+ * @attention Complexity: O(n) (n = number of airports)
  * @param airportName name of airport
  * @return code of airport, empty string if airport does not exist
  */
@@ -274,7 +274,7 @@ string CSVReader::findAirportByName(const std::string airportName,const string c
 
 /**
  * Get all airports in a given city \n
- * Complexity: O(n) (n = number of airports)
+ * @attention Complexity: O(n) (n = number of airports)
  * @param city name of city
  * @param country name of country
  * @return codes of all airports in the city
@@ -292,7 +292,7 @@ list<string> CSVReader::findAirportByCity(const std::string city, const std::str
 
 /**
  * Decodes the input givem by user following certain format
- * Complexity: O(N) being N the linear search for airports with given input
+ * @attention Complexity: O(N) being N the linear search for airports with given input
  * @param src : String given by user from input- can be the following formats : "(latitude,longitude)","airportName_city_country","city-country", "airportCode"
  * @param radius : In case of search by coordinates, needs radius to find airports around the coordinates given by user input
  * @return list<string> : List of airport codes in string
@@ -365,7 +365,7 @@ list<string> CSVReader::decipherInput(const string src,const double radius) {
 }
 /**
  * Outputs in the terminal the shortes path from a source to a destination airport given any inputs by user following any kind of criteria(ex: city, coordinates, airport name/code)
- * Complexity:O(N) being N the size of the path to travel through
+ * @attention Complexity:O(N) being N the size of the path to travel through
  * @param src : string of source airport
  * @param dest : string of destination airport
  * @param radius : radius around a given coordinate to find airports
@@ -375,20 +375,27 @@ void CSVReader::showShortestPath(const std::string src,const string dest, const 
     list<string>origin =this->decipherInput(src,radius);
     list<string>destination=this->decipherInput(dest,radius);
     auto travel=this->bfs(origin,destination,preferences);
-    auto startingPointPtr=airports.find(Airport(travel.second));
-    cout<<"{Aeroporto: "<<startingPointPtr->getName()<<"("<<startingPointPtr->getCode()<<")}";
-    auto it=travel.first.begin();
-    while(it!=travel.first.end()){
-        auto airportPtr=airports.find(Airport(it->destAirportCode_));
-        auto airlinePtr=airlines.find(Airline(it->airline_));
-        cout<<" =="<<"[Por:"<<airlinePtr->getName()<<"("<<airlinePtr->getCode()<<")"<<"]==> "<<"{Aeroporto: "<<airportPtr->getName()<<"("<<airportPtr->getCode()<<")}";
-        it++;
+    if(travel.first.empty()){
+        cout<<"Nao existe voo associado."<<endl;
+    }
+    else {
+        auto startingPointPtr = airports.find(Airport(travel.second));
+        cout << "Aeroporto: " << startingPointPtr->getName() << "(" << startingPointPtr->getCode() << ")"<<endl;
+        auto it = travel.first.begin();
+        while (it != travel.first.end()) {
+            auto airportPtr = airports.find(Airport(it->destAirportCode_));
+            auto airlinePtr = airlines.find(Airline(it->airline_));
+            cout << "[Pelo voo:" << airlinePtr->getName() << "(" << airlinePtr->getCode() << ")" << "]" << "\tAeroporto: " << airportPtr->getName() << "(" << airportPtr->getCode() << ")"<<endl;
+            it++;
+        }
+        cout << endl;
+        cout << "You will need to attend " << travel.first.size() << " flights in total!" << endl;
     }
 }
 
 /**
  * Determines which flights depart at a given airport \n
- * Complexity: O(n) (n = number of flights in the given airport) (complexity is not O(1) due to copy constructor when returning the list)
+ * @attention Complexity: O(n) (n = number of flights in the given airport) (@attention Complexity is not O(1) due to copy constructor when returning the list)
  * @param cod code of airport
  * @return list of flights departing from airport
  */
@@ -400,7 +407,7 @@ list<Flight> CSVReader::flightsFromAirport(const string &cod) {
 
 /**
  * Determines which flights arrive at a given airport \n
- * Complexity: O(n) (n = number of flights)
+ * @attention Complexity: O(n) (n = number of flights)
  * @param cod code of airport
  * @return list of flights arriving at airport
  */
@@ -414,7 +421,7 @@ list<pair<string,Flight>> CSVReader::flightsToAirport(const string &cod) {
 }
 /**
  * Calculates the nr of airports related to the whole web or by country
- * Complexity : O(1) if operation done for the whole web and O(N) if its specific for a country (N= nr of related Airports);
+ * @attention Complexity : O(1) if operation done for the whole web and O(N) if its specific for a country (N= nr of related Airports);
  * @param tipo : Type of operation - if for the whole web or only for the country being it "rede" or "pais" respectively
  * @param country : In case the operation is related to a country, it's the related country
  * @return Nr or related airports
@@ -501,7 +508,7 @@ Airport CSVReader::maxFlightsAirport(const int prevMax,const string country,cons
 }
 /**
  * Shows the ranking of the airports with the most flights
- * Complxity: O(N*K) (N being nr of related airports) (K being number of airports to be shown
+ *@attention Complexity: O(N*K) (N being nr of related airports) (K being number of airports to be shown
  * @param tipo : "rede","pais"
  * @param country : only necessary for tipo=="pais", otherwise "";
  * @param k : Nr of lines to be shown
@@ -534,7 +541,7 @@ void CSVReader::showTopKAirports(const std::string tipo, const std::string count
 /**
  * Shows the global statistics given a type(ex: of all the web, a country or airline ),a mode (ex: statistics of nr of airports,nr of flights, nr of companies,top k airports with the most flights or companies)
  * Possible combinations: rede-nAirports, pais-nAirports, rede-nFlights,pais-nFlights,companhia aerea-nFlights, rede - top-k airports, pais - top-k airports;
- * Complexity : O(N) average (N=Nr of airports), O(N*E) worst case (N= Nr of related airports, E=Nr of related airlines)
+ * @attention Complexity : O(N) average (N=Nr of airports), O(N*E) worst case (N= Nr of related airports, E=Nr of related airlines)
  * @param tipo - it can be "rede","pais", or "companhia aeria"
  * @param modo - it can be "nAirports","nFlights","nAirlines","top-k airports"
  * @param country - it can be optional depends on if "pais" is involved, if not necessary then ""
@@ -563,5 +570,61 @@ void CSVReader::globalStatistics(const string tipo, const std::string modo,const
         showTopKAirports(tipo,country,k);
     }
 }
-
-
+/**Calculates airlines that have flights on the airport;
+ * @attention Complexity:O(N) (N= number of Flights airport has)
+ * @param cod:airport code
+ * @return set of unique Airlines that has flights on the airport
+ */
+set<Airline> CSVReader::airlinesFromAirport(const std::string &cod) {
+    set<Airline> uniqueAirlines;
+    list<Flight> temp= flightsFromAirport(cod);
+    for(Flight a : temp){
+        auto ins=airlines.find(Airline(a.airline_,"","",""));
+        uniqueAirlines.insert(*ins);
+    }
+    return uniqueAirlines;
+}
+/**Checks for the flights that arrive at a specific airport \n
+ *
+ * @attention Complexity:O(N) (N = number of airports)
+ * @param cod : Airport Code
+ * @return set of unique airlines that arrive at the airport
+ */
+set<Airline> CSVReader::airlinesToAirport(const std::string &cod) {
+    unordered_set<Airline,AirlineHash> uniqueAirlines;
+    auto temp = flightsToAirport(cod);
+    for(auto a : temp){
+        auto ins=airlines.find(Airline(a.second.airline_,"","",""));
+        uniqueAirlines.insert(*ins);
+    }
+}
+/**Checks for the dest countries that flights from a certain airport reach
+ * @attention Complexity:O(N) (N=number of flights the airport has)
+ * @param cod Airport Code
+ * @return set of unique names of countries
+ */
+set<string> CSVReader::countriesFromAirport(const std::string &cod) {
+    auto temp= flightsFromAirport(cod);
+    set<string> countries;
+    for(Flight f:temp){
+        auto targetIt= airports.find(Airport(f.destAirportCode_));
+        City *cityP=targetIt->getCity();
+        countries.insert(cityP->get_country());
+    }
+    return countries;
+}
+/** Checks for the source countries of the flights
+ *@attention Complexity:O(N) (N=number of airports)
+ * @param cod : Airport code
+ * @return set of unique countries that arrive at airport
+ */
+set<string> CSVReader::countriesToAirport(const std::string &cod) {
+    list<pair<string,Flight>> flights= flightsToAirport(cod);
+    set<string> countries;
+    for (auto p:flights){
+        auto targetIt=airports.find(Airport(p.first));
+        City *cityP=targetIt->getCity();
+        countries.insert(cityP->get_country());
+    }
+    return countries;
+}

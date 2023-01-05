@@ -153,5 +153,9 @@ void testFindAirportByName(){
 
 int main() {
     CSVReader reader;
-    reader.globalStatistics("pais","top-k airports","Portugal","",10);
+    auto temp= reader.airlinesFromAirport("OPO");
+    for (auto a:temp){
+        cout<<a.getName()<<endl;
+    }
+
 }

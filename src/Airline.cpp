@@ -29,3 +29,13 @@ bool Airline::operator==(const Airline &other) const {
 }
 
 Airline::Airline(string code): code(code) {}
+bool Airline::operator<(const Airline &other) const {
+    if(this->getName()<other.getName()) return true;
+    else if(this->getName()==other.getName()){
+        if(this->get_callsign()<other.get_callsign()) return true;
+        else if(this->get_callsign()==other.get_callsign()){
+            return  this->getCode()<other.getCode();
+        }
+    }
+    return false;
+}
