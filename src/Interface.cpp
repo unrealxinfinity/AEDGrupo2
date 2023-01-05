@@ -18,7 +18,7 @@ bool Interface::is_in(string choice, int lim_start, int lim_end) const{
 int Interface::initiate() {
 
     list <string> save; //contem os inputs do user
-    //auto it = save.begin();
+    auto it = save.begin();
 
     MenuPrincipal: string userInput;
     cout << "Introduza o numero do comando: \n\t1. Calcular rota de voo \n\t2.Informacoes\n\t0.Sair do programa" << endl;
@@ -47,24 +47,6 @@ int Interface::initiate() {
             getline(cin,aeroporto);
             if (aeroporto == "0") goto menuRota;
             save.push_back(aeroporto);
-
-            menuAirline: string air, perso;
-            cout << "Quais companhias aereas pretende averiguar?\n\t1.Qualquer uma\n\t2.Personalizado\n\t0.Voltar" << endl;
-            cin >> air;
-            if (air =="0") goto menuRota;
-            save.push_back(air);
-
-            //qualquer uma
-            if (air == "1"){}
-
-            //personalizado
-            if (air == "2"){
-                cout << "Introduza as companhias aereas pretendidas: " << endl;
-                getline(cin, perso);
-                save.push_back(perso);
-            }
-
-
         }
         //caso o criterio for cidade
         if (criteria1 == "2"){
@@ -110,6 +92,29 @@ int Interface::initiate() {
             if (loc == "0") goto menuRota;
             save.push_back(loc);
         }
+
+        menuAirline: string air, perso;
+        cout << "Quais companhias aereas pretende averiguar?\n\t1.Qualquer uma\n\t2.Personalizado\n\t0.Voltar" << endl;
+        cin >> air;
+        if (air =="0") goto menuRota;
+        save.push_back(air);
+
+        //qualquer uma
+        if (air == "1"){
+            perso = "Qualquer";
+            save.push_back(perso);
+        }
+        //personalizado
+        if (air == "2"){
+            cout << "Introduza as companhias aereas pretendidas: " << endl;
+            getline(cin, perso);
+            save.push_back(perso);
+        }
+
+        menuResult:
+        cout << "A carregar..." << endl;
+        
+
     }
 
 
