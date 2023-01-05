@@ -34,7 +34,7 @@ private:
     //checks if a flight is flown by an airline, parameter airlines accepts callsign ,code or name, empty means all airlines are accepted;
     //Used for bfs , idea is to bfs_visit those flights that isFlownByAirline evaluates true maybe? But I believe this function will be useful;
     // complexity O(N) being N the size of the list of airlines the user provides;
-    bool isFlownByAirline(const Flight& f,const list<string>& airline) const;
+    bool isFlownByAirline(const Flight& f,const unordered_set<string>& airline) const;
 
     //estas funcoes find retornam o codigo/lista codigos do aeroporto,complexidade O(N)
     string findAirportByName(const string airportName,const string city, const string country) const;
@@ -43,7 +43,7 @@ private:
     //complexidade O(N) sendo N a pesquisa pelo aeroporto com as coordenadas dadas e a pesquisa pelos aeroportos a menos de raio radius
     list<string> findAirportsAround(const double lat,const double longi,const double radius)const;
     list<string> toListOfString(list<Airport> airports);
-    pair<list<Flight>, string> bfs(const list<string>& source, const list<string>& dest, const list<string>& preferences);
+    pair<list<Flight>, string> bfs(const list<string>& source, const list<string>& dest, const unordered_set<string>& preferences);
     void populate();
     //Dando um input o decipher transforma o input numa lista de aeroportos para fazer bfs, faz throw de um inteiro caso os inputs estejam invalidos e nao estiverem de acordo com o formato dado
     //Complexidade O(N) sendo N a pesquisa pelos aeroportos de acordo com o input;
@@ -65,7 +65,7 @@ public:
     //Mostra o caminho mais curto dando um src seguindo um formato, um dest seguindo tais formatos raius caso o user procure pela cidade ou pelas coordenadas e preferencias caso ela tenha alguma preferencia de companhia aeria;
     //Radius e preferencias estao como default 0 e empty caso o user nao precise de introduzir radius ou nao tenha preferencias;
     //Complexity O(N) being N the size of the path of travel
-    void showShortestPath(const string src,const string dest,const double radius=0,const list<string> preferences={});
+    void showShortestPath(const string src,const string dest,const double radius=0,const unordered_set<string>& preferences={});
     list<Flight> flightsFromAirport(const string& cod);
     list<pair<string,Flight>> flightsToAirport(const string& cod);
     void globalStatistics(const string tipo,const string modo,const string country="",const string airline="",const int k=0 );

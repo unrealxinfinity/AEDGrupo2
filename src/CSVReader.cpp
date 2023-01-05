@@ -146,16 +146,22 @@ list<string> CSVReader::findAirportsAround(const double lat, const double longi,
  * @param airlines desired airlines
  * @return true if flown by desired airlines or desired airline list is empty, false otherwise
  */
-bool CSVReader::isFlownByAirline(const Flight& f,const list<string>& airlines) const {
-    if(airlines.empty()) return true;
+bool CSVReader::isFlownByAirline(const Flight& f,const unordered_set<string>& airline) const {
+    if(airline.empty()) return true;
     Airline target= Airline(f.airline_,"","","");
     auto found=this->airlines.find(target);
-    auto it = airlines.begin();
-    while(it!=airlines.end()){
-        string airline= *it;
-        if(found->getCode()== airline || found->getName()==airline||found->get_callsign()==airline) return true;
+    auto search = airline.find(found->getCode());
+    if (search != airline.end()) return true;
+    search = airline.find(found->getName());
+    if (search != airline.end()) return true;
+    search = airline.find(found->get_callsign());
+    if (search != airline.end()) return true;
+    /*auto it = airline.begin();
+    while(it!=airline.end()){
+        string airline_str= *it;
+        if(found->getCode()== airline_str || found->getName()==airline_str||found->get_callsign()==airline_str) return true;
         it++;
-    }
+    }*/
     return false;
 }
 
@@ -200,7 +206,7 @@ unordered_set<string> CSVReader::reachableCountries(unsigned n, const string& so
  * @param preferences desired airlines (if no preference, use empty list)
  * @return list of flights used and name of source used (useful for when there are multiple sources)
  */
-pair<list<Flight>, string> CSVReader::bfs(const list<string> &source, const list<string> &dest, const list<string>& preferences) {
+pair<list<Flight>, string> CSVReader::bfs(const list<string> &source, const list<string> &dest, const unordered_set<string>& preferences) {
     list<Flight> flights;
     for (const Airport& airport : airports) {
         airport.visited = false;
@@ -371,7 +377,7 @@ list<string> CSVReader::decipherInput(const string src,const double radius) {
  * @param radius : radius around a given coordinate to find airports
  * @param preferences : list of user prefered airlines, empty means user has no airline preference
  */
-void CSVReader::showShortestPath(const std::string src,const string dest, const double radius,const list<string>preferences) {
+void CSVReader::showShortestPath(const std::string src,const string dest, const double radius, const unordered_set<string>& preferences) {
     list<string>origin =this->decipherInput(src,radius);
     list<string>destination=this->decipherInput(dest,radius);
     auto travel=this->bfs(origin,destination,preferences);
