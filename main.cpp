@@ -153,9 +153,6 @@ void testFindAirportByName(){
 
 int main() {
     CSVReader reader;
-    auto temp= reader.airlinesFromAirport("OPO");
-    for (auto a:temp){
-        cout<<a.getName()<<endl;
-    }
+    reader.showShortestPath("Porto-Portugal","Lisbon-Portugal");
 
 }
