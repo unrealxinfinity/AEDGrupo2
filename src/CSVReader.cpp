@@ -191,7 +191,7 @@ unordered_set<string> CSVReader::reachableCountries(unsigned n, const string& so
             auto target = airports.find(Airport(w));
             if (!target->visited) {
                 q.emplace(u.first + 1, w);
-                target->visited = false;
+                target->visited = true;
             }
         }
     }
