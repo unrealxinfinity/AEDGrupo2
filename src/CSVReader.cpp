@@ -210,7 +210,12 @@ pair<list<Flight>, string> CSVReader::bfs(const list<string> &source, const list
     list<Flight> flights;
     for (const Airport& airport : airports) {
         airport.visited = false;
+        airport.is_destination = false;
         airport.predecessor = nullptr;
+    }
+    for (const string& s : dest) {
+        auto it = airports.find(Airport(s));
+        it->is_destination = true;
     }
     queue<string> q; // queue of unvisited nodes
     for (const string& s : source) {
@@ -223,11 +228,11 @@ pair<list<Flight>, string> CSVReader::bfs(const list<string> &source, const list
         // show node order
         //cout << u << " ";
         auto find = airports.find(Airport(u));
-        bool found = false;
+        /*bool found = false;
         for (const string& s : dest) {
             if (find->getCode() == s) found = true;
-        }
-        if (found) {
+        }*/
+        if (find->is_destination) {
             Flight* pred = find->predecessor;
             string prev;
             while (pred != nullptr) {

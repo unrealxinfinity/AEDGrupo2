@@ -33,6 +33,7 @@ public:
     Airport();
 
     mutable bool visited;
+    mutable bool is_destination;
     double distanceSince;
 
     void addFlight(Flight f) const{
