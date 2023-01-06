@@ -7,6 +7,7 @@
 #include <string>
 #include <list>
 #include <set>
+#include <stack>
 #include "Airline.h"
 #include "Airport.h"
 #include "Flight.h"
@@ -37,8 +38,8 @@ private:
     bool isFlownByAirline(const Flight& f,const unordered_set<string>& airline) const;
 
     //estas funcoes find retornam o codigo/lista codigos do aeroporto,complexidade O(N)
-    string findAirportByName(const string airportName,const string city, const string country) const;
-    list<string> findAirportByCity(const string city, const string country) const;
+    string findAirportByName(const string& airportName,const string& city, const string& country) const;
+    list<string> findAirportByCity(const string& city, const string& country) const;
     //encontra os aeroportos a partir de um centro, retorna unordered set com o centro inclusive;
     //complexidade O(N) sendo N a pesquisa pelo aeroporto com as coordenadas dadas e a pesquisa pelos aeroportos a menos de raio radius
     list<string> findAirportsAround(const double lat,const double longi,const double radius)const;
@@ -47,15 +48,16 @@ private:
     void populate();
     //Dando um input o decipher transforma o input numa lista de aeroportos para fazer bfs, faz throw de um inteiro caso os inputs estejam invalidos e nao estiverem de acordo com o formato dado
     //Complexidade O(N) sendo N a pesquisa pelos aeroportos de acordo com o input;
+    list<string> decipherInput(const string& src,const double radius=0);
 
-    int calculateNrAirports(const string tipo,const string country="");
-    int calculateNrFlights(const string tipo,const string countryOrAirline="");
-    int calculateNrAirlines(const string tipo, const string country="");
-    void showTopKAirports(const string tipo,const string country="",const int k=0);
+    int calculateNrAirports(const string& tipo,const string& country="");
+    int calculateNrFlights(const string& tipo,const string& countryOrAirline="");
+    int calculateNrAirlines(const string& tipo, const string& country="");
+    void showTopKAirports(const string& tipo,const string& country="",const int k=0);
 
     //returns the airport with the max nr of FLights, if given parameter then finds the airport with the max nr of flights being the max nr < given max;
-    Airport maxFlightsAirport(const int prevMax=-1,const string country="", const unordered_set<Airport,AirportHash> existingAirports={});
-    list<string> decipherInput(const string src,const double radius=0);
+    Airport maxFlightsAirport(const int prevMax=-1,const string& country="", const unordered_set<Airport,AirportHash>& existingAirports={});
+    bool dfs_art(const string& code, int index, const string& initial);
 
 public:
     CSVReader();
@@ -66,15 +68,22 @@ public:
     // a;
     //Radius e preferencias estao como default 0 e empty caso o user nao precise de introduzir radius ou nao tenha preferencias;
     //Complexity O(N) being N the size of the path of travel
-    void showShortestPath(const string src,const string dest,const double radius=0,const unordered_set<string>& preferences={});
+    void showShortestPath(const string& src,const string& dest,const double radius=0,const unordered_set<string>& preferences={});
     list<Flight> flightsFromAirport(const string& cod);
     list<pair<string,Flight>> flightsToAirport(const string& cod);
-    void globalStatistics(const string tipo,const string modo,const string country="",const string airline="",const int k=0 );
+    void globalStatistics(const string& tipo,const string& modo,const string& country="",const string& airline="",const int k=0 );
     set<Airline>airlinesFromAirport(const string& cod);
     set<Airline> airlinesToAirport(const string& cod);
     set<string> countriesFromAirport(const string& cod);
     set<string> countriesToAirport(const string& cod);
-    unordered_set<string> reachableCountries(unsigned int n, const string& source);
+    set<pair<string,pair<string,string>>> citiesFromAirport(const string& cod);
+    set<pair<string,pair<string,string>>> citiesToAirport(const string& cod);
+
+    bool isArticulationPoint(const string& code);
+
+    set<string> reachableCountries(unsigned int n, const string& source);
+    set<string> reachableAirports(unsigned int n, const string& source);
+    set<pair<string,string>> reachableCities(unsigned int n, const string& source);
 };
 
 
