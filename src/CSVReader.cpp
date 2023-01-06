@@ -204,8 +204,8 @@ bool CSVReader::dfs_art(const string &code, int index, const string& initial) {
  * @param source source airport code
  * @return unordered_set with the names of reachable countries
  */
-unordered_set<string> CSVReader::reachableCountries(unsigned n, const string& source) {
-    unordered_set<string> countries;
+set<string> CSVReader::reachableCountries(unsigned n, const string& source) {
+    set<string> countries;
     for (const Airport& airport : airports) {
         airport.visited = false;
         airport.predecessor = nullptr;
@@ -228,6 +228,66 @@ unordered_set<string> CSVReader::reachableCountries(unsigned n, const string& so
         }
     }
     return countries;
+}
+/**Calculates the reachable airports with n flights from an airport
+ *@attention Complexity : O(N + F) (N = Number of airports),(F = number of flights)
+ * @param n : flights
+ * @param source : source airport
+ * @return set of reachable airport codes
+ */
+set<string> CSVReader::reachableAirports(unsigned int n, const string& source){
+    set<string> reachableairports;
+    for (const Airport& airport : airports) {
+        airport.visited = false;
+        airport.predecessor = nullptr;
+    }
+    queue<pair<int, string>> q;
+    q.emplace(0, source);
+
+    while (!q.empty() && q.front().first <= n) {
+        auto u = q.front(); q.pop();
+        auto find = airports.find(Airport(u.second));
+        reachableairports.insert(find->getCode());
+        for (const auto& e : find->flights) {
+            string w = e.destAirportCode_;
+            auto target = airports.find(Airport(w));
+            if (!target->visited) {
+                q.emplace(u.first + 1, w);
+                target->visited = true;
+            }
+        }
+    }
+    return reachableairports;
+}
+/**Calculates the reachable cities from an airport
+ * @attention Complexity : O(N + F) (N=number of airports), ( F= Number of flights)
+ * @param n : number of flights
+ * @param source : source airport
+ * @return a pair of reachable cities and their respective countries
+ */
+set<pair<string,string>> CSVReader::reachableCities(unsigned int n, const std::string &source) {
+    set<pair<string,string>> reachablecities;
+    for (const Airport& airport : airports) {
+        airport.visited = false;
+        airport.predecessor = nullptr;
+    }
+    queue<pair<int, string>> q;
+    q.emplace(0, source);
+
+    while (!q.empty() && q.front().first <= n) {
+        auto u = q.front(); q.pop();
+        auto find = airports.find(Airport(u.second));
+        reachablecities.insert({find->getCity()->get_name(),find->getCity()->get_country()});
+        for (const auto& e : find->flights) {
+            string w = e.destAirportCode_;
+            auto target = airports.find(Airport(w));
+            if (!target->visited) {
+                q.emplace(u.first + 1, w);
+                target->visited = true;
+            }
+        }
+    }
+    return reachablecities;
 }
 
 /**
@@ -404,6 +464,7 @@ list<string> CSVReader::decipherInput(const string src,const double radius) {
     auto it=airports.find(target);
     if(it==airports.end()) throw error;
     source1.push_back(it->getCode());
+
     return source1;
 }
 /**

@@ -48,6 +48,7 @@ private:
     void populate();
     //Dando um input o decipher transforma o input numa lista de aeroportos para fazer bfs, faz throw de um inteiro caso os inputs estejam invalidos e nao estiverem de acordo com o formato dado
     //Complexidade O(N) sendo N a pesquisa pelos aeroportos de acordo com o input;
+    list<string> decipherInput(const string src,const double radius=0);
 
     int calculateNrAirports(const string tipo,const string country="");
     int calculateNrFlights(const string tipo,const string countryOrAirline="");
@@ -75,8 +76,10 @@ public:
     set<Airline> airlinesToAirport(const string& cod);
     set<string> countriesFromAirport(const string& cod);
     set<string> countriesToAirport(const string& cod);
-    unordered_set<string> reachableCountries(unsigned int n, const string& source);
     bool isArticulationPoint(const string& code);
+    set<string> reachableCountries(unsigned int n, const string& source);
+    set<string> reachableAirports(unsigned int n, const string& source);
+    set<pair<string,string>> reachableCities(unsigned int n, const string& source);
 };
 
 
