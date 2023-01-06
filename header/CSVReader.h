@@ -7,6 +7,7 @@
 #include <string>
 #include <list>
 #include <set>
+#include <stack>
 #include "Airline.h"
 #include "Airport.h"
 #include "Flight.h"
@@ -56,6 +57,7 @@ private:
 
     //returns the airport with the max nr of FLights, if given parameter then finds the airport with the max nr of flights being the max nr < given max;
     Airport maxFlightsAirport(const int prevMax=-1,const string country="", const unordered_set<Airport,AirportHash> existingAirports={});
+    bool dfs_art(const string& code, int index, const string& initial);
 
 public:
     CSVReader();
@@ -75,6 +77,7 @@ public:
     set<string> countriesToAirport(const string& cod);
     set<pair<string,string>> citiesFromAirport(const string& cod);
     set<pair<string,string>> citiesToAirport(const string& cod);
+    bool isArticulationPoint(const string& code);
     set<string> reachableCountries(unsigned int n, const string& source);
     set<string> reachableAirports(unsigned int n, const string& source);
     set<pair<string,string>> reachableCities(unsigned int n, const string& source);
