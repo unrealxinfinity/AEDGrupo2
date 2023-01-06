@@ -62,7 +62,8 @@ public:
 
     unordered_set<Airline,AirlineHash> getAirlines(){return airlines;}
     unordered_set<Airport, AirportHash> getAirports();
-    //Mostra o caminho mais curto dando um src seguindo um formato, um dest seguindo tais formatos raius caso o user procure pela cidade ou pelas coordenadas e preferencias caso ela tenha alguma preferencia de companhia aeria;
+    //Mostra o caminho mais curto dando um src seguindo um formato, um dest seguindo tais formatos raius caso o user procure pela cidade ou pelas coordenadas e preferencias caso ela tenha alguma preferencia de companhia aere
+    // a;
     //Radius e preferencias estao como default 0 e empty caso o user nao precise de introduzir radius ou nao tenha preferencias;
     //Complexity O(N) being N the size of the path of travel
     void showShortestPath(const string src,const string dest,const double radius=0,const unordered_set<string>& preferences={});

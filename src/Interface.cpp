@@ -6,6 +6,8 @@
 #include <iostream>
 #include <set>
 #include <algorithm>
+#include <sstream>
+#include <vector>
 
 using namespace std;
 
@@ -15,8 +17,24 @@ bool Interface::is_in(string choice, int lim_start, int lim_end) const{
     return false;
 }
 
+vector<string> split(const string &str, char sep){
+    vector<string> tokens;
+    string i;
+    stringstream ss(str);
+    while (ss >> i) {
+        tokens.push_back(i);
+        if (ss.peek() == sep) {
+            ss.ignore();
+        }
+    }
+    return tokens;
+}
+
+
+
 int Interface::initiate() {
 
+    string src, dest;
     list <string> save; //contem os inputs do user
     auto it = save.begin();
 
@@ -46,7 +64,8 @@ int Interface::initiate() {
             cout << "Introduza o aeroporto pretendido:\n\t0.Voltar" << endl;
             getline(cin,aeroporto);
             if (aeroporto == "0") goto menuRota;
-            save.push_back(aeroporto);
+            //save.push_back(aeroporto);
+
         }
         //caso o criterio for cidade
         if (criteria1 == "2"){
@@ -113,13 +132,19 @@ int Interface::initiate() {
 
         menuResult:
         cout << "A carregar..." << endl;
-        
+        while (it != save.end()){
+            const string str = *it;
+            char sep = ',';
+            split(str, sep);
+        }
 
     }
 
 
     //Caso o user escolha Informacoes
-    else if(userInput == "2"){}
+    else if(userInput == "2"){
+
+    }
 
 }
 
