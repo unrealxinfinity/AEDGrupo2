@@ -526,7 +526,7 @@ list<pair<string,Flight>> CSVReader::flightsToAirport(const string &cod) {
 }
 /**
  * Calculates the nr of airports related to the whole web or by country
- * @attention Complexity : O(1) if operation done for the whole web and O(N) if its specific for a country (N= nr of related Airports);
+ * @attention Complexity : O(1) if operation done for the whole network and O(N) if its specific for a country (N= nr of related Airports);
  * @param tipo : Type of operation - if for the whole web or only for the country being it "rede" or "pais" respectively
  * @param country : In case the operation is related to a country, it's the related country
  * @return Nr or related airports
@@ -568,6 +568,12 @@ int CSVReader::calculateNrFlights(const std::string tipo, const std::string coun
     }
     return res;
 }
+/**Calculates the number of airlines;
+ * Complexity : Worst Case O(N) for search type by country (N=number of airlines), O(1) case search type by the network
+ * @param tipo
+ * @param country
+ * @return
+ */
 int CSVReader::calculateNrAirlines(const std::string tipo, const std::string country) {
     int res=0;
     if(tipo=="rede"){
@@ -582,6 +588,13 @@ int CSVReader::calculateNrAirlines(const std::string tipo, const std::string cou
     }
     return res;
 }
+/**Searches for the airport with the max nr of flights
+ * @attention Complexity : O(N) (N=number of airports);
+ * @param prevMax : given this max the function searches the airport with max nr of flights but that max has to be <= than actual max
+ * @param country : country case search criteria is by country;
+ * @param existingAirports : airports already found to be avoided;
+ * @return Airport with the max nr of flights;
+ */
 Airport CSVReader::maxFlightsAirport(const int prevMax,const string country,const unordered_set<Airport,AirportHash> existingAirports) {
     int max=0;
     Airport temp;
@@ -644,7 +657,7 @@ void CSVReader::showTopKAirports(const std::string tipo, const std::string count
 }
 
 /**
- * Shows the global statistics given a type(ex: of all the web, a country or airline ),a mode (ex: statistics of nr of airports,nr of flights, nr of companies,top k airports with the most flights or companies)
+ * Shows the global statistics given a type(ex: of all the network, a country or airline ),a mode (ex: statistics of nr of airports,nr of flights, nr of companies,top k airports with the most flights or companies)
  * Possible combinations: rede-nAirports, pais-nAirports, rede-nFlights,pais-nFlights,companhia aerea-nFlights, rede - top-k airports, pais - top-k airports;
  * @attention Complexity : O(N) average (N=Nr of airports), O(N*E) worst case (N= Nr of related airports, E=Nr of related airlines)
  * @param tipo - it can be "rede","pais", or "companhia aeria"
