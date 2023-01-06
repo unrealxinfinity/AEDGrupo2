@@ -719,7 +719,7 @@ set<pair<string,string>> CSVReader::citiesFromAirport(const std::string &cod) {
 }
 /** Calculate the source cities of incoming flights to an airport
  * @attention Complexity : O(n + mlog(p)) (n = number of airports; m = number of flights to airport; p = number of distinct cities to airport)
- * @param cod
+ * @param cod : Airport code
  * @return set of pairs of city-country
  */
 set<pair<string,string>> CSVReader::citiesToAirport(const std::string &cod) {
