@@ -514,7 +514,7 @@ list<Flight> CSVReader::flightsFromAirport(const string &cod) {
  * Determines which flights arrive at a given airport \n
  * @attention Complexity: O(n) (n = number of flights)
  * @param cod code of airport
- * @return list of flights arriving at airport
+ * @return list of pairs of source airport code and flight arriving at airport
  */
 list<pair<string,Flight>> CSVReader::flightsToAirport(const string &cod) {
     list<pair<string,Flight>> res;
