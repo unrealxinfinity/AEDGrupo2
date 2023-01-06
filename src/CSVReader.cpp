@@ -165,6 +165,38 @@ bool CSVReader::isFlownByAirline(const Flight& f,const unordered_set<string>& ai
     return false;
 }
 
+bool CSVReader::dfs_art(const string &code, int index, const string& initial) {
+    auto find = airports.find(Airport(code));
+    find->visited = true;
+    find->num = index;
+    find->low = index;
+    index++;
+    find->in_stack = true;
+
+    int count = 0;
+    for (const auto& e : find->flights) {
+        auto dest = airports.find(Airport(e.destAirportCode_));
+        if (!dest->visited) {
+            count++;
+            if (dfs_art(e.destAirportCode_, index, initial)) return true;
+            find->low = min(find->low, dest->low);
+        }
+        else if (dest->in_stack) {
+            find->low = min(find->low, dest->num);
+        }
+
+        if (find->num != 1 && !find->is_destination && dest->low >= find->num) {
+            find->is_destination = true;
+            if (code == initial) return true;
+        }
+        else if (!find->is_destination && find->num == 1 && count > 1) {
+            find->is_destination = true;
+            if (code == initial) return true;
+        }
+    }
+    return false;
+}
+
 /**
  * Determines which countries can be reached from a given airport in a given number of flights \n
  * @attention Complexity: O(V + E) (V = number of airports, E = number of flights)
@@ -639,4 +671,21 @@ set<string> CSVReader::countriesToAirport(const std::string &cod) {
         countries.insert(cityP->get_country());
     }
     return countries;
+}
+
+bool CSVReader::isArticulationPoint(const string &code) {
+    for (const Airport& airport : airports) {
+        airport.visited = false;
+        airport.in_stack = false;
+        airport.is_destination = false;
+    }
+    stack<string> s;
+    for (const Airport& airport : airports)
+        if (!airport.visited) {
+            dfs_art(airport.getCode(), 1, airport.getCode());
+            auto find = airports.find(Airport(code));
+            if (find->visited)
+                return find->is_destination;
+        }
+    return false;
 }

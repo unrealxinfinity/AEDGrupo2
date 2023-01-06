@@ -34,6 +34,9 @@ public:
 
     mutable bool visited;
     mutable bool is_destination;
+    mutable bool in_stack;
+    mutable int num;
+    mutable int low;
     double distanceSince;
 
     void addFlight(Flight f) const{
