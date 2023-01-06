@@ -696,12 +696,13 @@ set<Airline> CSVReader::airlinesFromAirport(const std::string &cod) {
  * @return set of unique airlines that arrive at the airport
  */
 set<Airline> CSVReader::airlinesToAirport(const std::string &cod) {
-    unordered_set<Airline,AirlineHash> uniqueAirlines;
+    set<Airline> uniqueAirlines;
     auto temp = flightsToAirport(cod);
     for(const auto& a : temp){
         auto ins=airlines.find(Airline(a.second.airline_,"","",""));
         uniqueAirlines.insert(*ins);
     }
+    return uniqueAirlines;
 }
 /**Checks for the dest countries that flights from a certain airport reach
  * @attention Complexity : O(nlog(m)) (n = number of flights the airport has; m = number of distinct countries from airport)
