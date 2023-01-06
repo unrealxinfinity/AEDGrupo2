@@ -701,3 +701,34 @@ set<string> CSVReader::countriesToAirport(const std::string &cod) {
     }
     return countries;
 }
+
+/** Calculates the cities that are reachable by the outgoing flights in that airport
+ * @attention Complexity : O(nlog(m)) (n = number of flights the airport has; m = number of distinct cities from airport)
+ * @param cod Airport Code
+ * @return set pair of city and country
+ */
+set<pair<string,string>> CSVReader::citiesFromAirport(const std::string &cod) {
+    list<Flight> temp= flightsFromAirport(cod);
+    set<pair<string,string>> res;
+    for(Flight f:temp){
+        auto targetIt= airports.find(Airport(f.destAirportCode_));
+        City *cityP=targetIt->getCity();
+        cities.insert({cityP->get_name(),cityP->get_country()});
+    }
+    return res;
+}
+/** Calculate the source cities of incoming flights to an airport
+ * @attention Complexity : O(n + mlog(p)) (n = number of airports; m = number of flights to airport; p = number of distinct cities to airport)
+ * @param cod
+ * @return set of pairs of city-country
+ */
+set<pair<string,string>> CSVReader::citiesToAirport(const std::string &cod) {
+    list<pair<string,Flight>> flights= flightsToAirport(cod);
+    set<pair<string,string>> res;
+    for (const auto& p:flights){
+        auto targetIt=airports.find(Airport(p.first));
+        City *cityP=targetIt->getCity();
+        res.insert({cityP->get_name(),cityP->get_country()});
+    }
+    return res;
+}

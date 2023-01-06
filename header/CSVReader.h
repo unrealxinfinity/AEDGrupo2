@@ -73,6 +73,8 @@ public:
     set<Airline> airlinesToAirport(const string& cod);
     set<string> countriesFromAirport(const string& cod);
     set<string> countriesToAirport(const string& cod);
+    set<pair<string,string>> citiesFromAirport(const string& cod);
+    set<pair<string,string>> citiesToAirport(const string& cod);
     set<string> reachableCountries(unsigned int n, const string& source);
     set<string> reachableAirports(unsigned int n, const string& source);
     set<pair<string,string>> reachableCities(unsigned int n, const string& source);
