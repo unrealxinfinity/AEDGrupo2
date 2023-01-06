@@ -362,7 +362,7 @@ pair<list<Flight>, string> CSVReader::bfs(const list<string> &source, const list
  * @param airportName name of airport
  * @return code of airport, empty string if airport does not exist
  */
-string CSVReader::findAirportByName(const std::string airportName,const string city, const string country) const {
+string CSVReader::findAirportByName(const std::string& airportName,const string& city, const string& country) const {
 
 
     auto it = airports.begin();
@@ -382,7 +382,7 @@ string CSVReader::findAirportByName(const std::string airportName,const string c
  * @param country name of country
  * @return codes of all airports in the city
  */
-list<string> CSVReader::findAirportByCity(const std::string city, const std::string country) const {
+list<string> CSVReader::findAirportByCity(const std::string& city, const std::string& country) const {
     auto it = airports.begin();
     list<string> res;
     while(it!=airports.end()){
@@ -400,7 +400,7 @@ list<string> CSVReader::findAirportByCity(const std::string city, const std::str
  * @param radius : In case of search by coordinates, needs radius to find airports around the coordinates given by user input
  * @return list<string> : List of airport codes in string
  */
-list<string> CSVReader::decipherInput(const string src,const double radius) {
+list<string> CSVReader::decipherInput(const string& src,const double radius) {
     list<string>source1;
     int error=-1;
 
@@ -475,7 +475,7 @@ list<string> CSVReader::decipherInput(const string src,const double radius) {
  * @param radius : radius around a given coordinate to find airports
  * @param preferences : list of user prefered airlines, empty means user has no airline preference
  */
-void CSVReader::showShortestPath(const std::string src,const string dest, const double radius, const unordered_set<string>& preferences) {
+void CSVReader::showShortestPath(const std::string& src,const string& dest, const double radius, const unordered_set<string>& preferences) {
     list<string>origin =this->decipherInput(src,radius);
     list<string>destination=this->decipherInput(dest,radius);
     auto travel=this->bfs(origin,destination,preferences);
@@ -531,7 +531,7 @@ list<pair<string,Flight>> CSVReader::flightsToAirport(const string &cod) {
  * @param country : In case the operation is related to a country, it's the related country
  * @return Nr or related airports
  */
-int CSVReader::calculateNrAirports(const std::string tipo,const string country) {
+int CSVReader::calculateNrAirports(const std::string& tipo,const string& country) {
     int airportCount=0;
     if(tipo=="rede"){
         return airports.size();
@@ -544,7 +544,13 @@ int CSVReader::calculateNrAirports(const std::string tipo,const string country) 
     }
     return airportCount;
 }
-int CSVReader::calculateNrFlights(const std::string tipo, const std::string countryOrAirline) {
+/**Calculates the nr of flights related to the whole network or by country or by airline
+ * @attention Complexity : O(1) if operation done for the whole network and O(N) if its specific for a country/airline (N= nr of related Airports);
+ * @param tipo : Type of operation - if for the whole network or only for the country being it "rede" or "pais" or "companhia aerea" respectively
+ * @param country : In case the operation is related to a country/airline, it's the related country/airline
+ * @return Nr or related airports
+ */
+int CSVReader::calculateNrFlights(const std::string& tipo, const std::string& countryOrAirline) {
     int res=0;
     if(tipo=="rede"){
             for(Airport a : airports){
@@ -568,13 +574,14 @@ int CSVReader::calculateNrFlights(const std::string tipo, const std::string coun
     }
     return res;
 }
+
 /**Calculates the number of airlines;
  * Complexity : Worst Case O(N) for search type by country (N=number of airlines), O(1) case search type by the network
  * @param tipo
  * @param country
- * @return
+ * @return number or airlines
  */
-int CSVReader::calculateNrAirlines(const std::string tipo, const std::string country) {
+int CSVReader::calculateNrAirlines(const string& tipo, const string& country) {
     int res=0;
     if(tipo=="rede"){
         return airlines.size();
@@ -631,7 +638,7 @@ Airport CSVReader::maxFlightsAirport(const int prevMax,const string country,cons
  * @param country : only necessary for tipo=="pais", otherwise "";
  * @param k : Nr of lines to be shown
  */
-void CSVReader::showTopKAirports(const std::string tipo, const std::string country, const int k) {
+void CSVReader::showTopKAirports(const std::string& tipo, const std::string& country, const int k) {
     int max=-1;
     int temp=1;
     unordered_set<Airport,AirportHash> existingAirports;
@@ -666,7 +673,7 @@ void CSVReader::showTopKAirports(const std::string tipo, const std::string count
  * @param airline - optional parameter only for comapnhjia aerea-nFlights for now, if not necessary then ""
  * @param k - k number of airports to be shown -optional paramenter only necessary in certain cases like "top-k airports"
  */
-void CSVReader::globalStatistics(const string tipo, const std::string modo,const string country, const string airline, const int k) {
+void CSVReader::globalStatistics(const string& tipo, const std::string& modo,const string& country, const string& airline, const int k) {
     //Case type of global statistics is all
     if(modo=="nAirports"){
         cout<<"O tipo:"<<tipo<<" foi escolhido e no total existem:"<<calculateNrAirports(tipo,country)<<" aeroportos relacionados com esse/a "<<tipo<<endl;
