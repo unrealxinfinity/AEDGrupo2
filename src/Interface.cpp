@@ -145,7 +145,7 @@ int Interface::initiate() {
         try {
             database->showShortestPath(str, dest, rad, pref1);
         } catch(int error){
-            cout << "Alguns dos dados inseridos estão incorretos, por favor, tente novamente. " << endl;
+            cout << "Alguns dos dados inseridos estao incorretos, por favor, tente novamente. " << endl;
             goto menuRota;
         }
 
@@ -319,7 +319,7 @@ int Interface::initiate() {
             try {
                 database->globalStatistics(tipo, modo, country, airline, k);
             } catch (int error) {
-                cout << "Alguns dos dados inseridos estão incorretos, por favor, tente novamente. " << endl;
+                cout << "Alguns dos dados inseridos estao incorretos, por favor, tente novamente. " << endl;
                 goto menuGlobal;
             }
         }
