@@ -20,7 +20,7 @@ private:
 public:
     Interface();
     Interface(CSVReader& reader);
-    vector<string> split(const string &str, char sep);
+    unordered_set<string> split(const string &str, char sep);
     int initiate();
     //Dados dois locais, indicar a melhor maneira de voar de um para o outro (menor número de voos).
         //Local - aeroporto em especifico, cidade (considerar todos os aeroportos presentes) ou uma localização (coordenadas, considerar todos os aeroportas a X kms da localização).
