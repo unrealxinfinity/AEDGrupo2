@@ -652,7 +652,7 @@ Airport CSVReader::maxFlightsAirport(const int prevMax,const string country,cons
             }
         }
     }
-    //if(!found) throw error;
+    if(!found) throw error;
     return temp;
 }
 /**

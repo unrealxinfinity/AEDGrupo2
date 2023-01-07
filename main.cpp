@@ -156,6 +156,6 @@ int main() {
     CSVReader reader;
     //reader.showShortestPath("Porto-Portugal","Lisbon-Portugal",50,{"TAP Air Portugal"});
     auto temp =reader.airlinesToAirport("OPO");
-    reader.globalStatistics("pais","top-k airports","Portugal","",5);
+    reader.globalStatistics("pais","top-k airports","Portuga","",5);
 
 }
