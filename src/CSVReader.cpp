@@ -506,7 +506,7 @@ void CSVReader::showShortestPath(const std::string& src,const string& dest, cons
  */
 list<Flight> CSVReader::flightsFromAirport(const string &cod) {
     auto it = airports.find(Airport(cod));
-    if (it == airports.end()) return {};
+    if (it == airports.end()) throw -1;
     return it->flights;
 }
 
@@ -522,6 +522,7 @@ list<pair<string,Flight>> CSVReader::flightsToAirport(const string &cod) {
         for (const Flight& flight : airport.flights)
             if (flight.destAirportCode_ == cod)
                 res.emplace_back(airport.getCode(), flight);
+    if(res.size()==0) throw -1;
     return res;
 }
 /**
