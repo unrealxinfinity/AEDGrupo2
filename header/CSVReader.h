@@ -56,7 +56,7 @@ private:
     void showTopKAirports(const string& tipo,const string& country="",const int k=0);
 
     //returns the airport with the max nr of Flights, if given parameter then finds the airport with the max nr of flights being the max nr < given max;
-    Airport maxFlightsAirport(const int prevMax=-1,const string country="", const unordered_set<Airport,AirportHash> existingAirports={});
+    Airport maxFlightsAirport(const int prevMax=-1,const string& country="", const unordered_set<Airport,AirportHash>& existingAirports={});
     bool dfs_art(const string& code, int index, const string& initial);
 
 public:
