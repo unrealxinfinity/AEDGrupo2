@@ -32,9 +32,6 @@ unordered_set<string> Interface::split(const string &str, char sep){
 
 int Interface::initiate() {
 
-    list <string> save; //contem os inputs do user
-    auto it = save.begin();
-
     MenuPrincipal: string userInput;
     cout << "Introduza o numero do comando: \n\t1. Calcular rota de voo \n\t2.Informacoes\n\t0.Sair do programa" << endl;
     cin >> userInput;
@@ -46,7 +43,9 @@ int Interface::initiate() {
 
     //Caso o user escolha Calcular rota de voo
     if(userInput == "1"){
-        menuRota: string criteria1, criteria2, aeroporto, cidade, loc, x;
+        menuRota: string criteria1, criteria2, aeroporto, cidade, loc;
+        int x;
+        string str, dest;
         cout << "Escolha o criterio para a partida e para a chegada:\n\tLocal de partida:\n\t1.Aeroporto\n\t2.Cidade-Pais\n\t3.Localizacao\n\tLocal de chegada:\n\t1.Aeroporto\n\t2.Cidade\n\t3.Localizacao\n\0.Voltar" << endl;
 
         //partida
@@ -59,31 +58,35 @@ int Interface::initiate() {
         //caso o criterio for aeroporto
         if (criteria1 == "1"){
             cout << "Introduza o aeroporto pretendido:\n\t0.Voltar" << endl;
+            cin.ignore();
             getline(cin,aeroporto);
             if (aeroporto == "0") goto menuRota;
-            //save.push_back(aeroporto);
+            str = aeroporto;
 
         }
         //caso o criterio for cidade
         if (criteria1 == "2"){
             cout << "Introduza a cidade-pais pretendida neste mesmo formato:\n\t0.Voltar" << endl;
+            cin.ignore();
             getline(cin,cidade);
             if (cidade == "0") goto menuRota;
-            save.push_back(cidade);
+            str = cidade;
         }
         //caso o criterio for localizacao
         if (criteria1 == "3"){
             cout << "Introduza as coordenadas neste formato - (latitude,longitude):\n\t0.Voltar" << endl;
+            cin.ignore();
             getline(cin,loc);
             if (loc == "0") goto menuRota;
             cout << "Introduza o raio que abranja os aeroportos desejados (em kilometros): " << endl;
-            getline(cin, x);
-            save.push_back(loc);
+            cin >> x;
+            str = loc;
         }
 
         
         //chegada
         cin >> criteria2;
+        cout << "Escolha o criterio para a chegada\n\tLocal de partida:\n\t1.Aeroporto\n\t2.Cidade-Pais\n\t3.Localizacao\n\tLocal de chegada:\n\t1.Aeroporto\n\t2.Cidade\n\t3.Localizacao\n\0.Voltar" << endl;
         while(!is_in(criteria2, 0, 3)){
             cout << "Sintaxe errada.\nPor favor, reintroduzir:" << endl;
             cin >> criteria2;
@@ -92,25 +95,28 @@ int Interface::initiate() {
         //caso o criterio for aeroporto
         if (criteria2 == "1"){
             cout << "Introduza o aeroporto pretendido:\n\t0.Voltar" << endl;
+            cin.ignore();
             getline(cin,aeroporto);
             if (aeroporto == "0") goto menuRota;
-            save.push_back(aeroporto);
+            dest = aeroporto;
         }
         //caso o criterio for cidade
         if (criteria2 == "2"){
             cout << "Introduza a cidade-pais pretendida neste mesmo formato:\n\t0.Voltar" << endl;
+            cin.ignore();
             getline(cin,cidade);
             if (cidade == "0") goto menuRota;
-            save.push_back(cidade);
+            dest = cidade;
         }
         //caso o criterio for localizacao
         if (criteria2 == "3"){
             cout << "Introduza as coordenadas neste formato - (latitude,longitude):\n\t0.Voltar" << endl;
+            cin.ignore();
             getline(cin,loc);
             if (loc == "0") goto menuRota;
             cout << "Introduza o raio que abranja os aeroportos desejados (em kilometros): " << endl;
-            getline(cin, x);
-            save.push_back(loc);
+            cin >> x;
+            dest = loc;
         }
 
         menuAirline: string air, perso;
@@ -121,25 +127,27 @@ int Interface::initiate() {
         //qualquer uma
         if (air == "1"){
             perso = "";
-            save.push_back(perso);
+
         }
         //personalizado
         if (air == "2"){
             cout << "Introduza as companhias aereas pretendidas: " << endl;
+            cin.ignore();
             getline(cin, perso);
-            save.push_back(perso);
+
         }
 
         menuResult:
-        const string str = *it;
-        it++;
-        const string dest = *it;
-        it++;
-        const string pref = *it;
         char sep = ',';
-        const unordered_set<string> pref1 = split(pref, sep);
-        const double rad = stod(x);
-        database -> showShortestPath(str, dest, rad, pref1);
+        unordered_set<string> pref1 = split(perso, sep);
+        double rad = x;
+
+        try {
+            database->showShortestPath(str, dest, rad, pref1);
+        } catch(int error){
+            cout << "Alguns dos dados inseridos estão incorretos, por favor, tente novamente. " << endl;
+            goto menuRota;
+        }
 
     }
 
@@ -170,54 +178,102 @@ int Interface::initiate() {
                 menu1:
                 cout << "Por favor, insira o codigo do aeroporto: " << endl;
                 cin >> cod;
-                database -> airlinesFromAirport(cod);
+                try{
+                    database -> airlinesFromAirport(cod);
+                }catch (int error){
+                    cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
+                    goto menu1;
+                }
             }
             if (ch2 == "2"){
                 menu2:
                 cout << "Por favor, insira o codigo do aeroporto: " << endl;
                 cin >> cod;
-                database -> airlinesToAirport(cod);
+                try{
+                    database -> airlinesToAirport(cod);
+                }catch (int error){
+                    cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
+                    goto menu2;
+                }
+
             }
             if (ch2 == "3"){
                 menu3:
                 cout << "Por favor, insira o codigo do aeroporto: " << endl;
                 cin >> cod;
-                database -> countriesFromAirport(cod);
+                try{
+                    database -> countriesFromAirport(cod);
+                }catch (int error){
+                    cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
+                    goto menu3;
+                }
+
             }
             if (ch2 == "4"){
                 menu4:
                 cout << "Por favor, insira o codigo do aeroporto: " << endl;
                 cin >> cod;
-                database -> countriesToAirport(cod);
+                try{
+                    database -> countriesToAirport(cod);
+                }catch (int error){
+                    cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
+                    goto menu4;
+                }
+
             }
             if (ch2 == "5"){
                 menu5:
                 cout << "Por favor, insira o codigo do aeroporto: " << endl;
                 cin >> cod;
-                database -> citiesFromAirport(cod);
+                try{
+                    database -> citiesFromAirport(cod);
+                }catch (int error){
+                    cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
+                    goto menu5;
+                }
+
             }
             if (ch2 == "6"){
                 menu6:
                 cout << "Por favor, insira o codigo do aeroporto: " << endl;
                 cin >> cod;
-                database -> citiesToAirport(cod);
+                try{
+                    database -> citiesToAirport(cod);
+                }catch (int error){
+                    cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
+                    goto menu6;
+                }
+
             }
             if (ch2 == "7"){
                 menu7:
                 cout << "Por favor, insira o codigo do aeroporto: " << endl;
                 cin >> cod;
-                database -> flightsFromAirport(cod);
+                try{
+                    database -> flightsFromAirport(cod);
+                }catch (int error){
+                    cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
+                    goto menu7;
+                }
+
             }
             if (ch2 == "8"){
                 menu8:
                 cout << "Por favor, insira o codigo do aeroporto: " << endl;
                 cin >> cod;
-                database -> flightsToAirport(cod);
+                try{
+                    database -> flightsToAirport(cod);
+                }catch (int error){
+                    cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
+                    goto menu8;
+                }
+
             }
         }
 
         if (ch1 == "2"){
-            menuGlobal: string tipo, modo, country, airline, k;
+            menuGlobal: string tipo, modo, country, airline;
+            int k;
             cout << "Pretende: \n\t1.Network completa\n\t2.Pais\n\t3.Companhia aerea\n\t0.Voltar" << endl;
             cin >> tipo;
             if (tipo == "0") goto menuInfo;
@@ -250,6 +306,7 @@ int Interface::initiate() {
                 cout << "Sintaxe errada.\nPor favor, reintroduzir:" << endl;
                 cin >> modo;
             }
+            k = 0;
             if (modo == "1"){modo = "nAirports";}
             if (modo == "2"){modo = "nFlights";}
             if (modo == "3"){modo = "nAirlines";}
@@ -258,13 +315,17 @@ int Interface::initiate() {
                 cout << "Qual o numero de aeroportos que pretende que Top mostre: " << endl;
                 cin >> k;
             }
-            
-            const int k1 = stoi(k);
-            database -> globalStatistics(tipo,modo,country,airline,k1);
+
+            try {
+                database->globalStatistics(tipo, modo, country, airline, k);
+            } catch (int error) {
+                cout << "Alguns dos dados inseridos estão incorretos, por favor, tente novamente. " << endl;
+                goto menuGlobal;
+            }
         }
 
     }
-
+    return 0;
 }
 
 Interface::Interface(CSVReader &reader) : database(&reader) {}
