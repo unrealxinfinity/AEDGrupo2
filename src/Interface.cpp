@@ -16,7 +16,7 @@ bool Interface::is_in(string choice, int lim_start, int lim_end) const{
     return false;
 }
 
-unordered_set<string> split(const string &str, char sep){
+unordered_set<string> Interface::split(const string &str, char sep){
     unordered_set<string> tokens;
     string i;
     stringstream ss(str);
@@ -268,3 +268,4 @@ int Interface::initiate() {
 }
 
 Interface::Interface(CSVReader &reader) : database(&reader) {}
+
