@@ -724,7 +724,7 @@ void CSVReader::globalStatistics(const string& tipo, const std::string& modo,con
         cout<<"O tipo:"<<tipo<<" foi escolhido e no total existem:"<<calculateNrAirlines(tipo,country)<<" companhias aereas relacionados com esse/a "<<tipo<<endl;
     }
     if(modo=="top-k airports"){
-        if(k==0) throw error;
+        if(k<=0) throw error;
         cout<<"O tipo:"<<tipo<<" foi escolhido e o ranking por nr de voos é o seguinte:"<<endl;
         showTopKAirports(tipo,country,k);
     }
