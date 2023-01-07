@@ -33,7 +33,6 @@ unordered_set<string> Interface::split(const string &str, char sep){
 int Interface::initiate() {
 
     list <string> save; //contem os inputs do user
-    auto it = save.begin();
 
     MenuPrincipal: string userInput;
     cout << "Introduza o numero do comando: \n\t1. Calcular rota de voo \n\t2.Informacoes\n\t0.Sair do programa" << endl;
@@ -50,6 +49,7 @@ int Interface::initiate() {
         cout << "Escolha o criterio para a partida e para a chegada:\n\tLocal de partida:\n\t1.Aeroporto\n\t2.Cidade-Pais\n\t3.Localizacao\n\tLocal de chegada:\n\t1.Aeroporto\n\t2.Cidade\n\t3.Localizacao\n\0.Voltar" << endl;
 
         //partida
+        cout<<"Partida"<<endl;
         cin >> criteria1;
         while(!is_in(criteria1, 0, 3)){
             cout << "Sintaxe errada.\nPor favor, reintroduzir:" << endl;
@@ -67,6 +67,8 @@ int Interface::initiate() {
         //caso o criterio for cidade
         if (criteria1 == "2"){
             cout << "Introduza a cidade-pais pretendida neste mesmo formato:\n\t0.Voltar" << endl;
+            string cidade1;
+            cin.ignore();
             getline(cin,cidade);
             if (cidade == "0") goto menuRota;
             save.push_back(cidade);
@@ -83,6 +85,7 @@ int Interface::initiate() {
 
         
         //chegada
+        cout<<"Opção para chegada"<<endl;
         cin >> criteria2;
         while(!is_in(criteria2, 0, 3)){
             cout << "Sintaxe errada.\nPor favor, reintroduzir:" << endl;
@@ -129,7 +132,7 @@ int Interface::initiate() {
             getline(cin, perso);
             save.push_back(perso);
         }
-
+        auto it = save.begin();
         menuResult:
         const string str = *it;
         it++;

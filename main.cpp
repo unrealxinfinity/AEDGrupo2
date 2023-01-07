@@ -154,10 +154,13 @@ void testFindAirportByName(){
 
 int main() {
     CSVReader reader;
+    string test;
     //reader.showShortestPath("Porto-Portugal","Lisbon-Portugal",50,{"TAP Air Portugal"});
     Interface i = Interface(reader);
     //reader.globalStatistics("pais","top-k airports","Portugal","",5);
 
     while(i.initiate()!=1);
+    //getline(cin,test);
+    //cout<<test<<endl;
     return 0;
 }
