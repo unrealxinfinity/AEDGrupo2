@@ -3,7 +3,7 @@
 #include "airportsGraph.h"
 #include "CSVReader.h"
 #include <unordered_set>
-
+#include "Interface.h"
 //temp section for tests
 //Tested
 
@@ -80,7 +80,9 @@ void testUnorderedSetFlights(){
 */
 int main() {
     testAirport();
-    //CSVReader reader;
+    CSVReader reader;
     //reader.populate();
+    Interface i= Interface(reader);
+    while(i.initiate()!=1);
     return 0;
 }
