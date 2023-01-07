@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Airport.h"
 #include "CSVReader.h"
+#include "Interface.h"
 #include <string>
 #include <sstream>
 #include <unordered_set>
@@ -155,7 +156,7 @@ void testFindAirportByName(){
 int main() {
     CSVReader reader;
     //reader.showShortestPath("Porto-Portugal","Lisbon-Portugal",50,{"TAP Air Portugal"});
-    auto temp =reader.airlinesToAirport("OPO");
-    reader.globalStatistics("pais","top-k airports","Spain","",5);
+    Interface interface = Interface(reader);
+    interface.initiate();
 
 }

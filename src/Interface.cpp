@@ -33,7 +33,7 @@ unordered_set<string> Interface::split(const string &str, char sep){
 int Interface::initiate() {
 
     MenuPrincipal: string userInput;
-    cout << "Introduza o numero do comando: \n\t1. Calcular rota de voo \n\t2.Informacoes\n\t0.Sair do programa" << endl;
+    cout << "Introduza o numero do comando: \n\t1.Calcular rota de voo \n\t2.Informacoes\n\t0.Sair do programa" << endl;
     cin >> userInput;
     if (userInput == "0") return 1;
     while(!is_in(userInput,1,4)){
@@ -46,7 +46,7 @@ int Interface::initiate() {
         menuRota: string criteria1, criteria2, aeroporto, cidade, loc;
         int x;
         string str, dest;
-        cout << "Escolha o criterio para a partida e para a chegada:\n\tLocal de partida:\n\t1.Aeroporto\n\t2.Cidade-Pais\n\t3.Localizacao\n\tLocal de chegada:\n\t1.Aeroporto\n\t2.Cidade\n\t3.Localizacao\n\0.Voltar" << endl;
+        cout << "Escolha o criterio para a partida:\n\tLocal de partida:\n\t1.Aeroporto\n\t2.Cidade-Pais\n\t3.Localizacao\n\t0.Voltar" << endl; //Local de chegada:\n\t1.Aeroporto\n\t2.Cidade\n\t3.Localizacao\n\t0.Voltar" << endl;
 
         //partida
         cin >> criteria1;
@@ -85,8 +85,8 @@ int Interface::initiate() {
 
         
         //chegada
+        cout << "Escolha o criterio para a chegada\n\tLocal de chegada:\n\t1.Aeroporto\n\t2.Cidade\n\t3.Localizacao\n\t0.Voltar" << endl;
         cin >> criteria2;
-        cout << "Escolha o criterio para a chegada\n\tLocal de partida:\n\t1.Aeroporto\n\t2.Cidade-Pais\n\t3.Localizacao\n\tLocal de chegada:\n\t1.Aeroporto\n\t2.Cidade\n\t3.Localizacao\n\0.Voltar" << endl;
         while(!is_in(criteria2, 0, 3)){
             cout << "Sintaxe errada.\nPor favor, reintroduzir:" << endl;
             cin >> criteria2;
