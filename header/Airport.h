@@ -25,13 +25,19 @@ private:
 
 public:
     mutable list<Flight> flights;
+    mutable Flight* predecessor;
+    mutable string predecessor_code;
 
     Airport(string code,string name,const City* city,double latitude,double longitude);
     explicit Airport(string code);
     Airport();
 
-    bool visited;
-    int distanceSince;
+    mutable bool visited;
+    mutable bool is_destination;
+    mutable bool in_stack;
+    mutable int num;
+    mutable int low;
+    double distanceSince;
 
     void addFlight(Flight f) const{
         flights.push_back(f);

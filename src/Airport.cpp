@@ -4,7 +4,14 @@
 
 #include "Airport.h"
 Airport::Airport(std::string code, std::string name, const City* city, double latitude, double longitude): code_(code), name_(name), city_(city), latitude_(latitude), longitude_(longitude) {}
+Airport::Airport() {
+    code_="";
+    name_="";
+    city_= nullptr;
+    latitude_=0;
+    longitude_=0;
 
+}
 string Airport::getCode() const {
     return code_;
 }
@@ -21,6 +28,9 @@ double Airport::getLongitude() const {
 double Airport::getLatitude() const {
     return latitude_;
 }
+list<Flight> Airport::getFlights() const {
+    return flights;
+}
 void Airport::operator=(const Airport &other) {
     this->code_=other.getCode();
     this->name_=other.getName();
@@ -29,6 +39,7 @@ void Airport::operator=(const Airport &other) {
     this->latitude_=other.getLatitude();
     this->distanceSince=other.distanceSince;
     this->visited=other.visited;
+    this->flights =other.getFlights();
 }
 bool Airport::operator==(const Airport &other) const{
     return this->getCode()==other.getCode();
