@@ -15,7 +15,7 @@ using namespace std;
 
 class Interface {
 private:
-    bool is_in(string choice,int lim_start,int lim_end) const;
+    bool is_in(const string& choice,int lim_start,int lim_end) const;
     CSVReader* database;
 public:
     Interface();
