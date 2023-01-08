@@ -811,6 +811,12 @@ bool CSVReader::isArticulationPoint(const string &code) {
     return false;
 }
 
+/**
+ * Get airport by code
+ * @attention Complexity: O(1)
+ * @param cod code of airport
+ * @return desired airport
+ */
 Airport CSVReader::getAirport(const string &cod) {
     auto find = airports.find(Airport(cod));
     return *find;
