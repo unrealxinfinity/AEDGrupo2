@@ -23,6 +23,7 @@ Flight& Flight::operator=(const Flight &other){
     this->airline_=other.airline_;
     this->destAirportCode_=other.destAirportCode_;
     this->flightDistance_=other.flightDistance_;
+    return *this;
 }
 
 
