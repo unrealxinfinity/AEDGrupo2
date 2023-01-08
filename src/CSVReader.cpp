@@ -477,7 +477,7 @@ void CSVReader::showShortestPath(const std::string& src,const string& dest, cons
         while (it != travel.first.end()) {
             auto airportPtr = airports.find(Airport(it->destAirportCode_));
             auto airlinePtr = airlines.find(Airline(it->airline_));
-            cout << "[Pelo voo:" << airlinePtr->getName() << "(" << airlinePtr->getCode() << ")" << "]" <<endl;
+            cout << "[Pela companhia:" << airlinePtr->getName() << "(" << airlinePtr->getCode() << ")" << "]" <<endl;
             cout<< "Aeroporto: " << airportPtr->getName() << "(" << airportPtr->getCode() << ")"<<endl;
             it++;
         }
@@ -514,9 +514,9 @@ list<pair<string,Flight>> CSVReader::flightsToAirport(const string &cod) {
     return res;
 }
 /**
- * Calculates the nr of airports related to the whole web or by country
+ * Calculates the nr of airports related to the whole network or by country
  * @attention Complexity: O(1) if operation done for the whole network and O(N) if its specific for a country (N = nr of related Airports);
- * @param tipo type of operation - if for the whole web or only for the country being it "rede" or "pais" respectively
+ * @param tipo type of operation - if for the whole network or only for the country being it "rede" or "pais" respectively
  * @param country in case the operation is related to a country, it's the related country
  * @return nr or related airports
  */
