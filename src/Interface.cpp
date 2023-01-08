@@ -195,6 +195,8 @@ int Interface::initiate() {
                     for (const auto& e : data) {
                         cout << e.getCode() << ", " << e.getName() << ". Callsign is " << e.get_callsign() << ", company is from " << e.getCountry() << '.' << endl;
                     }
+                    cout<<endl;
+                    cout<<"No total :"<<data.size()<<" Companhias."<<endl;
                 }catch (int error){
                     cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
                     goto menu1;
@@ -211,6 +213,8 @@ int Interface::initiate() {
                     for (const auto& e : data) {
                         cout << e.getCode() << ", " << e.getName() << ". Callsign is " << e.get_callsign() << ", company is from " << e.getCountry() << '.' << endl;
                     }
+                    cout<<endl;
+                    cout<<"No total :"<<data.size()<<" Companhias."<<endl;
                 }catch (int error){
                     cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
                     goto menu2;
@@ -222,7 +226,7 @@ int Interface::initiate() {
                 cout << "Por favor, insira o codigo do aeroporto: " << endl;
                 cin >> cod;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Paises atingiveis em quantos voos? (numero inteiro)";
+                cout << "Paises atingiveis em quantos voos? (numero inteiro):"<<endl;
                 int n;
                 cin >> n;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -232,6 +236,8 @@ int Interface::initiate() {
                     for (const auto& e : data) {
                         cout << e << endl;
                     }
+                    cout<<endl;
+                    cout<<"No total de: "<<data.size()<<" paises."<<endl;
                 }catch (int error){
                     cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
                     goto menu3;
@@ -249,6 +255,9 @@ int Interface::initiate() {
                     for (const auto& e : data) {
                         cout << e << endl;
                     }
+                    cout<<endl;
+                    cout<<"No total :"<<data.size()<<" paises."<<endl;
+
                 }catch (int error){
                     cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
                     goto menu4;
@@ -269,6 +278,8 @@ int Interface::initiate() {
                     for (const auto& e : data) {
                         cout << e.first << '-' << e.second << endl;
                     }
+                    cout<<endl;
+                    cout<<"No total :"<<data.size()<<" cidades."<<endl;
                 }catch (int error){
                     cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
                     goto menu5;
@@ -286,6 +297,8 @@ int Interface::initiate() {
                     for (const auto& e : data) {
                         cout << e.first << '-' << e.second << endl;
                     }
+                    cout<<endl;
+                    cout<<"No total :"<<data.size()<<" cidades."<<endl;
                 }catch (int error){
                     cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
                     goto menu6;
@@ -303,6 +316,8 @@ int Interface::initiate() {
                     for (const auto& e : data) {
                         cout << "Destino: " << e.destAirportCode_ << "; Companhia: " << e.airline_ << "; Distancia: " << e.flightDistance_ << endl;
                     }
+                    cout<<endl;
+                    cout<<"No total :"<<data.size()<<" voos."<<endl;
                 }catch (int error){
                     cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
                     goto menu7;
@@ -320,6 +335,8 @@ int Interface::initiate() {
                     for (const auto& e : data) {
                         cout << "Origem: " << e.first << "; Companhia: " << e.second.airline_ << "; Distancia: " << e.second.flightDistance_ << endl;
                     }
+                    cout<<endl;
+                    cout<<"No total :"<<data.size()<<" voos."<<endl;
                 }catch (int error){
                     cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
                     goto menu8;
@@ -330,7 +347,7 @@ int Interface::initiate() {
                 cout << "Por favor, insira o codigo do aeroporto: " << endl;
                 cin >> cod;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Aeroportos atingiveis em quantos voos? (numero inteiro)";
+                cout << "Aeroportos atingiveis em quantos voos? (numero inteiro):"<<endl;
                 int n;
                 cin >> n;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -340,6 +357,8 @@ int Interface::initiate() {
                         Airport find = database->getAirport(e);
                         cout << find.getCode() << ", " << find.getName() << ", localizado em " << find.getCity()->get_name() << '-' << find.getCity()->get_country() << ", coordenadas (" << find.getLatitude() << ';' << find.getLongitude() << ')' << endl;
                     }
+                    cout<<endl;
+                    cout<<"No total sao: "<<data.size()<< " aeroportos."<<endl;
                 }catch (int error){
                     cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
                     goto menu10;
