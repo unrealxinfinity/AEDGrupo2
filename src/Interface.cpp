@@ -174,7 +174,7 @@ int Interface::initiate() {
 
         if (ch1 == "1"){
             menuAero:
-            cout << "\t1.Companhias aereas responsaveis pelos voos que partem do aeroporto\n\t2.Companhias aereas responsaveis pelos voos que chegam ao aeroporto\n\t3.Paises destino dos voos do aeroporto\n\t4.Paises origem dos voos que chegam ao aeroporto\n\t5.Cidades destino dos voos que partem do aeroporto\n\t6.Cidades origem dos voos que chegam ao aeroporto\n\t7.Voos que partem do aeroporto\n\t8.Voos que chegam ao aeroporto\n\t9.Aeroportos atingiveis\n\t10.Verificar se o aeroporto e um ponto de artriculacao\n\t0.Voltar: " << endl;
+            cout << "\t1.Companhias aereas responsaveis pelos voos que partem do aeroporto\n\t2.Companhias aereas responsaveis pelos voos que chegam ao aeroporto\n\t3.Paises atingiveis com os voos do aeroporto\n\t4.Paises origem dos voos que chegam ao aeroporto\n\t5.Cidades atingiveis com os voos que partem do aeroporto\n\t6.Cidades origem dos voos que chegam ao aeroporto\n\t7.Voos que partem do aeroporto\n\t8.Voos que chegam ao aeroporto\n\t9.Aeroportos atingiveis\n\t10.Verificar se o aeroporto e um ponto de artriculacao\n\t0.Voltar: " << endl;
             cin >> ch2;
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             if (ch2 == "0") goto menuInfo;
@@ -269,7 +269,7 @@ int Interface::initiate() {
                 cout << "Por favor, insira o codigo do aeroporto: " << endl;
                 cin >> cod;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Cidades atingiveis em quantos voos? (numero inteiro)";
+                cout << "Cidades atingiveis em quantos voos? (numero inteiro):"<<endl;
                 int n;
                 cin >> n;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
