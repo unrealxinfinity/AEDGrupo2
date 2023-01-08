@@ -29,11 +29,7 @@ public:
 
 struct AirlineHash{
     size_t operator() (const Airline& other) const{
-        size_t res = 0;
-        for (char c : other.getCode()) {
-            res += 13 * c;
-        }
-        return res;
+        return hash<string>()(other.getCode());
     }
 };
 

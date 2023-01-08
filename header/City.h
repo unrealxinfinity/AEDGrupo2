@@ -22,14 +22,9 @@ public:
 
 struct CityHash{
     size_t operator() (const City& other) const{
-        size_t res = 0;
-        for (char c : other.get_country()) {
-            res += 17 * c;
-        }
-        for (char c : other.get_name()) {
-            res += 41 * c;
-        }
-        return res;
+        size_t hash1 = hash<string>()(other.get_country());
+        size_t hash2 = hash<string>()(other.get_name());
+        return 37*hash1 + 42*hash2;
     }
 };
 

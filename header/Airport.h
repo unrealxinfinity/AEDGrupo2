@@ -60,11 +60,7 @@ public:
 
 struct AirportHash {
     size_t operator() (const Airport& other) const{
-        size_t res = 0;
-        for (char c : other.getCode()) {
-            res += 37*c;
-        }
-        return res;
+        return hash<string>()(other.getCode());
     }
 };
 
