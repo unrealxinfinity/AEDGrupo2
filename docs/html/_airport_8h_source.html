@@ -136,27 +136,19 @@ $(function() {
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>};</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="comment">//Melhorar em termos de hash function que eu nao sei o que por c,:</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="struct_airport_hash.html">   62</a></span><span class="keyword">struct </span><a class="code hl_struct" href="struct_airport_hash.html">AirportHash</a> {</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="struct_airport_hash.html#a18b4b5ff8132640718bf42a891de2675">   63</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="struct_airport_hash.html#a18b4b5ff8132640718bf42a891de2675">operator() </a>(<span class="keyword">const</span> <a class="code hl_class" href="class_airport.html">Airport</a>&amp; other)<span class="keyword"> const</span>{</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        <span class="keywordtype">size_t</span> res = 0;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="keywordflow">for</span> (<span class="keywordtype">char</span> c : other.<a class="code hl_function" href="class_airport.html#ad1369e1d47c87e205f1718b853a66d54">getCode</a>()) {</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            res += 37*c;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        }</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="keywordflow">return</span> res;</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    }</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="comment">//queria implementar uma cena que fizesse com o struct levasse um argumento tipo float para verificar que dist de 2 airports &lt;X faz com que key seja igual ao outro key</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="struct_airport_hash.html">   61</a></span><span class="keyword">struct </span><a class="code hl_struct" href="struct_airport_hash.html">AirportHash</a> {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="struct_airport_hash.html#a18b4b5ff8132640718bf42a891de2675">   62</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="struct_airport_hash.html#a18b4b5ff8132640718bf42a891de2675">operator() </a>(<span class="keyword">const</span> <a class="code hl_class" href="class_airport.html">Airport</a>&amp; other)<span class="keyword"> const</span>{</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="keywordtype">size_t</span> res = 0;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        <span class="keywordflow">for</span> (<span class="keywordtype">char</span> c : other.<a class="code hl_function" href="class_airport.html#ad1369e1d47c87e205f1718b853a66d54">getCode</a>()) {</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            res += 37*c;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        }</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keywordflow">return</span> res;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    }</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>};</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>};</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="comment">//esta KeyCompare nao funciona for some reason</span></div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="struct_airport_key_equal.html">   74</a></span><span class="keyword">struct </span><a class="code hl_struct" href="struct_airport_key_equal.html">AirportKeyEqual</a>{</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="struct_airport_key_equal.html#ae19991ac0aeec6aef6d98ba9d5cbe013">   75</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="struct_airport_key_equal.html#ae19991ac0aeec6aef6d98ba9d5cbe013">operator()</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_airport.html">Airport</a> *a , <span class="keyword">const</span> <a class="code hl_class" href="class_airport.html">Airport</a> *b)<span class="keyword"> const</span>{</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="keywordflow">return</span> a==b; <span class="comment">// a-&gt;getCode()==b-&gt;getCode() ;</span></div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    }</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>};</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="preprocessor">#endif </span><span class="comment">//PROJETOGRUPO2_AIRPORT_H</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="preprocessor">#endif </span><span class="comment">//PROJETOGRUPO2_AIRPORT_H</span></div>
 <div class="ttc" id="a_city_8h_html"><div class="ttname"><a href="_city_8h.html">City.h</a></div></div>
 <div class="ttc" id="a_flight_8h_html"><div class="ttname"><a href="_flight_8h.html">Flight.h</a></div></div>
 <div class="ttc" id="aclass_airport_html"><div class="ttname"><a href="class_airport.html">Airport</a></div><div class="ttdef"><b>Definition:</b> Airport.h:18</div></div>
@@ -174,7 +166,7 @@ $(function() {
 <div class="ttc" id="aclass_airport_html_a7f0f0e9d727d5878263d0f2b278d0f02"><div class="ttname"><a href="class_airport.html#a7f0f0e9d727d5878263d0f2b278d0f02">Airport::flights</a></div><div class="ttdeci">list&lt; Flight &gt; flights</div><div class="ttdef"><b>Definition:</b> Airport.h:27</div></div>
 <div class="ttc" id="aclass_airport_html_a93efcd09328d24469d97a81e8048b776"><div class="ttname"><a href="class_airport.html#a93efcd09328d24469d97a81e8048b776">Airport::getName</a></div><div class="ttdeci">string getName() const</div><div class="ttdef"><b>Definition:</b> Airport.cpp:19</div></div>
 <div class="ttc" id="aclass_airport_html_ab802be812c69e3179a367d821ef68a57"><div class="ttname"><a href="class_airport.html#ab802be812c69e3179a367d821ef68a57">Airport::visited</a></div><div class="ttdeci">bool visited</div><div class="ttdef"><b>Definition:</b> Airport.h:35</div></div>
-<div class="ttc" id="aclass_airport_html_acb4f9417a562641eca079ee55d5893e8"><div class="ttname"><a href="class_airport.html#acb4f9417a562641eca079ee55d5893e8">Airport::calcDistanceHaversine</a></div><div class="ttdeci">double calcDistanceHaversine(const Airport &amp;b) const</div><div class="ttdef"><b>Definition:</b> Airport.cpp:47</div></div>
+<div class="ttc" id="aclass_airport_html_acb4f9417a562641eca079ee55d5893e8"><div class="ttname"><a href="class_airport.html#acb4f9417a562641eca079ee55d5893e8">Airport::calcDistanceHaversine</a></div><div class="ttdeci">double calcDistanceHaversine(const Airport &amp;b) const</div><div class="ttdef"><b>Definition:</b> Airport.cpp:54</div></div>
 <div class="ttc" id="aclass_airport_html_ad1369e1d47c87e205f1718b853a66d54"><div class="ttname"><a href="class_airport.html#ad1369e1d47c87e205f1718b853a66d54">Airport::getCode</a></div><div class="ttdeci">string getCode() const</div><div class="ttdef"><b>Definition:</b> Airport.cpp:15</div></div>
 <div class="ttc" id="aclass_airport_html_ad163ed7d463e58469e8c9f8af8cb9c1d"><div class="ttname"><a href="class_airport.html#ad163ed7d463e58469e8c9f8af8cb9c1d">Airport::is_destination</a></div><div class="ttdeci">bool is_destination</div><div class="ttdef"><b>Definition:</b> Airport.h:36</div></div>
 <div class="ttc" id="aclass_airport_html_ad8cd931389b14d63e5933a1658b653a3"><div class="ttname"><a href="class_airport.html#ad8cd931389b14d63e5933a1658b653a3">Airport::getLongitude</a></div><div class="ttdeci">double getLongitude() const</div><div class="ttdef"><b>Definition:</b> Airport.cpp:25</div></div>
@@ -183,10 +175,8 @@ $(function() {
 <div class="ttc" id="aclass_airport_html_af1cf65c2f432145f30202e7b47c1d3de"><div class="ttname"><a href="class_airport.html#af1cf65c2f432145f30202e7b47c1d3de">Airport::addFlight</a></div><div class="ttdeci">void addFlight(Flight f) const</div><div class="ttdef"><b>Definition:</b> Airport.h:42</div></div>
 <div class="ttc" id="aclass_city_html"><div class="ttname"><a href="class_city.html">City</a></div><div class="ttdef"><b>Definition:</b> City.h:12</div></div>
 <div class="ttc" id="aclass_flight_html"><div class="ttname"><a href="class_flight.html">Flight</a></div><div class="ttdef"><b>Definition:</b> Flight.h:11</div></div>
-<div class="ttc" id="astruct_airport_hash_html"><div class="ttname"><a href="struct_airport_hash.html">AirportHash</a></div><div class="ttdef"><b>Definition:</b> Airport.h:62</div></div>
-<div class="ttc" id="astruct_airport_hash_html_a18b4b5ff8132640718bf42a891de2675"><div class="ttname"><a href="struct_airport_hash.html#a18b4b5ff8132640718bf42a891de2675">AirportHash::operator()</a></div><div class="ttdeci">size_t operator()(const Airport &amp;other) const</div><div class="ttdef"><b>Definition:</b> Airport.h:63</div></div>
-<div class="ttc" id="astruct_airport_key_equal_html"><div class="ttname"><a href="struct_airport_key_equal.html">AirportKeyEqual</a></div><div class="ttdef"><b>Definition:</b> Airport.h:74</div></div>
-<div class="ttc" id="astruct_airport_key_equal_html_ae19991ac0aeec6aef6d98ba9d5cbe013"><div class="ttname"><a href="struct_airport_key_equal.html#ae19991ac0aeec6aef6d98ba9d5cbe013">AirportKeyEqual::operator()</a></div><div class="ttdeci">bool operator()(const Airport *a, const Airport *b) const</div><div class="ttdef"><b>Definition:</b> Airport.h:75</div></div>
+<div class="ttc" id="astruct_airport_hash_html"><div class="ttname"><a href="struct_airport_hash.html">AirportHash</a></div><div class="ttdef"><b>Definition:</b> Airport.h:61</div></div>
+<div class="ttc" id="astruct_airport_hash_html_a18b4b5ff8132640718bf42a891de2675"><div class="ttname"><a href="struct_airport_hash.html#a18b4b5ff8132640718bf42a891de2675">AirportHash::operator()</a></div><div class="ttdeci">size_t operator()(const Airport &amp;other) const</div><div class="ttdef"><b>Definition:</b> Airport.h:62</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

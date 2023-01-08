@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['calcdistancehaversine_0',['calcDistanceHaversine',['../class_airport.html#acb4f9417a562641eca079ee55d5893e8',1,'Airport']]],
-  ['citiestoairport_1',['citiesToAirport',['../class_c_s_v_reader.html#a064e05b7fbbc68a3464cf9d365309749',1,'CSVReader']]],
-  ['city_2',['City',['../class_city.html#ad453ecd41441de793ecd9262a292d070',1,'City']]],
-  ['countriestoairport_3',['countriesToAirport',['../class_c_s_v_reader.html#abe9565a53977231bb5975154a80afb2a',1,'CSVReader']]],
-  ['csvreader_4',['CSVReader',['../class_c_s_v_reader.html#a12625f70bff372421197d5d5ce236335',1,'CSVReader']]]
+  ['flight_0',['Flight',['../class_flight.html#a2e64fcd3854f4c54b681f3d6a06449d4',1,'Flight::Flight(const string dest, string airline, double flightDistance)'],['../class_flight.html#acbf1e8c321e01e04db2fe651a08b30af',1,'Flight::Flight()']]],
+  ['flightsfromairport_1',['flightsFromAirport',['../class_c_s_v_reader.html#a63d8a37072e7da86c910a74959abdeda',1,'CSVReader']]],
+  ['flightstoairport_2',['flightsToAirport',['../class_c_s_v_reader.html#a1a7cf8388d6c31073773e2d47cb51b7c',1,'CSVReader']]]
 ];
