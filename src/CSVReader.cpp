@@ -146,40 +146,45 @@ bool CSVReader::isFlownByAirline(const Flight& f,const unordered_set<string>& ai
 }
 
 /**
- * Performs a depth-first search that determines wether an airport is an articulation point or not \n
+ * Performs a depth-first search that counts the number of strongly connected components \n
  * @attention Complexity: O(V+E) (V = number of airports, E = number of flights)
  * @param code code of airport being visited
  * @param index index of current visit
- * @param initial code of the airport that will determine the result
- * @return true if the airport is an articulation point, false otherwise
+ * @param node_stack stack used for the algorithm
+ * @param forbidden code of airport to be ignored
+ * @return number of strongly connected components found in the search
  */
-bool CSVReader::dfs_art(const string &code, int index, const string& initial, const string& parent) {
+int CSVReader::dfs_count_scc(const string &code, int index, stack<string>* node_stack, const string& forbidden) {
     auto find = airports.find(Airport(code));
     find->visited = true;
     find->num = index;
     find->low = index;
+    find->in_stack = true;
+    node_stack->push(code);
     index++;
 
     int count = 0;
     for (const auto& e : find->flights) {
+        if (e.destAirportCode_ == forbidden) continue;
         auto dest = airports.find(Airport(e.destAirportCode_));
         if (!dest->visited) {
-            count++;
-            if (dfs_art(e.destAirportCode_, index, initial, code)) return true;
+            count += dfs_count_scc(e.destAirportCode_, index + 1, node_stack, forbidden);
             find->low = min(find->low, dest->low);
-            if (index != 1 && dest->low >= find->num) {
-                find->is_destination = true;
-                if (code == initial) return true;
-            }
         }
-        else if (e.destAirportCode_ != parent)
+        else if (dest->in_stack)
             find->low = min(find->low, dest->num);
     }
-    if (index == 1 && count > 1) {
-        find->is_destination = true;
-        if (code == initial) return true;
+    if (find->low == find->num) {
+        string curr;
+        count++;
+        do {
+            curr = node_stack->top();
+            auto it = airports.find(Airport(curr));
+            it->in_stack = false;
+            node_stack->pop();
+        } while (code != curr);
     }
-    return false;
+    return count;
 }
 
 /**
@@ -782,17 +787,26 @@ bool CSVReader::isArticulationPoint(const string &code) {
     for (const Airport& airport : airports) {
         airport.visited = false;
         airport.is_destination = false;
+        airport.in_stack = false;
     }
-    stack<string> s;
+    int count = 0;
     for (const Airport& airport : airports)
         if (!airport.visited) {
-            dfs_art(airport.getCode(), 1, airport.getCode(), "");
-            auto find = airports.find(Airport(code));
-            if (find == airports.end()) throw -1;
-            if (find->visited)
-                return find->is_destination;
+            stack<string> s;
+            count += dfs_count_scc(airport.getCode(), 1, &s, "");
         }
-    return false;
+
+    for (const Airport& airport : airports) {
+        airport.visited = false;
+        airport.is_destination = false;
+        airport.in_stack = false;
+    }
+    for (const Airport& airport : airports)
+        if (!airport.visited && airport.getCode() != code) {
+            stack<string> s;
+            count -= dfs_count_scc(airport.getCode(), 1, &s, code);
+        }
+    return (count != 0);
 }
 
 /**

@@ -57,7 +57,7 @@ private:
 
     //returns the airport with the max nr of Flights, if given parameter then finds the airport with the max nr of flights being the max nr < given max;
     Airport maxFlightsAirport(const int prevMax=-1,const string& country="", const unordered_set<Airport,AirportHash>& existingAirports={});
-    bool dfs_art(const string& code, int index, const string& initial, const string& parent);
+    int dfs_count_scc(const string &code, int index, stack<string> *node_stack, const string &forbidden);
 
 
 public:
@@ -84,6 +84,7 @@ public:
     set<string> reachableCountries(unsigned int n, const string& source);
     set<string> reachableAirports(unsigned int n, const string& source);
     set<pair<string,string>> reachableCities(unsigned int n, const string& source);
+
 };
 
 
