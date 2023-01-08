@@ -77,11 +77,13 @@ void CSVReader::read_airlines() {
  * @attention Complexity: O(n) (n = number of lines in file)
  */
 void CSVReader::read_flights() {
+    flight_num = 0;
     ifstream in("data/flights.csv");
     string source, target, airline, line;
     getline(in, line);
     while (getline(in, line)) {
         istringstream iss(line);
+        flight_num++;
         getline(iss, source, ',');
         getline(iss, target, ',');
         getline(iss, airline, ',');
@@ -548,9 +550,7 @@ int CSVReader::calculateNrFlights(const std::string& tipo, const std::string& co
     int error=-1;
     bool found=false;
     if(tipo=="rede"){
-            for(Airport a : airports){
-                res+=a.getFlights().size();
-            }
+        res = flight_num;
     }
     if(tipo=="pais"){
         for(Airport a : airports){

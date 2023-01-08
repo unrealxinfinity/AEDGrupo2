@@ -27,6 +27,7 @@ private:
     unordered_set<Airport, AirportHash> airports;
     unordered_set<City, CityHash> cities;
     unordered_set<Airline, AirlineHash> airlines;
+    unsigned flight_num;
 
     void read_flights();
     void read_airports();
