@@ -73,26 +73,6 @@ void CSVReader::read_airlines() {
 }
 
 /**
- * Calculates the distance between two points using the Haversine formula \n
- * @attention Complexity: O(1) (unsure since the documentation for functions like pow() don't specify @attention Complexity)
- * @param lat1 latitude of first point
- * @param lon1 longitude of first point
- * @param lat2 latitude of second point
- * @param lon2 longitude of second point
- * @return distance between two points
- */
-double haversine(double lat1, double lon1, double lat2, double lon2) {
-    double dLat = (lat2 - lat1) * M_PI / 180.0;
-    double dLon = (lon2 - lon1) * M_PI / 180.0;
-    lat1 = (lat1) * M_PI / 180.0;
-    lat2 = (lat2) * M_PI / 180.0;
-    double a = pow(sin(dLat / 2), 2) + pow(sin(dLon / 2), 2) * cos(lat1) * cos(lat2);
-    double rad = 6371;
-    double c = 2 * asin(sqrt(a));
-    return rad * c;
-}
-
-/**
  * Reads flights.csv and stores the data \n
  * @attention Complexity: O(n) (n = number of lines in file)
  */

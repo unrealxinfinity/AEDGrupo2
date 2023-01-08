@@ -44,6 +44,13 @@ void Airport::operator=(const Airport &other) {
 bool Airport::operator==(const Airport &other) const{
     return this->getCode()==other.getCode();
 }
+
+/**
+ * Calculates the distance between two points using the Haversine formula \n
+ * @attention Complexity: O(1) (unsure since the documentation for functions like pow() don't specify @attention Complexity)
+ * @param b second airport for calculation
+ * @return distance between two points
+ */
 double Airport::calcDistanceHaversine(const Airport &b) const{
     double aLatRad=this->getLatitude()*M_PI/180;
     double bLatRad=b.getLatitude()*M_PI/180;

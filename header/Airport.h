@@ -58,7 +58,6 @@ public:
 
 };
 
-//Melhorar em termos de hash function que eu nao sei o que por c,:
 struct AirportHash {
     size_t operator() (const Airport& other) const{
         size_t res = 0;
@@ -67,15 +66,8 @@ struct AirportHash {
         }
         return res;
     }
-    //queria implementar uma cena que fizesse com o struct levasse um argumento tipo float para verificar que dist de 2 airports <X faz com que key seja igual ao outro key
+};
 
-};
-//esta KeyCompare nao funciona for some reason
-struct AirportKeyEqual{
-    bool operator()(const Airport *a , const Airport *b) const{
-        return a==b; // a->getCode()==b->getCode() ;
-    }
-};
 
 
 #endif //PROJETOGRUPO2_AIRPORT_H
