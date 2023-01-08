@@ -43,7 +43,6 @@ private:
     //encontra os aeroportos a partir de um centro, retorna unordered set com o centro inclusive;
     //complexidade O(N) sendo N a pesquisa pelo aeroporto com as coordenadas dadas e a pesquisa pelos aeroportos a menos de raio radius
     list<string> findAirportsAround(const double lat,const double longi,const double radius)const;
-    list<string> toListOfString(list<Airport> airports);
     pair<list<Flight>, string> bfs(const list<string>& source, const list<string>& dest, const unordered_set<string>& preferences);
     void populate();
     //Dando um input o decipher transforma o input numa lista de aeroportos para fazer bfs, faz throw de um inteiro caso os inputs estejam invalidos e nao estiverem de acordo com o formato dado
@@ -63,8 +62,6 @@ private:
 public:
     CSVReader();
 
-    unordered_set<Airline,AirlineHash> getAirlines(){return airlines;}
-    unordered_set<Airport, AirportHash> getAirports();
     //Mostra o caminho mais curto dando um src seguindo um formato, um dest seguindo tais formatos raius caso o user procure pela cidade ou pelas coordenadas e preferencias caso ela tenha alguma preferencia de companhia aere
     // a;
     //Radius e preferencias estao como default 0 e empty caso o user nao precise de introduzir radius ou nao tenha preferencias;

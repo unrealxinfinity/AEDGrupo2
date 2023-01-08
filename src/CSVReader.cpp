@@ -93,10 +93,6 @@ void CSVReader::read_flights() {
     in.close();
 }
 
-unordered_set<Airport, AirportHash> CSVReader::getAirports() {
-    return airports;
-}
-
 /**
  * Determines which airports are within a certain radius of a point \n
  * @attention Complexity: O(n) (n = number of airports)
