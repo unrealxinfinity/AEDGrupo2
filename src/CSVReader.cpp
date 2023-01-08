@@ -173,34 +173,31 @@ bool CSVReader::isFlownByAirline(const Flight& f,const unordered_set<string>& ai
  * @param initial code of the airport that will determine the result
  * @return true if the airport is an articulation point, false otherwise
  */
-bool CSVReader::dfs_art(const string &code, int index, const string& initial) {
+bool CSVReader::dfs_art(const string &code, int index, const string& initial, const string& parent) {
     auto find = airports.find(Airport(code));
     find->visited = true;
     find->num = index;
     find->low = index;
     index++;
-    find->in_stack = true;
 
     int count = 0;
     for (const auto& e : find->flights) {
         auto dest = airports.find(Airport(e.destAirportCode_));
         if (!dest->visited) {
             count++;
-            if (dfs_art(e.destAirportCode_, index, initial)) return true;
+            if (dfs_art(e.destAirportCode_, index, initial, code)) return true;
             find->low = min(find->low, dest->low);
+            if (index != 1 && dest->low >= find->num) {
+                find->is_destination = true;
+                if (code == initial) return true;
+            }
         }
-        else if (dest->in_stack) {
+        else if (e.destAirportCode_ != parent)
             find->low = min(find->low, dest->num);
-        }
-
-        if (find->num != 1 && !find->is_destination && dest->low >= find->num) {
-            find->is_destination = true;
-            if (code == initial) return true;
-        }
-        else if (!find->is_destination && find->num == 1 && count > 1) {
-            find->is_destination = true;
-            if (code == initial) return true;
-        }
+    }
+    if (index == 1 && count > 1) {
+        find->is_destination = true;
+        if (code == initial) return true;
     }
     return false;
 }
@@ -758,21 +755,7 @@ set<Airline> CSVReader::airlinesToAirport(const std::string &cod) {
     }
     return uniqueAirlines;
 }
-/**Checks for the dest countries that flights from a certain airport reach
- * @attention Complexity: O(nlog(m)) (n = number of flights the airport has; m = number of distinct countries from airport)
- * @param cod airport code
- * @return set of unique names of countries
- */
-set<string> CSVReader::countriesFromAirport(const std::string &cod) {
-    auto temp= flightsFromAirport(cod);
-    set<string> countries;
-    for(const Flight& f:temp){
-        auto targetIt= airports.find(Airport(f.destAirportCode_));
-        City *cityP=targetIt->getCity();
-        countries.insert(cityP->get_country());
-    }
-    return countries;
-}
+
 /** Checks for the source countries of the flights
  * @attention Complexity: O(n + mlog(p)) (n = number of airports; m = number of flights to airport; p = number of distinct countries to airport)
  * @param cod airport code
@@ -789,34 +772,18 @@ set<string> CSVReader::countriesToAirport(const std::string &cod) {
     return countries;
 }
 
-/** Calculates the cities that are reachable by the outgoing flights in that airport
- * @attention Complexity: O(nlog(m)) (n = number of flights the airport has; m = number of distinct cities from airport)
- * @param cod airport code
- * @return set of cities with pair of respective airportCode-country
- */
-set<pair<string,pair<string,string>>> CSVReader::citiesFromAirport(const std::string &cod) {
-    list<Flight> temp= flightsFromAirport(cod);
-    set<pair<string,pair<string,string>>> res;
-    for(Flight f:temp){
-        auto targetIt= airports.find(Airport(f.destAirportCode_));
-        City *cityP=targetIt->getCity();
-        res.insert({cityP->get_name(),{targetIt->getCode(),cityP->get_country()}});
-    }
-    return res;
-}
-
 /** Calculate the source cities of incoming flights to an airport
  * @attention Complexity: O(n + mlog(p)) (n = number of airports; m = number of flights to airport; p = number of distinct cities to airport)
  * @param cod airport code
  * @return set of cities with pair of respective airportCode-country
  */
-set<pair<string,pair<string,string>>> CSVReader::citiesToAirport(const std::string &cod) {
+set<pair<string,string>> CSVReader::citiesToAirport(const std::string &cod) {
     list<pair<string, Flight>> flights = flightsToAirport(cod);
-    set<pair<string,pair<string,string>>> res;
+    set<pair<string,string>> res;
     for (const auto &p: flights) {
         auto targetIt = airports.find(Airport(p.first));
         City *cityP = targetIt->getCity();
-        res.insert({cityP->get_name(),{targetIt->getCode(),cityP->get_country()}});
+        res.insert({cityP->get_name(), cityP->get_country()});
     }
     return res;
 }
@@ -830,16 +797,21 @@ set<pair<string,pair<string,string>>> CSVReader::citiesToAirport(const std::stri
 bool CSVReader::isArticulationPoint(const string &code) {
     for (const Airport& airport : airports) {
         airport.visited = false;
-        airport.in_stack = false;
         airport.is_destination = false;
     }
     stack<string> s;
     for (const Airport& airport : airports)
         if (!airport.visited) {
-            dfs_art(airport.getCode(), 1, airport.getCode());
+            dfs_art(airport.getCode(), 1, airport.getCode(), "");
             auto find = airports.find(Airport(code));
+            if (find == airports.end()) throw -1;
             if (find->visited)
                 return find->is_destination;
         }
     return false;
+}
+
+Airport CSVReader::getAirport(const string &cod) {
+    auto find = airports.find(Airport(cod));
+    return *find;
 }

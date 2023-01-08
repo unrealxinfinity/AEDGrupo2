@@ -174,7 +174,7 @@ int Interface::initiate() {
 
         if (ch1 == "1"){
             menuAero:
-            cout << "\n\t1.Companhias aereas do aeroporto\n\t2.Companhias aereas para aeroporto\n\t3.Paises do aeroporto\n\t4.Paises para aeroporto\n\t5.Cidades do aeroporto\n\t6.Cidades para aeroporto\n\t7.Voos do aeroporto\n\t8.Voos para aeroporto\n\t0.Voltar: " << endl;
+            cout << "\n\t1.Companhias aereas do aeroporto\n\t2.Companhias aereas para aeroporto\n\t3.Paises do aeroporto\n\t4.Paises para aeroporto\n\t5.Cidades do aeroporto\n\t6.Cidades para aeroporto\n\t7.Voos do aeroporto\n\t8.Voos para aeroporto\n\t9.Aeroportos atingiveis\n\t10.Verificar se o aeroporto e um ponto de artriculacao\n\t0.Voltar: " << endl;
             cin >> ch2;
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             if (ch2 == "0") goto menuInfo;
@@ -222,8 +222,16 @@ int Interface::initiate() {
                 cout << "Por favor, insira o codigo do aeroporto: " << endl;
                 cin >> cod;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Paises atingiveis em quantos voos? (numero inteiro)";
+                int n;
+                cin >> n;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 try{
-                    auto data = database -> countriesFromAirport(cod);
+                    auto data = database ->reachableCountries(n, cod);
+                    cout << "Os paises atingiveis sao:" << endl;
+                    for (const auto& e : data) {
+                        cout << e << endl;
+                    }
                 }catch (int error){
                     cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
                     goto menu3;
@@ -252,8 +260,15 @@ int Interface::initiate() {
                 cout << "Por favor, insira o codigo do aeroporto: " << endl;
                 cin >> cod;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Cidades atingiveis em quantos voos? (numero inteiro)";
+                int n;
+                cin >> n;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 try{
-                    database -> citiesFromAirport(cod);
+                    auto data = database ->reachableCities(n, cod);
+                    for (const auto& e : data) {
+                        cout << e.first << '-' << e.second << endl;
+                    }
                 }catch (int error){
                     cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
                     goto menu5;
@@ -266,7 +281,11 @@ int Interface::initiate() {
                 cin >> cod;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 try{
-                    database -> citiesToAirport(cod);
+                    auto data = database -> citiesToAirport(cod);
+                    cout << "As cidades que tem voos a entrar no aeroporto sao:" << endl;
+                    for (const auto& e : data) {
+                        cout << e.first << '-' << e.second << endl;
+                    }
                 }catch (int error){
                     cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
                     goto menu6;
@@ -279,7 +298,11 @@ int Interface::initiate() {
                 cin >> cod;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 try{
-                    database -> flightsFromAirport(cod);
+                    auto data = database -> flightsFromAirport(cod);
+                    cout << "Os voos que saem do aeroporto sao:" << endl;
+                    for (const auto& e : data) {
+                        cout << "Destino: " << e.destAirportCode_ << "; Companhia: " << e.airline_ << "; Distancia: " << e.flightDistance_ << endl;
+                    }
                 }catch (int error){
                     cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
                     goto menu7;
@@ -292,12 +315,51 @@ int Interface::initiate() {
                 cin >> cod;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 try{
-                    database -> flightsToAirport(cod);
+                    auto data = database -> flightsToAirport(cod);
+                    cout << "Os voos que entram no aeroporto sao:" << endl;
+                    for (const auto& e : data) {
+                        cout << "Origem: " << e.first << "; Companhia: " << e.second.airline_ << "; Distancia: " << e.second.flightDistance_ << endl;
+                    }
                 }catch (int error){
                     cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
                     goto menu8;
                 }
-
+            }
+            if (ch2 == "9"){
+                menu9:
+                cout << "Por favor, insira o codigo do aeroporto: " << endl;
+                cin >> cod;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Aeroportos atingiveis em quantos voos? (numero inteiro)";
+                int n;
+                cin >> n;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                try{
+                    auto data = database ->reachableAirports(n, cod);
+                    for (const auto& e : data) {
+                        Airport find = database->getAirport(e);
+                        cout << find.getCode() << ", " << find.getName() << ", localizado em " << find.getCity()->get_name() << '-' << find.getCity()->get_country() << ", coordenadas (" << find.getLatitude() << ';' << find.getLongitude() << ')' << endl;
+                    }
+                }catch (int error){
+                    cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
+                    goto menu10;
+                }
+            }
+            if (ch2 == "10"){
+                menu10:
+                cout << "Por favor, insira o codigo do aeroporto: " << endl;
+                cin >> cod;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                try{
+                    auto data = database ->isArticulationPoint(cod);
+                    if (data)
+                        cout << "O aeroporto e ponto de articulacao" << endl;
+                    else
+                        cout << "O aeroporto nao e ponto de articulacao" << endl;
+                }catch (int error){
+                    cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
+                    goto menu10;
+                }
             }
         }
 

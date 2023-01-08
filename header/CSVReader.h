@@ -57,7 +57,8 @@ private:
 
     //returns the airport with the max nr of Flights, if given parameter then finds the airport with the max nr of flights being the max nr < given max;
     Airport maxFlightsAirport(const int prevMax=-1,const string& country="", const unordered_set<Airport,AirportHash>& existingAirports={});
-    bool dfs_art(const string& code, int index, const string& initial);
+    bool dfs_art(const string& code, int index, const string& initial, const string& parent);
+
 
 public:
     CSVReader();
@@ -74,10 +75,9 @@ public:
     void globalStatistics(const string& tipo,const string& modo,const string& country="",const string& airline="",const int k=0 );
     set<Airline>airlinesFromAirport(const string& cod);
     set<Airline> airlinesToAirport(const string& cod);
-    set<string> countriesFromAirport(const string& cod);
     set<string> countriesToAirport(const string& cod);
-    set<pair<string,pair<string,string>>> citiesFromAirport(const string& cod);
-    set<pair<string,pair<string,string>>> citiesToAirport(const string& cod);
+    set<pair<string,string>> citiesToAirport(const string& cod);
+    Airport getAirport(const string& cod);
 
     bool isArticulationPoint(const string& code);
 
