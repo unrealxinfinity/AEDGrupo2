@@ -424,7 +424,7 @@ int Interface::initiate() {
                 cout << "Qual o pais que pretende: " << endl<<flush;
 
                 getline(cin,country);
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
                 airline = "";
             }
             if (tipo == "3"){
