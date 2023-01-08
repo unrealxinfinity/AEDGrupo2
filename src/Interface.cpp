@@ -58,7 +58,7 @@ int Interface::initiate() {
         if (criteria1 == "0") goto MenuPrincipal;
         //caso o criterio for aeroporto
         if (criteria1 == "1"){
-            cout << "Introduza o aeroporto pretendido em formato de codigo ou nomedoaeroporto_cidade_pais :\n\t0.Voltar" << endl;
+            cout << "Introduza o aeroporto pretendido em formato de codigo ou nomeDoAeroporto_cidade_pais :\n\t0.Voltar" << endl;
             
             getline(cin,aeroporto);
             if (aeroporto == "0") goto menuRota;
@@ -98,7 +98,7 @@ int Interface::initiate() {
         if (criteria2 == "0") goto MenuPrincipal;
         //caso o criterio for aeroporto
         if (criteria2 == "1"){
-            cout << "Introduza o aeroporto pretendido em codigo ou nomedoaeroporto_cidade_pais :\n\t0.Voltar" << endl;
+            cout << "Introduza o aeroporto pretendido em codigo ou nomeDoAeroporto_cidade_pais :\n\t0.Voltar" << endl;
             
             getline(cin,aeroporto);
             if (aeroporto == "0") goto menuRota;
@@ -421,8 +421,9 @@ int Interface::initiate() {
                 }
 
                 tipo = "pais";
-                cout << "Qual o pais que pretende: " << endl;
-                cin >> country;
+                cout << "Qual o pais que pretende: " << endl<<flush;
+
+                getline(cin,country);
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 airline = "";
             }
