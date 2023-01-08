@@ -687,27 +687,27 @@ void CSVReader::globalStatistics(const string& tipo, const std::string& modo,con
     int error=-1;
     //Case type of global statistics is all
     if(modo=="nAirports"){
-        cout<<"O tipo:"<<tipo<<" foi escolhido e no total existem:"<<calculateNrAirports(tipo,country)<<" aeroportos relacionados com esse/a "<<tipo<<endl;
+        cout<<"O tipo: "<<tipo<<" foi escolhido e no total existem: "<<calculateNrAirports(tipo,country)<<" aeroportos relacionados com esse/a "<<tipo<<endl;
     }
     if(modo=="nFlights"){
         if(tipo=="pais") {
-            cout << "O tipo:" << tipo << " foi escolhido e no total existem:" << calculateNrFlights(tipo, country)<< " voos relacionados com esse/a " << tipo << endl;
+            cout << "O tipo: " << tipo << " foi escolhido e no total existem: " << calculateNrFlights(tipo, country)<< " voos relacionados com esse/a " << tipo << endl;
         }
         else if(tipo=="companhia aerea"){
-            cout << "O tipo:" << tipo << " foi escolhido e no total existem:" << calculateNrFlights(tipo, airline)<< " voos relacionados com esse/a " << tipo << endl;
+            cout << "O tipo: " << tipo << " foi escolhido e no total existem: " << calculateNrFlights(tipo, airline)<< " voos relacionados com esse/a " << tipo << endl;
 
         }
         else if(tipo=="rede"){
-            cout << "O tipo:" << tipo << " foi escolhido e no total existem:" << calculateNrFlights(tipo, airline)<< " voos relacionados com esse/a " << tipo << endl;
+            cout << "O tipo: " << tipo << " foi escolhido e no total existem: " << calculateNrFlights(tipo, airline)<< " voos relacionados com esse/a " << tipo << endl;
 
         }
     }
     if(modo=="nAirlines"){
-        cout<<"O tipo:"<<tipo<<" foi escolhido e no total existem:"<<calculateNrAirlines(tipo,country)<<" companhias aereas relacionados com esse/a "<<tipo<<endl;
+        cout<<"O tipo: "<<tipo<<" foi escolhido e no total existem: "<<calculateNrAirlines(tipo,country)<<" companhias aereas relacionados com esse/a "<<tipo<<endl;
     }
     if(modo=="top-k airports"){
         if(k<=0) throw error;
-        cout<<"O tipo:"<<tipo<<" foi escolhido e o ranking por nr de voos é o seguinte:"<<endl;
+        cout<<"O tipo: "<<tipo<<" foi escolhido e o ranking por nr de voos é o seguinte:"<<endl;
         showTopKAirports(tipo,country,k);
     }
 }
