@@ -155,7 +155,7 @@ int Interface::initiate() {
     //Caso o user escolha Informacoes
     else if(userInput == "2"){
         menuInfo: string ch1, ch2, cod;
-        cout << "1.Aeroportos\n\t2.Estatisticas globais\n\t0.Voltar" << endl;
+        cout << "Tipo de informacao desejada:\n\t1.Aeroportos\n\t2.Estatisticas globais\n\t0.Voltar" << endl;
         cin >> ch1;
 
         if (ch1 == "0") goto MenuPrincipal;
@@ -166,7 +166,7 @@ int Interface::initiate() {
 
         if (ch1 == "1"){
             menuAero:
-            cout << "1.Companhias aéreas do aeroporto\n\t2.Companhias aéreas para aeroporto\n\t3.Países do aeroporto\n\t4.Países para aeroporto\n\t5.Cidades do aeroporto\n\t6.Cidades para aeroporto\n\t7.Voos do aeroporto\n\t8.Voos para aeroporto\n\t0.Voltar: " << endl;
+            cout << "\n\t1.Companhias aereas do aeroporto\n\t2.Companhias aereas para aeroporto\n\t3.Paises do aeroporto\n\t4.Paises para aeroporto\n\t5.Cidades do aeroporto\n\t6.Cidades para aeroporto\n\t7.Voos do aeroporto\n\t8.Voos para aeroporto\n\t0.Voltar: " << endl;
             cin >> ch2;
             if (ch2 == "0") goto menuInfo;
             while(!is_in(ch2,1,8)) {
@@ -179,7 +179,11 @@ int Interface::initiate() {
                 cout << "Por favor, insira o codigo do aeroporto: " << endl;
                 cin >> cod;
                 try{
-                    database -> airlinesFromAirport(cod);
+                    auto data = database -> airlinesFromAirport(cod);
+                    cout << "Companhias aereas presentes em voos saindo do aeroporto:" << endl;
+                    for (const auto& e : data) {
+                        cout << e.getCode() << ", " << e.getName() << ". Callsign is " << e.get_callsign() << ", company is from " << e.getCountry() << '.' << endl;
+                    }
                 }catch (int error){
                     cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
                     goto menu1;
@@ -190,7 +194,11 @@ int Interface::initiate() {
                 cout << "Por favor, insira o codigo do aeroporto: " << endl;
                 cin >> cod;
                 try{
-                    database -> airlinesToAirport(cod);
+                    auto data = database -> airlinesToAirport(cod);
+                    cout << "Companhias aereas presentes em voos entrando no aeroporto:" << endl;
+                    for (const auto& e : data) {
+                        cout << e.getCode() << ", " << e.getName() << ". Callsign is " << e.get_callsign() << ", company is from " << e.getCountry() << '.' << endl;
+                    }
                 }catch (int error){
                     cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
                     goto menu2;
@@ -202,7 +210,7 @@ int Interface::initiate() {
                 cout << "Por favor, insira o codigo do aeroporto: " << endl;
                 cin >> cod;
                 try{
-                    database -> countriesFromAirport(cod);
+                    auto data = database -> countriesFromAirport(cod);
                 }catch (int error){
                     cout << "O codigo inserido esta incorreto, por favor, tente novamente." << endl;
                     goto menu3;
