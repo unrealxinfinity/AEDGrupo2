@@ -525,6 +525,7 @@ int CSVReader::calculateNrAirports(const std::string& tipo,const string& country
     bool found=false;
     int error=-1;
     if(tipo=="rede"){
+        found=true;
         return airports.size();
     }
     if(tipo=="pais"){
@@ -551,6 +552,7 @@ int CSVReader::calculateNrFlights(const std::string& tipo, const std::string& co
     bool found=false;
     if(tipo=="rede"){
         res = flight_num;
+        found=true;
     }
     if(tipo=="pais"){
         for(Airport a : airports){
@@ -586,6 +588,7 @@ int CSVReader::calculateNrAirlines(const string& tipo, const string& country) {
     int error=-1;
     bool found=false;
     if(tipo=="rede"){
+        found=true;
         return airlines.size();
     }
     if(tipo=="pais"){
@@ -697,9 +700,8 @@ void CSVReader::globalStatistics(const string& tipo, const std::string& modo,con
             cout << "O tipo: " << tipo << " foi escolhido e no total existem: " << calculateNrFlights(tipo, airline)<< " voos relacionados com esse/a " << tipo << endl;
 
         }
-        else if(tipo=="rede"){
+        else if(tipo=="rede") {
             cout << "O tipo: " << tipo << " foi escolhido e no total existem: " << calculateNrFlights(tipo, airline)<< " voos relacionados com esse/a " << tipo << endl;
-
         }
     }
     if(modo=="nAirlines"){
