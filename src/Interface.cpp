@@ -11,7 +11,7 @@
 using namespace std;
 
 bool Interface::is_in(const string& choice, int lim_start, int lim_end) const{
-    set<string> availableChoices={"0","1","2","3","4","5","6","7","8","9"};
+    set<string> availableChoices={"0","1","2","3","4","5","6","7","8","9","10"};
     if(availableChoices.find(choice)!= availableChoices.end()&&stoi(choice)>=lim_start && stoi(choice) <=lim_end ) return true;
     return false;
 }
@@ -45,7 +45,7 @@ int Interface::initiate() {
         menuRota: string criteria1, criteria2, aeroporto, cidade, loc;
         int x;
         string str, dest;
-        cout << "Escolha o criterio para a partida:\n\tLocal de partida:\n\t1.Aeroporto\n\t2.Cidade-Pais\n\t3.Localizacao\n\t0.Voltar" << endl; //Local de chegada:\n\t1.Aeroporto\n\t2.Cidade\n\t3.Localizacao\n\t0.Voltar" << endl;
+        cout << "Escolha o criterio para a partida:\n\tLocal de partida:\n\t1.Aeroporto\n\t2.Cidade-Pais\n\t3.Localizacao\n\t0.Voltar" << endl; //Local de chegada:\n\t1.Aeroporto\n\t2.Cidade-Pais\n\t3.Localizacao\n\t0.Voltar" << endl;
 
         //partida
         cin >> criteria1;
@@ -58,7 +58,7 @@ int Interface::initiate() {
         if (criteria1 == "0") goto MenuPrincipal;
         //caso o criterio for aeroporto
         if (criteria1 == "1"){
-            cout << "Introduza o aeroporto pretendido:\n\t0.Voltar" << endl;
+            cout << "Introduza o aeroporto pretendido em formato de codigo ou nomedoaeroporto_cidade_pais :\n\t0.Voltar" << endl;
             
             getline(cin,aeroporto);
             if (aeroporto == "0") goto menuRota;
@@ -98,7 +98,7 @@ int Interface::initiate() {
         if (criteria2 == "0") goto MenuPrincipal;
         //caso o criterio for aeroporto
         if (criteria2 == "1"){
-            cout << "Introduza o aeroporto pretendido:\n\t0.Voltar" << endl;
+            cout << "Introduza o aeroporto pretendido em codigo ou nomedoaeroporto_cidade_pais :\n\t0.Voltar" << endl;
             
             getline(cin,aeroporto);
             if (aeroporto == "0") goto menuRota;
@@ -161,7 +161,7 @@ int Interface::initiate() {
     //Caso o user escolha Informacoes
     else if(userInput == "2"){
         menuInfo: string ch1, ch2, cod;
-        cout << "Tipo de informacao desejada:\n\t1.Aeroportos\n\t2.Estatisticas globais\n\t0.Voltar" << endl;
+        cout << "Tipo de informacao desejada:\n\t1.Sobre aeroporto\n\t2.Estatisticas globais\n\t0.Voltar" << endl;
         cin >> ch1;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
@@ -174,11 +174,11 @@ int Interface::initiate() {
 
         if (ch1 == "1"){
             menuAero:
-            cout << "\n\t1.Companhias aereas do aeroporto\n\t2.Companhias aereas para aeroporto\n\t3.Paises do aeroporto\n\t4.Paises para aeroporto\n\t5.Cidades do aeroporto\n\t6.Cidades para aeroporto\n\t7.Voos do aeroporto\n\t8.Voos para aeroporto\n\t9.Aeroportos atingiveis\n\t10.Verificar se o aeroporto e um ponto de artriculacao\n\t0.Voltar: " << endl;
+            cout << "\t1.Companhias aereas responsaveis pelos voos que partem do aeroporto\n\t2.Companhias aereas responsaveis pelos voos que chegam ao aeroporto\n\t3.Paises destino dos voos do aeroporto\n\t4.Paises origem dos voos que chegam ao aeroporto\n\t5.Cidades destino dos voos que partem do aeroporto\n\t6.Cidades origem dos voos que chegam ao aeroporto\n\t7.Voos que partem do aeroporto\n\t8.Voos que chegam ao aeroporto\n\t9.Aeroportos atingiveis\n\t10.Verificar se o aeroporto e um ponto de artriculacao\n\t0.Voltar: " << endl;
             cin >> ch2;
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             if (ch2 == "0") goto menuInfo;
-            while(!is_in(ch2,1,8)) {
+            while(!is_in(ch2,0,10)) {
                 cout << "Sintaxe errada.\nPor favor, reintroduzir:" << endl;
                 cin >> ch2;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -370,17 +370,37 @@ int Interface::initiate() {
             cin >> tipo;
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             if (tipo == "0") goto menuInfo;
-            while(!is_in(tipo,1,3)) {
+            while(!is_in(tipo,0,3)) {
                 cout << "Sintaxe errada.\nPor favor, reintroduzir:" << endl;
                 cin >> tipo;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
             if (tipo == "1"){
+                cout << "Pretende: \n\t1.Numero de aeroportos\n\t2.Numero de voos\n\t3.Numero de companhias aereas\n\t4.Top-K de aeroportos\n\t0.Voltar" << endl;
+                cin >> modo;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                if (modo == "0") goto menuInfo;
+                while(!is_in(modo,0,4)) {
+                    cout << "Sintaxe errada.\nPor favor, reintroduzir:" << endl;
+                    cin >> modo;
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                }
+
                 tipo = "rede";
                 country = "";
                 airline = "";
             }
             if (tipo == "2"){
+                cout << "Pretende: \n\t1.Numero de aeroportos\n\t2.Numero de voos\n\t3.Numero de companhias aereas\n\t4.Top-K de aeroportos\n\t0.Voltar" << endl;
+                cin >> modo;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                if (modo == "0") goto menuInfo;
+                while(!is_in(modo,0,4)) {
+                    cout << "Sintaxe errada.\nPor favor, reintroduzir:" << endl;
+                    cin >> modo;
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                }
+
                 tipo = "pais";
                 cout << "Qual o pais que pretende: " << endl;
                 cin >> country;
@@ -388,22 +408,25 @@ int Interface::initiate() {
                 airline = "";
             }
             if (tipo == "3"){
-                tipo = "companhia aerea";
-                cout << "Qual a companhia aerea que pretende: " << endl;
-                country = "";
-                cin >> airline;
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            }
-
-            cout << "Pretende: \n\t1.Numero de aeroportos\n\t2.Numero de voos\n\t3.Numero de companhias aereas\n\t4.Top-K de aeroportos\n\t0.Voltar" << endl;
-            cin >> modo;
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            if (modo == "0") goto menuInfo;
-            while(!is_in(modo,1,4)) {
-                cout << "Sintaxe errada.\nPor favor, reintroduzir:" << endl;
+                cout << "Pretende: \n\t2.Numero de voos totais da companhia\n\t0.Voltar" << endl;
                 cin >> modo;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+                if (modo == "0") goto menuInfo;
+                while(!is_in(modo,2,2)) {
+                    cout << "Sintaxe errada.\nPor favor, reintroduzir:" << endl;
+                    cin >> modo;
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                }
+
+                tipo = "companhia aerea";
+                cout << "Qual a companhia aerea que pretende: " << endl;
+                cin >> airline;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
             }
+
+
             k = 0;
             if (modo == "1"){modo = "nAirports";}
             if (modo == "2"){modo = "nFlights";}

@@ -479,7 +479,7 @@ void CSVReader::showShortestPath(const std::string& src,const string& dest, cons
             it++;
         }
         cout << endl;
-        cout << "You will need to attend " << travel.first.size() << " flights in total!" << endl;
+        cout << "Precisas de: " << travel.first.size() << " voos no total total!" << endl;
     }
 }
 
@@ -693,6 +693,10 @@ void CSVReader::globalStatistics(const string& tipo, const std::string& modo,con
             cout << "O tipo:" << tipo << " foi escolhido e no total existem:" << calculateNrFlights(tipo, country)<< " voos relacionados com esse/a " << tipo << endl;
         }
         else if(tipo=="companhia aerea"){
+            cout << "O tipo:" << tipo << " foi escolhido e no total existem:" << calculateNrFlights(tipo, airline)<< " voos relacionados com esse/a " << tipo << endl;
+
+        }
+        else if(tipo=="rede"){
             cout << "O tipo:" << tipo << " foi escolhido e no total existem:" << calculateNrFlights(tipo, airline)<< " voos relacionados com esse/a " << tipo << endl;
 
         }

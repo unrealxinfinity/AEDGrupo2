@@ -157,6 +157,7 @@ int main() {
     CSVReader reader;
     //reader.showShortestPath("Porto-Portugal","Lisbon-Portugal",50,{"TAP Air Portugal"});
     Interface interface = Interface(reader);
-    interface.initiate();
+    while (interface.initiate()!=1);
+    return 0;
 
 }
